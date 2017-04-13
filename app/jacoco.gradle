@@ -1,5 +1,9 @@
 apply plugin: 'jacoco'
 
+jacoco {
+    toolVersion = "0.7.8"
+}
+
 // To include robolectric test in the Jacoco report
 android {
     testOptions {
@@ -12,13 +16,17 @@ android {
 }
 
 project.afterEvaluate {
+
     // Grab all build types and product flavors
-    def buildTypes = android.buildTypes.collect { type -> type.name }
-    def productFlavors = android.productFlavors.collect { flavor -> flavor.name }
+    def buildTypes = android.buildTypes.collect { type ->
+        type.name
+    }
+    def productFlavors = android.productFlavors.collect { flavor ->
+        flavor.name
+    }
 
     // When no product flavors defined, use empty
     if (!productFlavors) productFlavors.add('')
-
     productFlavors.each { productFlavorName ->
         buildTypes.each { buildTypeName ->
             def sourceName, sourcePath
@@ -28,19 +36,11 @@ project.afterEvaluate {
                 sourceName = "${productFlavorName}${buildTypeName.capitalize()}"
                 sourcePath = "${productFlavorName}/${buildTypeName}"
             }
-            def unitTestTaskName = "test${sourceName.capitalize()}UnitTest"
-            def connectedTestTaskName = "connected${sourceName.capitalize()}AndroidTest"
-            if (productFlavorName == "prod" && buildTypeName == "release") {
-                connectedTestTaskName = "connectedAndroidTest"
-            }
-
+            def testTaskName = "test${sourceName.capitalize()}UnitTest"
             // Create coverage task of form 'testFlavorTypeCoverage' depending on 'testFlavorTypeUnitTest'
-            task "${unitTestTaskName}Coverage"(type: JacocoReport) {
-                dependsOn "$unitTestTaskName"
-                //dependsOn "$connectedTestTaskName"
+            task "${testTaskName}Coverage" (type:JacocoReport, dependsOn: "$testTaskName") {
                 group = "Reporting"
-                description = "Generate Jacoco coverage reports on the ${sourceName} build."
-
+                description = "Generate Jacoco coverage reports on the ${sourceName.capitalize()} build."
                 classDirectories = fileTree(
                         dir: "${project.buildDir}/intermediates/classes/${sourcePath}",
                         excludes: ['**/R.class',
@@ -63,10 +63,10 @@ project.afterEvaluate {
                         "src/$productFlavorName/java",
                         "src/$buildTypeName/java"
                 ]
+
                 additionalSourceDirs = files(coverageSourceDirs)
                 sourceDirectories = files(coverageSourceDirs)
-                executionData = fileTree(dir: project.projectDir, includes: ['**/*.exec', '**/*.ec'])
-
+                executionData = files("${project.buildDir}/jacoco/${testTaskName}.exec")
                 reports {
                     xml.enabled = true
                     xml.destination = "${buildDir}/reports/jacoco/jacocoTestReport.xml"
@@ -76,8 +76,4 @@ project.afterEvaluate {
             }
         }
     }
-}
-
-jacoco {
-    toolVersion = '0.7.8'
 }
