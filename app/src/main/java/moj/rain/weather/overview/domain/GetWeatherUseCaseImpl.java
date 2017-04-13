@@ -9,7 +9,7 @@ public class GetWeatherUseCaseImpl extends BaseUseCaseImpl implements GetWeather
 
     private Callback callback;
 
-    @Inject
+    @Inject // Inject repository etc.
     public GetWeatherUseCaseImpl() {
     }
 
@@ -19,7 +19,7 @@ public class GetWeatherUseCaseImpl extends BaseUseCaseImpl implements GetWeather
     }
 
     @Override
-    public void getWeather() {
+    public void execute() {
 
     }
 }

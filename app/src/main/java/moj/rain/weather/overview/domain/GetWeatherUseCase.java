@@ -15,5 +15,5 @@ public interface GetWeatherUseCase extends BaseUseCase {
 
     void setCallback(Callback callback);
 
-    void getWeather();
+    void execute();
 }

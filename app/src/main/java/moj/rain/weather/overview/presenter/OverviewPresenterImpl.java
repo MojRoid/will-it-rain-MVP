@@ -3,9 +3,10 @@ package moj.rain.weather.overview.presenter;
 
 import javax.inject.Inject;
 
+import moj.rain.app.presenter.BasePresenter;
 import moj.rain.weather.overview.view.OverviewView;
 
-public class OverviewPresenterImpl implements OverviewPresenter {
+public class OverviewPresenterImpl extends BasePresenter implements OverviewPresenter {
 
     private final OverviewView view;
 
