@@ -9,6 +9,8 @@ import butterknife.ButterKnife;
 
 public abstract class BaseActivity extends AppCompatActivity implements BaseView {
 
+    public abstract void injectDependencies();
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -16,6 +18,4 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
         setContentView(getLayoutResourceId());
         ButterKnife.bind(this);
     }
-
-    public abstract void injectDependencies();
 }

@@ -7,6 +7,8 @@ import dagger.Module;
 import dagger.Provides;
 import moj.rain.app.injection.qualifiers.ForActivity;
 import moj.rain.app.injection.scopes.PerActivity;
+import moj.rain.weather.overview.presenter.OverviewPresenter;
+import moj.rain.weather.overview.presenter.OverviewPresenterImpl;
 import moj.rain.weather.overview.view.OverviewView;
 
 @Module
@@ -31,5 +33,11 @@ public class OverviewModule {
     @PerActivity
     OverviewView provideView() {
         return view;
+    }
+
+    @Provides
+    @PerActivity
+    OverviewPresenter providesPresenter(OverviewPresenterImpl overviewPresenter) {
+        return overviewPresenter;
     }
 }

@@ -1,0 +1,83 @@
+apply plugin: 'jacoco'
+
+// To include robolectric test in the Jacoco report
+android {
+    testOptions {
+        unitTests.all {
+            jacoco {
+                includeNoLocationClasses = true
+            }
+        }
+    }
+}
+
+project.afterEvaluate {
+    // Grab all build types and product flavors
+    def buildTypes = android.buildTypes.collect { type -> type.name }
+    def productFlavors = android.productFlavors.collect { flavor -> flavor.name }
+
+    // When no product flavors defined, use empty
+    if (!productFlavors) productFlavors.add('')
+
+    productFlavors.each { productFlavorName ->
+        buildTypes.each { buildTypeName ->
+            def sourceName, sourcePath
+            if (!productFlavorName) {
+                sourceName = sourcePath = "${buildTypeName}"
+            } else {
+                sourceName = "${productFlavorName}${buildTypeName.capitalize()}"
+                sourcePath = "${productFlavorName}/${buildTypeName}"
+            }
+            def unitTestTaskName = "test${sourceName.capitalize()}UnitTest"
+            def connectedTestTaskName = "connected${sourceName.capitalize()}AndroidTest"
+            if (productFlavorName == "prod" && buildTypeName == "release") {
+                connectedTestTaskName = "connectedAndroidTest"
+            }
+
+            // Create coverage task of form 'testFlavorTypeCoverage' depending on 'testFlavorTypeUnitTest'
+            task "${unitTestTaskName}Coverage"(type: JacocoReport) {
+                dependsOn "$unitTestTaskName"
+                //dependsOn "$connectedTestTaskName"
+                group = "Reporting"
+                description = "Generate Jacoco coverage reports on the ${sourceName} build."
+
+                classDirectories = fileTree(
+                        dir: "${project.buildDir}/intermediates/classes/${sourcePath}",
+                        excludes: ['**/R.class',
+                                   '**/R$*.class',
+                                   '**/*$ViewInjector*.*',
+                                   '**/*$ViewBinder*.*',
+                                   '**/*_ViewBinding*.*',
+                                   '**/*Factory*.class',
+                                   '**/*AutoValue*.class',
+                                   '**/injection/*.*',
+                                   '**/*Provider*.class',
+                                   '**/*_MembersInjector.class',
+                                   '**/BuildConfig.*',
+                                   '**/Manifest*.*',
+                                   '**/*Lambda*.*']
+                )
+
+                def coverageSourceDirs = [
+                        "src/main/java",
+                        "src/$productFlavorName/java",
+                        "src/$buildTypeName/java"
+                ]
+                additionalSourceDirs = files(coverageSourceDirs)
+                sourceDirectories = files(coverageSourceDirs)
+                executionData = fileTree(dir: project.projectDir, includes: ['**/*.exec', '**/*.ec'])
+
+                reports {
+                    xml.enabled = true
+                    xml.destination = "${buildDir}/reports/jacoco/jacocoTestReport.xml"
+                    html.enabled = true
+                    html.destination = "${buildDir}/reports/jacoco"
+                }
+            }
+        }
+    }
+}
+
+jacoco {
+    toolVersion = '0.7.8'
+}
