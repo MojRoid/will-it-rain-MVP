@@ -30,11 +30,11 @@ Feature: As a user, when it is about to rain, I want to be notified so that I am
 ----
 
 
-Scenario: Receive a notification if it is about to rain.
+**Scenario:** Receive a notification if it is about to rain.
 
-GIVEN I have a saved location
-WHEN it is likely to rain within the next hour
-THEN I am presented with a notification
+**GIVEN** I have a saved location
+**WHEN** it is likely to rain within the next hour
+**THEN** I am presented with a notification
 
 --
 
