@@ -15,9 +15,9 @@ ext {
     // Testing dependencies
     espresso_version = '2.2.2'
     junit_version = '4.12'
-    mockito_version = '1.10.19'
+    mockito_version = '2.+'
     truth_version = '0.31'
-    robolectric_version = '3.2.2'
+    robolectric_version = '3.3.2'
 }
 
 dependencies {
@@ -70,7 +70,7 @@ dependencies {
 
     // Unit Testing
     testCompile "junit:junit:$junit_version"
-    testCompile "org.mockito:mockito-all:$mockito_version"
+    testCompile "org.mockito:mockito-core:$mockito_version"
     testCompile "com.google.truth:truth:$truth_version"
     testCompile "org.robolectric:robolectric:$robolectric_version"
     testCompile "org.robolectric:shadows-support-v4:$robolectric_version"
