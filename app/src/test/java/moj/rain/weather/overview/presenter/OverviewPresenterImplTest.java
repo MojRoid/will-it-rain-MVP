@@ -5,8 +5,12 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.List;
+
 import moj.rain.app.model.Weather;
+import moj.rain.weather.overview.data.WeatherDataAdapter;
 import moj.rain.weather.overview.domain.GetWeatherUseCase;
+import moj.rain.weather.overview.model.WeatherData;
 import moj.rain.weather.overview.view.OverviewView;
 
 import static com.google.common.truth.Truth.assertThat;
@@ -20,14 +24,20 @@ public class OverviewPresenterImplTest {
     @Mock
     private GetWeatherUseCase getWeatherUseCase;
     @Mock
-    private Weather weather;
+    private WeatherDataAdapter weatherDataAdapter;
+    @Mock
+    private List<Weather> weather;
+    @Mock
+    private List<WeatherData> weatherData;
+    @Mock
+    private Throwable throwable;
 
     private OverviewPresenterImpl presenter;
 
     @Before
-    public void setup() {
+    public void presenterIsCreated() {
         MockitoAnnotations.initMocks(this);
-        presenter = new OverviewPresenterImpl(view, getWeatherUseCase);
+        presenter = new OverviewPresenterImpl(view, getWeatherUseCase, weatherDataAdapter);
     }
 
     private void verifyUseCaseCallbacksAreSet() {
@@ -81,9 +91,7 @@ public class OverviewPresenterImplTest {
         presenter.onWeatherRetrieved(weather);
 
         // Then
-        // TODO: test transforming of data in a separate class.
-        then(view).should(times(1)).showWeather(null);
-        then(view).shouldHaveNoMoreInteractions();
+        then(weatherDataAdapter).should(times(1)).transform(weather, presenter);
     }
 
     @Test
@@ -96,4 +104,23 @@ public class OverviewPresenterImplTest {
         then(view).shouldHaveNoMoreInteractions();
     }
 
+    @Test
+    public void givenPresenterIsCreated_whenOnDataAdaptedIsCalled_thenShowWeatherWithTheAdaptedData() throws Exception {
+        // When
+        presenter.onDataAdapted(weatherData);
+
+        // Then
+        then(view).should(times(1)).showWeather(weatherData);
+        then(view).shouldHaveNoMoreInteractions();
+    }
+
+    @Test
+    public void givenPresenterIsCreated_whenOnDataAdaptErrorIsCalled_thenShowWeatherNetworkError() throws Exception {
+        // When
+        presenter.onDataAdaptError(throwable);
+
+        // Then
+        then(view).should(times(1)).showWeatherNetworkError();
+        then(view).shouldHaveNoMoreInteractions();
+    }
 }
