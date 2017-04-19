@@ -3,11 +3,11 @@ package moj.rain.app.domain;
 
 import android.support.annotation.NonNull;
 
-import rx.Subscription;
+import io.reactivex.disposables.Disposable;
 
 public interface BaseUseCase {
 
-    void trackSubscription(@NonNull Subscription subscription);
+    void trackDisposable(@NonNull Disposable disposable);
 
     void cleanUp();
 }

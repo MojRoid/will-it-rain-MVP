@@ -5,9 +5,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.util.List;
-
-import moj.rain.app.model.Weather;
+import moj.rain.app.repository.network.model.Weather;
 import moj.rain.weather.overview.data.WeatherDataAdapter;
 import moj.rain.weather.overview.domain.GetWeatherUseCase;
 import moj.rain.weather.overview.model.WeatherData;
@@ -26,9 +24,9 @@ public class OverviewPresenterImplTest {
     @Mock
     private WeatherDataAdapter weatherDataAdapter;
     @Mock
-    private List<Weather> weather;
+    private Weather weather;
     @Mock
-    private List<WeatherData> weatherData;
+    private WeatherData weatherData;
     @Mock
     private Throwable throwable;
 
@@ -71,7 +69,7 @@ public class OverviewPresenterImplTest {
 
         // Then
         verifyUseCaseCallbacksAreSet();
-        then(getWeatherUseCase).should(times(1)).execute();
+        then(getWeatherUseCase).should(times(1)).execute(50, 0);
         then(getWeatherUseCase).shouldHaveNoMoreInteractions();
     }
 
@@ -97,7 +95,7 @@ public class OverviewPresenterImplTest {
     @Test
     public void givenPresenterIsCreated_whenOnWeatherNetworkErrorIsCalled_thenShowWeatherNetworkErrorIsCalled() throws Exception {
         // When
-        presenter.onWeatherNetworkError();
+        presenter.onWeatherNetworkError(throwable);
 
         // Then
         then(view).should(times(1)).showWeatherNetworkError();

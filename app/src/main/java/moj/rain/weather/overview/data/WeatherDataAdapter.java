@@ -5,12 +5,12 @@ import android.support.annotation.Nullable;
 
 import javax.inject.Inject;
 
+import io.reactivex.Scheduler;
 import moj.rain.app.data.BaseDataAdapter;
 import moj.rain.app.injection.qualifiers.ForComputationThread;
 import moj.rain.app.injection.qualifiers.ForMainThread;
-import moj.rain.app.model.Weather;
+import moj.rain.app.repository.network.model.Weather;
 import moj.rain.weather.overview.model.WeatherData;
-import rx.Scheduler;
 
 public class WeatherDataAdapter extends BaseDataAdapter<Weather, WeatherData> {
 

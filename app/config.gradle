@@ -1,0 +1,11 @@
+class Config {
+    Properties properties
+}
+
+ext {
+    config = new Config()
+    config.properties = new Properties()
+    def basePath = rootDir.absolutePath + "/app/config/"
+    def propertiesFilename = "common.properties"
+    config.properties.load(new FileInputStream(rootProject.file((basePath + propertiesFilename))))
+}

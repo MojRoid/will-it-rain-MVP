@@ -3,14 +3,16 @@ ext {
     support_library_version = '25.3.1'
     play_services_version = '10.2.1'
     dagger_version = '2.9'
-    rxJava_version = '1.2.6'
-    rxAndroid_version = '1.2.1'
+    rxJava_version = '2.0.1'
     butterknife_version = '8.5.1'
     auto_value_version = '1.3'
     auto_value_parcel_version = '0.2.5'
+    auto_value_gson_version = '0.4.6'
     okhttp_version = '3.6.0'
-    retrofit_version = '2.1.0'
+    retrofit_version = '2.2.0'
+    gson_version = '2.8.0'
     timber_version = '4.5.1'
+    joda_time_version = '2.9.9'
 
     // Testing dependencies
     espresso_version = '2.2.2'
@@ -33,8 +35,7 @@ dependencies {
     annotationProcessor "com.google.dagger:dagger-compiler:$dagger_version"
 
     // RxJava
-    compile "io.reactivex:rxandroid:$rxAndroid_version"
-    compile "io.reactivex:rxjava:$rxJava_version"
+    compile "io.reactivex.rxjava2:rxandroid:$rxJava_version"
 
     // Butterknife
     compile "com.jakewharton:butterknife:$butterknife_version"
@@ -47,6 +48,7 @@ dependencies {
     // Parcelable for AutoValue
     compile "com.ryanharter.auto.value:auto-value-parcel-adapter:$auto_value_parcel_version"
     annotationProcessor "com.ryanharter.auto.value:auto-value-parcel:$auto_value_parcel_version"
+    annotationProcessor "com.ryanharter.auto.value:auto-value-gson:$auto_value_gson_version"
 
     // OkHttp
     compile "com.squareup.okhttp3:okhttp:$okhttp_version"
@@ -55,10 +57,10 @@ dependencies {
     // Retrofit
     compile "com.squareup.retrofit2:retrofit:$retrofit_version"
     compile "com.squareup.retrofit2:converter-gson:$retrofit_version"
-    compile "com.squareup.retrofit2:adapter-rxjava:$retrofit_version"
+    compile "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
 
     // Gson
-    compile "com.google.code.gson:gson:2.7"
+    compile "com.google.code.gson:gson:$gson_version"
 
     // Logging
     compile "com.jakewharton.timber:timber:$timber_version"
@@ -67,6 +69,9 @@ dependencies {
     androidTestCompile("com.android.support.test.espresso:espresso-core:$espresso_version", {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+
+    // Joda Time
+    compile "joda-time:joda-time:$joda_time_version"
 
     // Unit Testing
     testCompile "junit:junit:$junit_version"

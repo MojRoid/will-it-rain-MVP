@@ -8,14 +8,14 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import io.reactivex.Scheduler;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import moj.rain.app.RainApp;
 import moj.rain.app.injection.qualifiers.ForApplication;
 import moj.rain.app.injection.qualifiers.ForComputationThread;
 import moj.rain.app.injection.qualifiers.ForIoThread;
 import moj.rain.app.injection.qualifiers.ForMainThread;
-import rx.Scheduler;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 import timber.log.Timber;
 
 @Module

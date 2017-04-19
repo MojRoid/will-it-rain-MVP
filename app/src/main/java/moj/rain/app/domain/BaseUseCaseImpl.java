@@ -3,24 +3,24 @@ package moj.rain.app.domain;
 
 import android.support.annotation.NonNull;
 
-import rx.Subscription;
-import rx.subscriptions.CompositeSubscription;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 
 public class BaseUseCaseImpl implements BaseUseCase {
 
-    private final CompositeSubscription compositeSubscription;
+    private final CompositeDisposable compositeDisposable;
 
     protected BaseUseCaseImpl() {
-        this.compositeSubscription = new CompositeSubscription();
+        this.compositeDisposable = new CompositeDisposable();
     }
 
     @Override
-    public void trackSubscription(@NonNull Subscription subscription) {
-        compositeSubscription.add(subscription);
+    public void trackDisposable(@NonNull Disposable disposable) {
+        compositeDisposable.add(disposable);
     }
 
     @Override
     public void cleanUp() {
-        compositeSubscription.clear();
+        compositeDisposable.clear();
     }
 }

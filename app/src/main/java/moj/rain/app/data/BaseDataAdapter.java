@@ -4,16 +4,16 @@ package moj.rain.app.data;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import java.util.List;
-
-import rx.Observable;
-import rx.Scheduler;
+import io.reactivex.Observable;
+import io.reactivex.Scheduler;
+import io.reactivex.disposables.Disposable;
 import timber.log.Timber;
 
 public abstract class BaseDataAdapter<SOURCE, DESTINATION> {
 
     private final Scheduler computationScheduler;
     private final Scheduler mainThreadScheduler;
+    private Disposable disposable;
 
     public BaseDataAdapter(Scheduler computationScheduler, Scheduler mainThreadScheduler) {
         this.computationScheduler = computationScheduler;
@@ -27,19 +27,23 @@ public abstract class BaseDataAdapter<SOURCE, DESTINATION> {
         return destination != null;
     }
 
-    public void transform(@Nullable List<SOURCE> sourceList, @NonNull DataAdapterListener<DESTINATION> adapterListener) {
-        if (sourceList == null) {
+    public void transform(@Nullable SOURCE source, @NonNull DataAdapterCallback<DESTINATION> callback) {
+        if (source == null) {
             Timber.w("No data to adapt.");
             return;
         }
 
-        Observable.from(sourceList)
+        disposable = Observable.just(source)
                 .map(this::transform)
                 .filter(this::isValid)
-                .toList()
                 .subscribeOn(computationScheduler)
                 .observeOn(mainThreadScheduler)
-                .subscribe(adapterListener::onDataAdapted, adapterListener::onDataAdaptError);
+                .subscribe(callback::onDataAdapted, callback::onDataAdaptError);
+    }
 
+    public void cancel() {
+        if (!disposable.isDisposed()) {
+            disposable.dispose();
+        }
     }
 }

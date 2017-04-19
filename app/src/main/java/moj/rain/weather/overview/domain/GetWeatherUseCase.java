@@ -1,21 +1,19 @@
 package moj.rain.weather.overview.domain;
 
 
-import java.util.List;
-
 import moj.rain.app.domain.BaseUseCase;
-import moj.rain.app.model.Weather;
+import moj.rain.app.repository.network.model.Weather;
 
 public interface GetWeatherUseCase extends BaseUseCase {
 
     interface Callback {
 
-        void onWeatherRetrieved(List<Weather> weather);
+        void onWeatherRetrieved(Weather weather);
 
-        void onWeatherNetworkError();
+        void onWeatherNetworkError(Throwable throwable);
     }
 
     void setCallback(Callback callback);
 
-    void execute();
+    void execute(double latitude, double longitude);
 }

@@ -2,10 +2,12 @@ apply plugin: 'com.android.application'
 apply plugin: 'me.tatarka.retrolambda'
 apply from: 'dependencies.gradle'
 apply from: 'jacoco.gradle'
+apply from: 'config.gradle'
 
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
+
     defaultConfig {
         applicationId "moj.rain"
         minSdkVersion 19
@@ -13,7 +15,11 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "String", "DARK_SKY_BASE_URL", "\"${config.properties.dark_sky_base_url}\""
+        buildConfigField "String", "DARK_SKY_API_KEY", "\"${config.properties.dark_sky_api_key}\""
     }
+
     buildTypes {
         release {
             minifyEnabled true

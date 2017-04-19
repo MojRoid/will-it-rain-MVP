@@ -1,19 +1,17 @@
 package moj.rain.weather.overview.presenter;
 
 
-import java.util.List;
-
 import javax.inject.Inject;
 
-import moj.rain.app.data.DataAdapterListener;
-import moj.rain.app.model.Weather;
+import moj.rain.app.data.DataAdapterCallback;
 import moj.rain.app.presenter.BasePresenter;
+import moj.rain.app.repository.network.model.Weather;
 import moj.rain.weather.overview.data.WeatherDataAdapter;
-import moj.rain.weather.overview.model.WeatherData;
 import moj.rain.weather.overview.domain.GetWeatherUseCase;
+import moj.rain.weather.overview.model.WeatherData;
 import moj.rain.weather.overview.view.OverviewView;
 
-public class OverviewPresenterImpl extends BasePresenter implements OverviewPresenter, GetWeatherUseCase.Callback, DataAdapterListener<WeatherData> {
+public class OverviewPresenterImpl extends BasePresenter implements OverviewPresenter, GetWeatherUseCase.Callback, DataAdapterCallback<WeatherData> {
 
     private final OverviewView view;
     private final GetWeatherUseCase getWeatherUseCase;
@@ -45,27 +43,33 @@ public class OverviewPresenterImpl extends BasePresenter implements OverviewPres
 
     @Override
     public void getWeather() {
-        getWeatherUseCase.execute();
+
+        // TODO: get latitude and longitude first
+        double latitude = 50;
+        double longitude = 0;
+
+        getWeatherUseCase.execute(latitude, longitude);
     }
 
     @Override
     public void onViewDestroyed() {
         nullifyUseCaseCallbacks();
         cleanup();
+        weatherDataAdapter.cancel();
     }
 
     @Override
-    public void onWeatherRetrieved(List<Weather> weather) {
+    public void onWeatherRetrieved(Weather weather) {
         weatherDataAdapter.transform(weather, this);
     }
 
     @Override
-    public void onWeatherNetworkError() {
+    public void onWeatherNetworkError(Throwable throwable) {
         view.showWeatherNetworkError();
     }
 
     @Override
-    public void onDataAdapted(List<WeatherData> weatherData) {
+    public void onDataAdapted(WeatherData weatherData) {
         view.showWeather(weatherData);
     }
 

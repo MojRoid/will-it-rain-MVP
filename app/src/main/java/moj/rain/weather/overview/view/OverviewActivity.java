@@ -3,16 +3,14 @@ package moj.rain.weather.overview.view;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import moj.rain.R;
 import moj.rain.app.RainApp;
 import moj.rain.app.view.BaseActivity;
 import moj.rain.app.view.error.ErrorViewManager;
-import moj.rain.weather.overview.model.WeatherData;
 import moj.rain.weather.overview.injection.OverviewModule;
+import moj.rain.weather.overview.model.WeatherData;
 import moj.rain.weather.overview.presenter.OverviewPresenter;
 
 public class OverviewActivity extends BaseActivity implements OverviewView {
@@ -45,7 +43,6 @@ public class OverviewActivity extends BaseActivity implements OverviewView {
     protected void onResume() {
         super.onResume();
         presenter.getWeather();
-        showWeatherNetworkError();
     }
 
     @Override
@@ -55,7 +52,7 @@ public class OverviewActivity extends BaseActivity implements OverviewView {
     }
 
     @Override
-    public void showWeather(List<WeatherData> weatherData) {
+    public void showWeather(WeatherData weatherData) {
 
     }
 
