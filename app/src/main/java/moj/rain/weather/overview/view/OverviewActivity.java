@@ -30,7 +30,7 @@ public class OverviewActivity extends BaseActivity implements OverviewView {
     public void injectDependencies() {
         RainApp.get()
                 .getComponent()
-                .plus(new OverviewModule(this, this))
+                .plus(new OverviewModule(this))
                 .inject(this);
     }
 

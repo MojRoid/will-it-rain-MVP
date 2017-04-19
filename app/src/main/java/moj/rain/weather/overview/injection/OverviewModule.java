@@ -1,6 +1,7 @@
 package moj.rain.weather.overview.injection;
 
 
+import android.app.Activity;
 import android.content.Context;
 
 import dagger.Module;
@@ -15,30 +16,29 @@ import moj.rain.weather.overview.domain.GetWeatherUseCaseImpl;
 import moj.rain.weather.overview.presenter.OverviewPresenter;
 import moj.rain.weather.overview.presenter.OverviewPresenterImpl;
 import moj.rain.weather.overview.repository.WeatherNetworkRepository;
+import moj.rain.weather.overview.view.OverviewActivity;
 import moj.rain.weather.overview.view.OverviewView;
 
 @Module
 public class OverviewModule {
 
-    private Context context;
-    private OverviewView view;
+    private final OverviewActivity activity;
 
-    public OverviewModule(Context context, OverviewView view) {
-        this.context = context;
-        this.view = view;
+    public OverviewModule(OverviewActivity activity) {
+        this.activity = activity;
     }
 
     @Provides
     @PerActivity
     @ForActivity
     Context provideContext() {
-        return context;
+        return activity;
     }
 
     @Provides
     @PerActivity
     OverviewView provideView() {
-        return view;
+        return activity;
     }
 
     @Provides
