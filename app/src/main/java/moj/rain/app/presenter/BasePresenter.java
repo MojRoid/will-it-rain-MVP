@@ -8,7 +8,7 @@ import java.util.List;
 
 import moj.rain.app.domain.BaseUseCase;
 
-public class BasePresenter {
+public abstract class BasePresenter {
     private List<BaseUseCase> useCaseList;
 
     protected BasePresenter() {
@@ -24,5 +24,9 @@ public class BasePresenter {
             useCase.cleanUp();
         }
         useCaseList.clear();
+    }
+
+    public List<BaseUseCase> getUseCaseList() {
+        return useCaseList;
     }
 }

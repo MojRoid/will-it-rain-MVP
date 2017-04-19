@@ -10,7 +10,7 @@ public interface GetWeatherUseCase extends BaseUseCase {
 
         void onWeatherRetrieved(Weather weather);
 
-        void onWeatherNetworkEror();
+        void onWeatherNetworkError();
     }
 
     void setCallback(Callback callback);

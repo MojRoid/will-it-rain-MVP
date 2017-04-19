@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Will It Rain?</string>
+
+    <string name="network_error_message">Sorry, there is a network error.</string>
 </resources>

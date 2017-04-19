@@ -7,6 +7,10 @@ import dagger.Module;
 import dagger.Provides;
 import moj.rain.app.injection.qualifiers.ForActivity;
 import moj.rain.app.injection.scopes.PerActivity;
+import moj.rain.app.view.error.ErrorViewManager;
+import moj.rain.app.view.error.ErrorViewManagerImpl;
+import moj.rain.weather.overview.domain.GetWeatherUseCase;
+import moj.rain.weather.overview.domain.GetWeatherUseCaseImpl;
 import moj.rain.weather.overview.presenter.OverviewPresenter;
 import moj.rain.weather.overview.presenter.OverviewPresenterImpl;
 import moj.rain.weather.overview.view.OverviewView;
@@ -37,7 +41,19 @@ public class OverviewModule {
 
     @Provides
     @PerActivity
-    OverviewPresenter providesPresenter(OverviewPresenterImpl overviewPresenter) {
+    OverviewPresenter providePresenter(OverviewPresenterImpl overviewPresenter) {
         return overviewPresenter;
+    }
+
+    @Provides
+    @PerActivity
+    GetWeatherUseCase provideGetWeatherUseCase(GetWeatherUseCaseImpl getWeatherUseCase) {
+        return getWeatherUseCase;
+    }
+
+    @Provides
+    @PerActivity
+    ErrorViewManager provideErrorViewManager() {
+        return new ErrorViewManagerImpl();
     }
 }
