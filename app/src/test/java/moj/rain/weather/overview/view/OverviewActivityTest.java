@@ -2,6 +2,7 @@ package moj.rain.weather.overview.view;
 
 import android.support.design.widget.Snackbar;
 import android.view.View;
+import android.widget.TextView;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -13,6 +14,7 @@ import org.robolectric.android.controller.ActivityController;
 import moj.rain.R;
 import moj.rain.RobolectricTestBase;
 import moj.rain.app.view.error.ErrorViewManager;
+import moj.rain.weather.overview.model.WeatherData;
 import moj.rain.weather.overview.presenter.OverviewPresenter;
 
 import static org.mockito.BDDMockito.then;
@@ -24,6 +26,10 @@ public class OverviewActivityTest extends RobolectricTestBase {
     private OverviewPresenter presenter;
     @Mock
     private ErrorViewManager errorViewManager;
+    @Mock
+    TextView weather;
+    @Mock
+    private WeatherData weatherData;
 
     private ActivityController<OverviewActivity> activityController;
     private OverviewActivity activity;
@@ -41,6 +47,10 @@ public class OverviewActivityTest extends RobolectricTestBase {
 
     private void errorViewManagerIsInjected() {
         activity.errorViewManager = errorViewManager;
+    }
+
+    private void weatherTextViewIsInjected() {
+        activity.weather = weather;
     }
 
     @Test
@@ -77,6 +87,19 @@ public class OverviewActivityTest extends RobolectricTestBase {
         // Then
         then(presenter).should(times(1)).onViewDestroyed();
         then(presenter).shouldHaveNoMoreInteractions();
+    }
+
+    @Test
+    public void givenWeatherDataIsProvided_whenShowWeatherIsCalled_thenShowThisWeatherData() throws Exception {
+        // Given
+        weatherTextViewIsInjected();
+
+        // When
+        activity.showWeather(weatherData);
+
+        // Then
+        then(weather).should(times(1)).setText(weatherData.toString());
+        then(weather).shouldHaveNoMoreInteractions();
     }
 
     @Test

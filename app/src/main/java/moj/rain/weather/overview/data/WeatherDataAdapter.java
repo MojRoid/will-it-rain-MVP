@@ -11,6 +11,7 @@ import moj.rain.app.injection.qualifiers.ForComputationThread;
 import moj.rain.app.injection.qualifiers.ForMainThread;
 import moj.rain.app.repository.network.model.Weather;
 import moj.rain.weather.overview.model.WeatherData;
+import timber.log.Timber;
 
 public class WeatherDataAdapter extends BaseDataAdapter<Weather, WeatherData> {
 
@@ -23,6 +24,8 @@ public class WeatherDataAdapter extends BaseDataAdapter<Weather, WeatherData> {
     @Nullable
     @Override
     protected WeatherData transform(@Nullable Weather weather) {
+        Timber.e(weather.toString());
+
         if (weather == null) {
             return null;
         }

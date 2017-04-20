@@ -2,9 +2,11 @@ package moj.rain.weather.overview.view;
 
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.widget.TextView;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
 import moj.rain.R;
 import moj.rain.app.RainApp;
 import moj.rain.app.view.BaseActivity;
@@ -20,6 +22,9 @@ public class OverviewActivity extends BaseActivity implements OverviewView {
 
     @Inject
     ErrorViewManager errorViewManager;
+
+    @BindView(R.id.overview_weather_txt)
+    TextView weather;
 
     @Override
     public int getLayoutResourceId() {
@@ -53,7 +58,7 @@ public class OverviewActivity extends BaseActivity implements OverviewView {
 
     @Override
     public void showWeather(WeatherData weatherData) {
-
+        weather.setText(weatherData.toString());
     }
 
     @Override
