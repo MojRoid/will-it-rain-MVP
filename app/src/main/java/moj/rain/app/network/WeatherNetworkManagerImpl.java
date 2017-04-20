@@ -1,12 +1,12 @@
-package moj.rain.app.repository.network;
+package moj.rain.app.network;
 
 
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
 import moj.rain.BuildConfig;
-import moj.rain.app.repository.network.api.DarkSkyApi;
-import moj.rain.app.repository.network.model.Weather;
+import moj.rain.app.network.api.DarkSkyApi;
+import moj.rain.app.network.model.Weather;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Converter;

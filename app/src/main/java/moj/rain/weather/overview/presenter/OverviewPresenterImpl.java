@@ -5,7 +5,7 @@ import javax.inject.Inject;
 
 import moj.rain.app.data.DataAdapterCallback;
 import moj.rain.app.presenter.BasePresenter;
-import moj.rain.app.repository.network.model.Weather;
+import moj.rain.app.network.model.Weather;
 import moj.rain.weather.overview.data.WeatherDataAdapter;
 import moj.rain.weather.overview.domain.GetWeatherUseCase;
 import moj.rain.weather.overview.model.WeatherData;
@@ -54,8 +54,8 @@ public class OverviewPresenterImpl extends BasePresenter implements OverviewPres
     @Override
     public void onViewDestroyed() {
         nullifyUseCaseCallbacks();
-        cleanup();
         weatherDataAdapter.cancel();
+        cleanup();
     }
 
     @Override

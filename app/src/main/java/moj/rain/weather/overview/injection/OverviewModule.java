@@ -1,21 +1,18 @@
 package moj.rain.weather.overview.injection;
 
 
-import android.app.Activity;
 import android.content.Context;
 
 import dagger.Module;
 import dagger.Provides;
 import moj.rain.app.injection.qualifiers.ForActivity;
 import moj.rain.app.injection.scopes.PerActivity;
-import moj.rain.app.repository.WeatherRepository;
 import moj.rain.app.view.error.ErrorViewManager;
 import moj.rain.app.view.error.ErrorViewManagerImpl;
 import moj.rain.weather.overview.domain.GetWeatherUseCase;
 import moj.rain.weather.overview.domain.GetWeatherUseCaseImpl;
 import moj.rain.weather.overview.presenter.OverviewPresenter;
 import moj.rain.weather.overview.presenter.OverviewPresenterImpl;
-import moj.rain.weather.overview.repository.WeatherNetworkRepository;
 import moj.rain.weather.overview.view.OverviewActivity;
 import moj.rain.weather.overview.view.OverviewView;
 
@@ -57,11 +54,5 @@ public class OverviewModule {
     @PerActivity
     ErrorViewManager provideErrorViewManager() {
         return new ErrorViewManagerImpl();
-    }
-
-    @Provides
-    @PerActivity
-    WeatherRepository provideWeatherRepository(WeatherNetworkRepository weatherNetworkRepository) {
-        return weatherNetworkRepository;
     }
 }

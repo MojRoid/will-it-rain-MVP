@@ -1,16 +1,16 @@
-package moj.rain.app.repository.network.model;
+package moj.rain.app.network.model;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Collections;
 import java.util.List;
 
-public class Hourly {
+public class Minutely {
 
     private String summary;
     private String icon;
     @SerializedName("data")
-    private final List<Hour> hours = Collections.emptyList();
+    private final List<Minute> minutes = Collections.emptyList();
 
     public String getSummary() {
         return summary;
@@ -20,16 +20,16 @@ public class Hourly {
         return icon;
     }
 
-    public List<Hour> getHours() {
-        return hours;
+    public List<Minute> getMinutes() {
+        return minutes;
     }
 
     @Override
     public String toString() {
-        return "Hourly{" +
+        return "Minutely{" +
                 "summary='" + summary + '\'' +
                 ", icon='" + icon + '\'' +
-                ", hours=" + hours +
+                ", minutes=" + minutes +
                 '}';
     }
 }

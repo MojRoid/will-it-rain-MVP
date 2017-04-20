@@ -2,7 +2,7 @@ package moj.rain.weather.overview.domain;
 
 
 import moj.rain.app.domain.BaseUseCase;
-import moj.rain.app.repository.network.model.Weather;
+import moj.rain.app.network.model.Weather;
 
 public interface GetWeatherUseCase extends BaseUseCase {
 

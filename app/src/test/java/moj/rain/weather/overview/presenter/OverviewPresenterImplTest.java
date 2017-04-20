@@ -5,7 +5,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import moj.rain.app.repository.network.model.Weather;
+import moj.rain.app.network.model.Weather;
 import moj.rain.weather.overview.data.WeatherDataAdapter;
 import moj.rain.weather.overview.domain.GetWeatherUseCase;
 import moj.rain.weather.overview.model.WeatherData;

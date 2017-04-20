@@ -9,7 +9,7 @@ import io.reactivex.Scheduler;
 import moj.rain.app.data.BaseDataAdapter;
 import moj.rain.app.injection.qualifiers.ForComputationThread;
 import moj.rain.app.injection.qualifiers.ForMainThread;
-import moj.rain.app.repository.network.model.Weather;
+import moj.rain.app.network.model.Weather;
 import moj.rain.weather.overview.model.WeatherData;
 import timber.log.Timber;
 

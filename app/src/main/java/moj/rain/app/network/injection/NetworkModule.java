@@ -1,4 +1,4 @@
-package moj.rain.app.repository.network.injection;
+package moj.rain.app.network.injection;
 
 
 import com.google.gson.Gson;
@@ -8,8 +8,8 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import moj.rain.app.repository.network.WeatherNetworkManager;
-import moj.rain.app.repository.network.WeatherNetworkManagerImpl;
+import moj.rain.app.network.WeatherNetworkManager;
+import moj.rain.app.network.WeatherNetworkManagerImpl;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Converter;

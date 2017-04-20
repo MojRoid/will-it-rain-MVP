@@ -1,8 +1,8 @@
-package moj.rain.app.repository.network.api;
+package moj.rain.app.network.api;
 
 
 import io.reactivex.Observable;
-import moj.rain.app.repository.network.model.Weather;
+import moj.rain.app.network.model.Weather;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;

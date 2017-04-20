@@ -1,4 +1,4 @@
-package moj.rain.app.repository.network.model;
+package moj.rain.app.network.model;
 
 import org.joda.time.DateTime;
 
