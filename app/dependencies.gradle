@@ -17,8 +17,8 @@ ext {
     // Testing dependencies
     espresso_version = '2.2.2'
     junit_version = '4.12'
-    mockito_version = '2.+'
-    truth_version = '0.31'
+    mockito_version = '2.7.22'
+    truth_version = '0.32'
     robolectric_version = '3.3.2'
 }
 
@@ -41,19 +41,6 @@ dependencies {
     compile "com.jakewharton:butterknife:$butterknife_version"
     annotationProcessor "com.jakewharton:butterknife-compiler:$butterknife_version"
 
-    // AutoValue
-    provided "com.google.auto.value:auto-value:$auto_value_version"
-    annotationProcessor "com.google.auto.value:auto-value:$auto_value_version"
-
-    provided "com.ryanharter.auto.value:auto-value-gson:$auto_value_gson_version"
-    annotationProcessor "com.ryanharter.auto.value:auto-value-gson:$auto_value_gson_version"
-
-    provided "com.ryanharter.auto.value:auto-value-parcel:$auto_value_parcel_version"
-    annotationProcessor "com.ryanharter.auto.value:auto-value-parcel:$auto_value_parcel_version"
-
-    compile "com.ryanharter.auto.value:auto-value-parcel-adapter:$auto_value_parcel_version"
-
-
     // OkHttp
     compile "com.squareup.okhttp3:okhttp:$okhttp_version"
     compile "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
@@ -65,6 +52,18 @@ dependencies {
 
     // Gson
     compile "com.google.code.gson:gson:$gson_version"
+
+    // AutoValue
+    provided "com.google.auto.value:auto-value:$auto_value_version"
+    annotationProcessor "com.google.auto.value:auto-value:$auto_value_version"
+
+    provided "com.ryanharter.auto.value:auto-value-gson:$auto_value_gson_version"
+    annotationProcessor "com.ryanharter.auto.value:auto-value-gson:$auto_value_gson_version"
+
+    provided "com.ryanharter.auto.value:auto-value-parcel:$auto_value_parcel_version"
+    annotationProcessor "com.ryanharter.auto.value:auto-value-parcel:$auto_value_parcel_version"
+
+    compile "com.ryanharter.auto.value:auto-value-parcel-adapter:$auto_value_parcel_version"
 
     // Logging
     compile "com.jakewharton.timber:timber:$timber_version"

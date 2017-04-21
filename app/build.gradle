@@ -18,6 +18,12 @@ android {
 
         buildConfigField "String", "DARK_SKY_BASE_URL", "\"${config.properties.dark_sky_base_url}\""
         buildConfigField "String", "DARK_SKY_API_KEY", "\"${config.properties.dark_sky_api_key}\""
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath false
+            }
+        }
     }
 
     buildTypes {

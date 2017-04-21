@@ -41,22 +41,10 @@ public class OverviewActivityTest extends RobolectricTestBase {
         activity = activityController.get();
     }
 
-    private void presenterIsInjected() {
-        activity.presenter = presenter;
-    }
-
-    private void errorViewManagerIsInjected() {
-        activity.errorViewManager = errorViewManager;
-    }
-
-    private void weatherTextViewIsInjected() {
-        activity.weather = weather;
-    }
-
     @Test
     public void givenActivityIsCreated_whenActivityIsResumed_thenGetWeatherShouldBeCalledOnce() throws Exception {
         // Given
-        presenterIsInjected();
+        activity.presenter = presenter;
 
         // When
         activityController.resume();
@@ -69,7 +57,7 @@ public class OverviewActivityTest extends RobolectricTestBase {
     @Test
     public void givenActivityIsCreated_whenActivityIsNotResumed_thenGetWeatherShouldNotBeCalled() throws Exception {
         // Given
-        presenterIsInjected();
+        activity.presenter = presenter;
 
         // Then
         then(presenter).should(times(0)).getWeather();
@@ -79,7 +67,7 @@ public class OverviewActivityTest extends RobolectricTestBase {
     @Test
     public void givenActivityIsCreated_whenActivityIsDestroyed_thenNotifyThePresenter() throws Exception {
         // Given
-        presenterIsInjected();
+        activity.errorViewManager = errorViewManager;
 
         // When
         activityController.destroy();
@@ -92,7 +80,7 @@ public class OverviewActivityTest extends RobolectricTestBase {
     @Test
     public void givenWeatherDataIsProvided_whenShowWeatherIsCalled_thenShowThisWeatherData() throws Exception {
         // Given
-        weatherTextViewIsInjected();
+        activity.weather = weather;
 
         // When
         activity.showWeather(weatherData);
@@ -105,7 +93,7 @@ public class OverviewActivityTest extends RobolectricTestBase {
     @Test
     public void givenActivityIsCreated_whenShowWeatherNetworkErrorIsCalled_thenShowNetworkErrorMessage() throws Exception {
         // Given
-        errorViewManagerIsInjected();
+        activity.errorViewManager = errorViewManager;
 
         // When
         activity.showWeatherNetworkError();

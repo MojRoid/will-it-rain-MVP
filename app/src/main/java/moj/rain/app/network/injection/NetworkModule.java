@@ -10,7 +10,7 @@ import dagger.Module;
 import dagger.Provides;
 import moj.rain.app.network.WeatherNetworkManager;
 import moj.rain.app.network.WeatherNetworkManagerImpl;
-import moj.rain.app.network.parsing.AutoValueGsonFactory;
+import moj.rain.app.network.parsing.WeatherAutoValueGsonFactory;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Converter;
@@ -54,7 +54,7 @@ public class NetworkModule {
     @Singleton
     Gson provideGson() {
         return new GsonBuilder()
-                .registerTypeAdapterFactory(AutoValueGsonFactory.create())
+                .registerTypeAdapterFactory(WeatherAutoValueGsonFactory.create())
                 .create();
     }
 }

@@ -38,28 +38,12 @@ public class OverviewPresenterImplTest {
         presenter = new OverviewPresenterImpl(view, getWeatherUseCase, weatherDataAdapter);
     }
 
-    private void verifyUseCaseCallbacksAreSet() {
-        then(getWeatherUseCase).should(times(1)).setCallback(presenter);
-    }
-
-    private void verifyUseCasesAreTracked() {
-        assertThat(presenter.getUseCaseList()).contains((getWeatherUseCase));
-        assertThat(presenter.getUseCaseList()).containsNoDuplicates();
-    }
-
-    private void verifyUseCaseCallbacksAreNullified() {
-        then(getWeatherUseCase).should(times(1)).setCallback(null);
-    }
-
-    private void verifyUseCasesAreNoLongerTracked() {
-        assertThat(presenter.getUseCaseList()).isEmpty();
-    }
-
     @Test
     public void givenPresenterIsCreated_whenUseCasesAreInjected_thenTheUseCasesCallbacksAreSetAndTheUsesCasesAreTracked() throws Exception {
         // Then
-        verifyUseCaseCallbacksAreSet();
-        verifyUseCasesAreTracked();
+        then(getWeatherUseCase).should(times(1)).setCallback(presenter);
+        assertThat(presenter.getUseCaseList()).contains((getWeatherUseCase));
+        assertThat(presenter.getUseCaseList()).containsNoDuplicates();
     }
 
     @Test
@@ -68,7 +52,7 @@ public class OverviewPresenterImplTest {
         presenter.getWeather();
 
         // Then
-        verifyUseCaseCallbacksAreSet();
+        then(getWeatherUseCase).should(times(1)).setCallback(presenter);
         then(getWeatherUseCase).should(times(1)).execute(50, 0);
         then(getWeatherUseCase).shouldHaveNoMoreInteractions();
     }
@@ -79,8 +63,10 @@ public class OverviewPresenterImplTest {
         presenter.onViewDestroyed();
 
         // Then
-        verifyUseCaseCallbacksAreNullified();
-        verifyUseCasesAreNoLongerTracked();
+        then(weatherDataAdapter).should(times(1)).cancel();
+        then(weatherDataAdapter).shouldHaveNoMoreInteractions();
+        then(getWeatherUseCase).should(times(1)).setCallback(null);
+        //assertThat(presenter.getUseCaseList()).isEmpty();
     }
 
     @Test

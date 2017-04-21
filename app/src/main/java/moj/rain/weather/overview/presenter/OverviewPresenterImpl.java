@@ -53,8 +53,8 @@ public class OverviewPresenterImpl extends BasePresenter implements OverviewPres
 
     @Override
     public void onViewDestroyed() {
-        nullifyUseCaseCallbacks();
         weatherDataAdapter.cancel();
+        nullifyUseCaseCallbacks();
         cleanup();
     }
 
