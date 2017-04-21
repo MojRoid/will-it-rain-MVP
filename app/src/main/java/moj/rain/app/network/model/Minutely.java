@@ -1,35 +1,25 @@
 package moj.rain.app.network.model;
 
+import com.google.auto.value.AutoValue;
+import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.Collections;
 import java.util.List;
 
-public class Minutely {
+@AutoValue
+public abstract class Minutely {
 
-    private String summary;
-    private String icon;
+    @SerializedName("summary")
+    public abstract String summary();
+
     @SerializedName("data")
-    private final List<Minute> minutes = Collections.emptyList();
+    public abstract List<Minute> data();
 
-    public String getSummary() {
-        return summary;
-    }
+    @SerializedName("icon")
+    public abstract String icon();
 
-    public String getIcon() {
-        return icon;
-    }
-
-    public List<Minute> getMinutes() {
-        return minutes;
-    }
-
-    @Override
-    public String toString() {
-        return "Minutely{" +
-                "summary='" + summary + '\'' +
-                ", icon='" + icon + '\'' +
-                ", minutes=" + minutes +
-                '}';
+    public static TypeAdapter<Minutely> typeAdapter(Gson gson) {
+        return new AutoValue_Minutely.GsonTypeAdapter(gson);
     }
 }

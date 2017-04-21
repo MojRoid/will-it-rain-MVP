@@ -11,6 +11,13 @@ import timber.log.Timber;
 
 public abstract class BaseDataAdapter<SOURCE, DESTINATION> {
 
+    public interface Callback<DESTINATION> {
+
+        void onDataAdapted(DESTINATION data);
+
+        void onDataAdaptError(Throwable throwable);
+    }
+
     private final Scheduler computationScheduler;
     private final Scheduler mainThreadScheduler;
     private Disposable disposable;
@@ -20,14 +27,14 @@ public abstract class BaseDataAdapter<SOURCE, DESTINATION> {
         this.mainThreadScheduler = mainThreadScheduler;
     }
 
-    @Nullable
-    protected abstract DESTINATION transform(@Nullable SOURCE source);
-
     protected boolean isValid(DESTINATION destination) {
         return destination != null;
     }
 
-    public void transform(@Nullable SOURCE source, @NonNull DataAdapterCallback<DESTINATION> callback) {
+    @Nullable
+    protected abstract DESTINATION transform(@Nullable SOURCE source);
+
+    public void transform(@Nullable SOURCE source, @NonNull Callback<DESTINATION> callback) {
         if (source == null) {
             Timber.w("No data to adapt.");
             return;

@@ -21,14 +21,16 @@ public class WeatherDataAdapter extends BaseDataAdapter<Weather, WeatherData> {
         super(computationScheduler, mainThreadScheduler);
     }
 
+    @Override
+    protected boolean isValid(@Nullable WeatherData weatherData) {
+        return weatherData != null;
+    }
+
     @Nullable
     @Override
     protected WeatherData transform(@Nullable Weather weather) {
         Timber.e(weather.toString());
 
-        if (weather == null) {
-            return null;
-        }
 
         WeatherData weatherData = new WeatherData();
         // TODO: transform the data

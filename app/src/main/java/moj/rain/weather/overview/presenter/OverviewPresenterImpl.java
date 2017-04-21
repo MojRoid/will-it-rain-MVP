@@ -3,15 +3,15 @@ package moj.rain.weather.overview.presenter;
 
 import javax.inject.Inject;
 
-import moj.rain.app.data.DataAdapterCallback;
-import moj.rain.app.presenter.BasePresenter;
 import moj.rain.app.network.model.Weather;
+import moj.rain.app.presenter.BasePresenter;
 import moj.rain.weather.overview.data.WeatherDataAdapter;
 import moj.rain.weather.overview.domain.GetWeatherUseCase;
 import moj.rain.weather.overview.model.WeatherData;
 import moj.rain.weather.overview.view.OverviewView;
+import timber.log.Timber;
 
-public class OverviewPresenterImpl extends BasePresenter implements OverviewPresenter, GetWeatherUseCase.Callback, DataAdapterCallback<WeatherData> {
+public class OverviewPresenterImpl extends BasePresenter implements OverviewPresenter, GetWeatherUseCase.Callback, WeatherDataAdapter.Callback<WeatherData> {
 
     private final OverviewView view;
     private final GetWeatherUseCase getWeatherUseCase;
@@ -60,11 +60,13 @@ public class OverviewPresenterImpl extends BasePresenter implements OverviewPres
 
     @Override
     public void onWeatherRetrieved(Weather weather) {
+        Timber.i(weather.toString());
         weatherDataAdapter.transform(weather, this);
     }
 
     @Override
     public void onWeatherNetworkError(Throwable throwable) {
+        throwable.printStackTrace();
         view.showWeatherNetworkError();
     }
 

@@ -30,8 +30,8 @@ public class WeatherNetworkManagerImpl implements WeatherNetworkManager {
 
         darkSkyApi = builder.client(okHttpClientBuilder.build())
                 .baseUrl(BuildConfig.DARK_SKY_BASE_URL)
-                .addConverterFactory(converterFactory)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(converterFactory)
                 .build()
                 .create(DarkSkyApi.class);
     }

@@ -1,66 +1,29 @@
 package moj.rain.app.network.model;
 
-public class Weather {
+import com.google.auto.value.AutoValue;
+import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.SerializedName;
 
-    /**
-     * Units
-     * -----
-     * summary: Any summaries containing temperature or snow accumulation units will have
-     * their values in degrees Celsius or in centimeters (respectively).
-     * nearestStormDistance: Kilometers.
-     * precipIntensity: Millimeters per hour.
-     * precipIntensityMax: Millimeters per hour.
-     * precipAccumulation: Centimeters.
-     * temperature: Degrees Celsius.
-     * temperatureMin: Degrees Celsius.
-     * temperatureMax: Degrees Celsius.
-     * apparentTemperature: Degrees Celsius.
-     * dewPoint: Degrees Celsius.
-     * windSpeed: Miles per second.
-     * pressure: Hectopascals.
-     * visibility: miles.
-     */
+@AutoValue
+public abstract class Weather {
 
-    private double latitude;
-    private double longitude;
-    private String timezone;
-    private int offset;
-    private Minutely minutely;
-    private Hourly hourly;
+    @SerializedName("offset")
+    public abstract int offset();
 
-    public double getLatitude() {
-        return latitude;
-    }
+    @SerializedName("timezone")
+    public abstract String timezone();
 
-    public double getLongitude() {
-        return longitude;
-    }
+    @SerializedName("latitude")
+    public abstract int latitude();
 
-    public String getTimezone() {
-        return timezone;
-    }
+    @SerializedName("minutely")
+    public abstract Minutely minutely();
 
-    public int getOffset() {
-        return offset;
-    }
+    @SerializedName("longitude")
+    public abstract int longitude();
 
-    public Minutely getMinutely() {
-        return minutely;
-    }
-
-    public Hourly getHourly() {
-        return hourly;
-    }
-
-    @Override
-    public String toString() {
-        return "Weather{" +
-                "latitude=" + latitude +
-                ", longitude=" + longitude +
-                ", timezone='" + timezone + '\'' +
-                ", offset=" + offset +
-                ", minutely=" + minutely +
-                ", hourly=" + hourly +
-                '}';
+    public static TypeAdapter<Weather> typeAdapter(Gson gson) {
+        return new AutoValue_Weather.GsonTypeAdapter(gson);
     }
 }

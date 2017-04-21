@@ -1,49 +1,60 @@
 package moj.rain.app.network.model;
 
-import org.joda.time.DateTime;
+import android.support.annotation.Nullable;
 
-public class Minute {
+import com.google.auto.value.AutoValue;
+import com.google.gson.Gson;
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.SerializedName;
 
-    private long time;
-    private double precipIntensity;
-    private double precipIntensityError;
-    private double precipProbability;
-    private String precipType;
-    private double precipAccumulation;
+@AutoValue
+public abstract class Minute {
 
-    public DateTime getTime() {
-        return new DateTime(time * 1000);
-    }
+    @Nullable
+    @SerializedName("summary")
+    public abstract String summary();
 
-    public double getPrecipIntensity() {
-        return precipIntensity;
-    }
+    @SerializedName("precipProbability")
+    public abstract int precipProbability();
 
-    public double getPrecipIntensityError() {
-        return precipIntensityError;
-    }
+    @SerializedName("precipIntensity")
+    public abstract int precipIntensity();
 
-    public double getPrecipProbability() {
-        return precipProbability;
-    }
+    @Nullable
+    @SerializedName("icon")
+    public abstract String icon();
 
-    public String getPrecipType() {
-        return precipType;
-    }
+    @SerializedName("cloudCover")
+    public abstract double cloudCover();
 
-    public double getPrecipAccumulation() {
-        return precipAccumulation;
-    }
+    @SerializedName("windBearing")
+    public abstract int windBearing();
 
-    @Override
-    public String toString() {
-        return "Minute{" +
-                "time=" + time +
-                ", precipIntensity=" + precipIntensity +
-                ", precipIntensityError=" + precipIntensityError +
-                ", precipProbability=" + precipProbability +
-                ", precipType='" + precipType + '\'' +
-                ", precipAccumulation=" + precipAccumulation +
-                '}';
+    @SerializedName("apparentTemperature")
+    public abstract double apparentTemperature();
+
+    @SerializedName("pressure")
+    public abstract double pressure();
+
+    @SerializedName("dewPoint")
+    public abstract double dewPoint();
+
+    @SerializedName("ozone")
+    public abstract double ozone();
+
+    @SerializedName("temperature")
+    public abstract double temperature();
+
+    @SerializedName("humidity")
+    public abstract double humidity();
+
+    @SerializedName("time")
+    public abstract int time();
+
+    @SerializedName("windSpeed")
+    public abstract double windSpeed();
+
+    public static TypeAdapter<Minute> typeAdapter(Gson gson) {
+        return new AutoValue_Minute.GsonTypeAdapter(gson);
     }
 }

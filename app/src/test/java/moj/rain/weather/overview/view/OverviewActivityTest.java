@@ -27,7 +27,7 @@ public class OverviewActivityTest extends RobolectricTestBase {
     @Mock
     private ErrorViewManager errorViewManager;
     @Mock
-    TextView weather;
+    private TextView weather;
     @Mock
     private WeatherData weatherData;
 
