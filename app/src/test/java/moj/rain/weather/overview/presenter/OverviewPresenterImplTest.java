@@ -11,7 +11,6 @@ import moj.rain.weather.overview.domain.GetWeatherUseCase;
 import moj.rain.weather.overview.model.WeatherData;
 import moj.rain.weather.overview.view.OverviewView;
 
-
 import static com.google.common.truth.Truth.assertThat;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.times;

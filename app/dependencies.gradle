@@ -18,7 +18,7 @@ ext {
     espresso_version = '2.2.2'
     junit_version = '4.12'
     mockito_version = '2.7.22'
-    truth_version = '0.30'
+    truth_version = '0.32'
     robolectric_version = '3.3.2'
 }
 
@@ -71,10 +71,20 @@ dependencies {
     // Joda Time
     compile "joda-time:joda-time:$joda_time_version"
 
-    // Unit Testing
+    // TESTING //
+
+    // JUnit
     testCompile "junit:junit:$junit_version"
+
+    // Mockito
     testCompile "org.mockito:mockito-core:$mockito_version"
-    testCompile "com.google.truth:truth:$truth_version"
+
+    // Truth
+    testCompile("com.google.truth:truth:$truth_version", {
+        transitive = false;
+    })
+
+    // Robolectric
     testCompile("org.robolectric:robolectric:$robolectric_version", {
         exclude group: 'org.assertj'
     })
