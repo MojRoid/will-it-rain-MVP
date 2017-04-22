@@ -9,6 +9,7 @@ import java.util.List;
 import moj.rain.app.domain.BaseUseCase;
 
 public abstract class BasePresenter {
+
     private List<BaseUseCase> useCaseList;
 
     protected BasePresenter() {
@@ -19,7 +20,7 @@ public abstract class BasePresenter {
         useCaseList.add(useCase);
     }
 
-    protected void cleanup() {
+    protected void cleanUp() {
         for (BaseUseCase useCase : useCaseList) {
             useCase.cleanUp();
         }

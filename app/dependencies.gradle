@@ -18,7 +18,7 @@ ext {
     espresso_version = '2.2.2'
     junit_version = '4.12'
     mockito_version = '2.7.22'
-    truth_version = '0.32'
+    truth_version = '0.30'
     robolectric_version = '3.3.2'
 }
 
@@ -41,14 +41,14 @@ dependencies {
     compile "com.jakewharton:butterknife:$butterknife_version"
     annotationProcessor "com.jakewharton:butterknife-compiler:$butterknife_version"
 
-    // OkHttp
-    compile "com.squareup.okhttp3:okhttp:$okhttp_version"
-    compile "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
-
     // Retrofit
     compile "com.squareup.retrofit2:retrofit:$retrofit_version"
     compile "com.squareup.retrofit2:converter-gson:$retrofit_version"
     compile "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
+
+    // OkHttp
+    compile "com.squareup.okhttp3:okhttp:$okhttp_version"
+    compile "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
 
     // Gson
     compile "com.google.code.gson:gson:$gson_version"
@@ -59,11 +59,6 @@ dependencies {
 
     provided "com.ryanharter.auto.value:auto-value-gson:$auto_value_gson_version"
     annotationProcessor "com.ryanharter.auto.value:auto-value-gson:$auto_value_gson_version"
-
-    provided "com.ryanharter.auto.value:auto-value-parcel:$auto_value_parcel_version"
-    annotationProcessor "com.ryanharter.auto.value:auto-value-parcel:$auto_value_parcel_version"
-
-    compile "com.ryanharter.auto.value:auto-value-parcel-adapter:$auto_value_parcel_version"
 
     // Logging
     compile "com.jakewharton.timber:timber:$timber_version"
@@ -80,6 +75,8 @@ dependencies {
     testCompile "junit:junit:$junit_version"
     testCompile "org.mockito:mockito-core:$mockito_version"
     testCompile "com.google.truth:truth:$truth_version"
-    testCompile "org.robolectric:robolectric:$robolectric_version"
+    testCompile("org.robolectric:robolectric:$robolectric_version", {
+        exclude group: 'org.assertj'
+    })
     testCompile "org.robolectric:shadows-support-v4:$robolectric_version"
 }

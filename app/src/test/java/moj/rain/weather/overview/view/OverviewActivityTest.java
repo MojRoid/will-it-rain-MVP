@@ -67,7 +67,7 @@ public class OverviewActivityTest extends RobolectricTestBase {
     @Test
     public void givenActivityIsCreated_whenActivityIsDestroyed_thenNotifyThePresenter() throws Exception {
         // Given
-        activity.errorViewManager = errorViewManager;
+        activity.presenter = presenter;
 
         // When
         activityController.destroy();

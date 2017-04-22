@@ -25,11 +25,11 @@ public class OverviewPresenterImpl extends BasePresenter implements OverviewPres
         this.getWeatherUseCase = getWeatherUseCase;
         this.weatherDataAdapter = weatherDataAdapter;
 
-        setupCallbacks();
+        setCallbacks();
         trackUseCases();
     }
 
-    private void setupCallbacks() {
+    private void setCallbacks() {
         getWeatherUseCase.setCallback(this);
     }
 
@@ -55,7 +55,7 @@ public class OverviewPresenterImpl extends BasePresenter implements OverviewPres
     public void onViewDestroyed() {
         weatherDataAdapter.cancel();
         nullifyUseCaseCallbacks();
-        cleanup();
+        cleanUp();
     }
 
     @Override
