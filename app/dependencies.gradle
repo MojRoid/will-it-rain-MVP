@@ -81,7 +81,7 @@ dependencies {
 
     // Truth
     testCompile("com.google.truth:truth:$truth_version", {
-        transitive = false;
+        transitive = false
     })
 
     // Robolectric
