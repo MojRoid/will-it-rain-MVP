@@ -53,7 +53,7 @@ public class OverviewActivityTest extends RobolectricTestBase {
     @Test
     public void givenActivityIsCreated_whenActivityIsStarted_thenGetWeatherShouldBeCalledOnce() throws Exception {
         // When
-        activityController.start();
+        activityController.resume();
 
         // Then
         then(presenter).should(times(1)).getWeather();
@@ -83,7 +83,6 @@ public class OverviewActivityTest extends RobolectricTestBase {
         List<WeatherHour> weatherHourList = new ArrayList<>();
         WeatherHour weatherHour = WeatherHour.builder()
                 .setHour(DateTime.now())
-                .setSummary("test summary")
                 .setIcon("test icon")
                 .setPrecipIntensity(1)
                 .setPrecipProbability(2)

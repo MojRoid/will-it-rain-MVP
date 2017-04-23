@@ -11,51 +11,48 @@ import com.google.gson.annotations.SerializedName;
 public abstract class Hour {
 
     @SerializedName("time")
-    public abstract long time();
+    public abstract long getTime();
 
-    @Nullable
     @SerializedName("summary")
-    public abstract String summary();
+    public abstract String getSummary();
 
-    @Nullable
     @SerializedName("icon")
-    public abstract String icon();
+    public abstract String getIcon();
 
     @SerializedName("precipIntensity")
-    public abstract double precipIntensity();
+    public abstract double getPrecipIntensity();
 
     @SerializedName("precipProbability")
-    public abstract double precipProbability();
+    public abstract double getPrecipProbability();
 
     @SerializedName("temperature")
-    public abstract double temperature();
+    public abstract double getTemperature();
 
     @SerializedName("apparentTemperature")
-    public abstract double apparentTemperature();
+    public abstract double getApparentTemperature();
 
     @SerializedName("dewPoint")
-    public abstract double dewPoint();
+    public abstract double getDewPoint();
 
     @SerializedName("humidity")
-    public abstract double humidity();
+    public abstract double getHumidity();
 
     @SerializedName("windSpeed")
-    public abstract double windSpeed();
+    public abstract double getWindSpeed();
 
     @SerializedName("windBearing")
-    public abstract int windBearing();
+    public abstract int getWindBearing();
 
     @SerializedName("cloudCover")
-    public abstract double cloudCover();
+    public abstract double getCloudCover();
 
     @SerializedName("pressure")
-    public abstract double pressure();
+    public abstract double getPressure();
 
     @SerializedName("ozone")
-    public abstract double ozone();
+    public abstract double getOzone();
 
     public static TypeAdapter<Hour> typeAdapter(Gson gson) {
-        return new AutoValue_Hour.GsonTypeAdapter(gson)
-                .setDefaultTime(0);
+        return new AutoValue_Hour.GsonTypeAdapter(gson);
     }
 }

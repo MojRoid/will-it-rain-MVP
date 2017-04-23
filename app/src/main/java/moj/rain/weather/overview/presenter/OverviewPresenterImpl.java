@@ -2,7 +2,8 @@ package moj.rain.weather.overview.presenter;
 
 
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+
+import org.joda.time.DateTimeZone;
 
 import java.util.List;
 
@@ -66,7 +67,8 @@ public class OverviewPresenterImpl extends BasePresenter implements OverviewPres
     @Override
     public void onWeatherRetrieved(@NonNull Weather weather) {
         Timber.i(weather.toString());
-        weatherDataAdapter.transform(weather.hourly().hour(), this);
+        DateTimeZone dateTimeZone = DateTimeZone.forID(weather.getTimezone());
+        weatherDataAdapter.transform(weather.getHourly().getHour(), this);
     }
 
     @Override

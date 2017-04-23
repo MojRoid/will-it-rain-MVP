@@ -11,13 +11,13 @@ import java.util.List;
 public abstract class Hourly {
 
     @SerializedName("summary")
-    public abstract String summary();
+    public abstract String getSummary();
 
     @SerializedName("icon")
-    public abstract String icon();
+    public abstract String getIcon();
 
     @SerializedName("data")
-    public abstract List<Hour> hour();
+    public abstract List<Hour> getHour();
 
     public static TypeAdapter<Hourly> typeAdapter(Gson gson) {
         return new AutoValue_Hourly.GsonTypeAdapter(gson);

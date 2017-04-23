@@ -9,16 +9,15 @@ import com.google.gson.annotations.SerializedName;
 public abstract class Minute {
 
     @SerializedName("time")
-    public abstract long time();
+    public abstract long getTime();
 
     @SerializedName("precipIntensity")
-    public abstract double precipIntensity();
+    public abstract double getPrecipIntensity();
 
     @SerializedName("precipProbability")
-    public abstract double precipProbability();
+    public abstract double getPrecipProbability();
 
     public static TypeAdapter<Minute> typeAdapter(Gson gson) {
-        return new AutoValue_Minute.GsonTypeAdapter(gson)
-                .setDefaultTime(0);
+        return new AutoValue_Minute.GsonTypeAdapter(gson);
     }
 }

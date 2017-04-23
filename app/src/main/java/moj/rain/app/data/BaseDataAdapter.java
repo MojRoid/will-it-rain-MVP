@@ -32,7 +32,7 @@ public abstract class BaseDataAdapter<SOURCE, DESTINATION> {
     protected abstract boolean isValid(DESTINATION destination);
 
     @Nullable
-    protected abstract DESTINATION transform(@Nullable SOURCE source);
+    protected abstract DESTINATION transform(@NonNull SOURCE source);
 
     public void transform(@Nullable List<SOURCE> sourceList, @NonNull Callback<DESTINATION> callback) {
         if (sourceList == null) {

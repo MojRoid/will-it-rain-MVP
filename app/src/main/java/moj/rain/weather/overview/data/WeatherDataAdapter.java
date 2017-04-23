@@ -1,6 +1,7 @@
 package moj.rain.weather.overview.data;
 
 
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import org.joda.time.DateTime;
@@ -30,14 +31,13 @@ public class WeatherDataAdapter extends BaseDataAdapter<Hour, WeatherHour> {
 
     @Nullable
     @Override
-    protected WeatherHour transform(@Nullable Hour hour) {
+    protected WeatherHour transform(@NonNull Hour hour) {
         return WeatherHour.builder()
-                .setHour(new DateTime(hour.time() * 1000))
-                .setSummary(hour.summary())
-                .setIcon(hour.icon())
-                .setPrecipIntensity(hour.precipIntensity())
-                .setPrecipProbability(hour.precipProbability())
-                .setTemperature((hour.temperature() + hour.apparentTemperature()) / 2)
+                .setHour(new DateTime(hour.getTime() * 1000))
+                .setIcon(hour.getIcon())
+                .setPrecipIntensity(hour.getPrecipIntensity())
+                .setPrecipProbability(hour.getPrecipProbability())
+                .setTemperature((hour.getTemperature() + hour.getApparentTemperature()) / 2)
                 .build();
     }
 }

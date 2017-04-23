@@ -81,8 +81,8 @@ public class OverviewPresenterImplTest {
     @Test
     public void givenPresenterIsCreated_whenOnWeatherRetrievedIsCalled_thenTheWeatherDataIsTransformedAndShowWeatherIsCalled() throws Exception {
         // Given
-        given(weather.hourly()).willReturn(hourly);
-        given(hourly.hour()).willReturn(hourList);
+        given(weather.getHourly()).willReturn(hourly);
+        given(hourly.getHour()).willReturn(hourList);
 
         // When
         presenter.onWeatherRetrieved(weather);

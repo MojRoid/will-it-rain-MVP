@@ -1,7 +1,5 @@
 package moj.rain.weather.overview.model;
 
-import android.support.annotation.Nullable;
-
 import com.google.auto.value.AutoValue;
 
 import org.joda.time.DateTime;
@@ -13,26 +11,20 @@ public abstract class WeatherHour {
         return new AutoValue_WeatherHour.Builder();
     }
 
-    public abstract DateTime hour();
+    public abstract DateTime getHour();
 
-    @Nullable
-    public abstract String summary();
+    public abstract String getIcon();
 
-    @Nullable
-    public abstract String icon();
+    public abstract double getPrecipIntensity();
 
-    public abstract double precipIntensity();
+    public abstract double getPrecipProbability();
 
-    public abstract double precipProbability();
-
-    public abstract double temperature();
+    public abstract double getTemperature();
 
     @AutoValue.Builder
     public abstract static class Builder {
 
         public abstract Builder setHour(DateTime hour);
-
-        public abstract Builder setSummary(String summary);
 
         public abstract Builder setIcon(String icon);
 
