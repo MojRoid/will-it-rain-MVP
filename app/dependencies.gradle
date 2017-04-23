@@ -14,12 +14,20 @@ ext {
     timber_version = '4.5.1'
     joda_time_version = '2.9.9'
 
-    // Testing dependencies
+    // Testing Dependencies
     espresso_version = '2.2.2'
-    junit_version = '4.12'
     mockito_version = '2.7.22'
-    truth_version = '0.32'
+    truth_version = '0.30'
     robolectric_version = '3.3.2'
+}
+
+// JUnit 5 Dependencies
+android {
+    junitPlatform {
+        jupiterVersion '5.0.0-M3'
+        platformVersion '1.0.0-M3'
+        vintageVersion '4.12.0-M3'
+    }
 }
 
 dependencies {
@@ -74,14 +82,15 @@ dependencies {
     // TESTING //
 
     // JUnit
-    testCompile "junit:junit:$junit_version"
+    testCompile junitJupiter()
+    testCompile junitVintage()
 
     // Mockito
     testCompile "org.mockito:mockito-core:$mockito_version"
 
     // Truth
     testCompile("com.google.truth:truth:$truth_version", {
-        transitive = false;
+        transitive = false
     })
 
     // Robolectric

@@ -77,6 +77,7 @@ public class OverviewPresenterImpl extends BasePresenter implements OverviewPres
 
     @Override
     public void onDataAdaptError(Throwable throwable) {
+        throwable.getStackTrace();
         view.showWeatherNetworkError();
     }
 }

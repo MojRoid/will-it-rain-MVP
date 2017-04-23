@@ -76,4 +76,14 @@ project.afterEvaluate {
             }
         }
     }
+
+//    def junitPlatformTestTask = project.tasks.getByName('junitPlatformTest')
+//
+//    // create junit platform jacoco task
+//    project.task(type: JacocoReport, "junitPlatformJacocoReport",
+//            {
+//                sourceDirectories = files("./src/main")
+//                classDirectories = files("$buildDir/classes/main")
+//                executionData junitPlatformTestTask
+//            })
 }
