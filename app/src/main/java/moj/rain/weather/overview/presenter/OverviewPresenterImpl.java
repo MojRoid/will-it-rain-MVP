@@ -1,17 +1,22 @@
 package moj.rain.weather.overview.presenter;
 
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
+import java.util.List;
+
 import javax.inject.Inject;
 
 import moj.rain.app.network.model.Weather;
 import moj.rain.app.presenter.BasePresenter;
 import moj.rain.weather.overview.data.WeatherDataAdapter;
 import moj.rain.weather.overview.domain.GetWeatherUseCase;
-import moj.rain.weather.overview.model.WeatherData;
+import moj.rain.weather.overview.model.WeatherHour;
 import moj.rain.weather.overview.view.OverviewView;
 import timber.log.Timber;
 
-public class OverviewPresenterImpl extends BasePresenter implements OverviewPresenter, GetWeatherUseCase.Callback, WeatherDataAdapter.Callback<WeatherData> {
+public class OverviewPresenterImpl extends BasePresenter implements OverviewPresenter, GetWeatherUseCase.Callback, WeatherDataAdapter.Callback<WeatherHour> {
 
     private final OverviewView view;
     private final GetWeatherUseCase getWeatherUseCase;
@@ -59,9 +64,9 @@ public class OverviewPresenterImpl extends BasePresenter implements OverviewPres
     }
 
     @Override
-    public void onWeatherRetrieved(Weather weather) {
+    public void onWeatherRetrieved(@NonNull Weather weather) {
         Timber.i(weather.toString());
-        weatherDataAdapter.transform(weather, this);
+        weatherDataAdapter.transform(weather.hourly().hour(), this);
     }
 
     @Override
@@ -71,12 +76,13 @@ public class OverviewPresenterImpl extends BasePresenter implements OverviewPres
     }
 
     @Override
-    public void onDataAdapted(WeatherData weatherData) {
-        view.showWeather(weatherData);
+    public void onDataAdapted(@NonNull List<WeatherHour> weatherHourList) {
+        view.showWeather(weatherHourList);
     }
 
     @Override
     public void onDataAdaptError(Throwable throwable) {
+        throwable.printStackTrace();
         view.showWeatherNetworkError();
     }
 }

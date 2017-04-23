@@ -4,6 +4,8 @@ package moj.rain.app.data;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import java.util.List;
+
 import io.reactivex.Observable;
 import io.reactivex.Scheduler;
 import io.reactivex.disposables.Disposable;
@@ -13,7 +15,7 @@ public abstract class BaseDataAdapter<SOURCE, DESTINATION> {
 
     public interface Callback<DESTINATION> {
 
-        void onDataAdapted(DESTINATION data);
+        void onDataAdapted(@NonNull List<DESTINATION> data);
 
         void onDataAdaptError(Throwable throwable);
     }
@@ -27,22 +29,21 @@ public abstract class BaseDataAdapter<SOURCE, DESTINATION> {
         this.mainThreadScheduler = mainThreadScheduler;
     }
 
-    protected boolean isValid(DESTINATION destination) {
-        return destination != null;
-    }
+    protected abstract boolean isValid(DESTINATION destination);
 
     @Nullable
     protected abstract DESTINATION transform(@Nullable SOURCE source);
 
-    public void transform(@Nullable SOURCE source, @NonNull Callback<DESTINATION> callback) {
-        if (source == null) {
-            Timber.w("No data to adapt.");
+    public void transform(@Nullable List<SOURCE> sourceList, @NonNull Callback<DESTINATION> callback) {
+        if (sourceList == null) {
+            Timber.w("No hour to adapt.");
             return;
         }
 
-        disposable = Observable.just(source)
+        disposable = Observable.fromIterable(sourceList)
                 .map(this::transform)
                 .filter(this::isValid)
+                .toList()
                 .subscribeOn(computationScheduler)
                 .observeOn(mainThreadScheduler)
                 .subscribe(callback::onDataAdapted, callback::onDataAdaptError);

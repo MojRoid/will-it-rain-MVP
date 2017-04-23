@@ -13,11 +13,11 @@ public abstract class Minutely {
     @SerializedName("summary")
     public abstract String summary();
 
-    @SerializedName("data")
-    public abstract List<Minute> data();
-
     @SerializedName("icon")
     public abstract String icon();
+
+    @SerializedName("data")
+    public abstract List<Minute> minute();
 
     public static TypeAdapter<Minutely> typeAdapter(Gson gson) {
         return new AutoValue_Minutely.GsonTypeAdapter(gson);

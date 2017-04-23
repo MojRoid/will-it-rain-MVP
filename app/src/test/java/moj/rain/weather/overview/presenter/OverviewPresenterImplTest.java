@@ -5,13 +5,18 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.List;
+
+import moj.rain.app.network.model.Hour;
+import moj.rain.app.network.model.Hourly;
 import moj.rain.app.network.model.Weather;
 import moj.rain.weather.overview.data.WeatherDataAdapter;
 import moj.rain.weather.overview.domain.GetWeatherUseCase;
-import moj.rain.weather.overview.model.WeatherData;
+import moj.rain.weather.overview.model.WeatherHour;
 import moj.rain.weather.overview.view.OverviewView;
 
 import static com.google.common.truth.Truth.assertThat;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.times;
 
@@ -26,7 +31,11 @@ public class OverviewPresenterImplTest {
     @Mock
     private Weather weather;
     @Mock
-    private WeatherData weatherData;
+    private Hourly hourly;
+    @Mock
+    private List<Hour> hourList;
+    @Mock
+    private List<WeatherHour> weatherHourList;
     @Mock
     private Throwable throwable;
 
@@ -71,11 +80,16 @@ public class OverviewPresenterImplTest {
 
     @Test
     public void givenPresenterIsCreated_whenOnWeatherRetrievedIsCalled_thenTheWeatherDataIsTransformedAndShowWeatherIsCalled() throws Exception {
+        // Given
+        given(weather.hourly()).willReturn(hourly);
+        given(hourly.hour()).willReturn(hourList);
+
         // When
         presenter.onWeatherRetrieved(weather);
 
         // Then
-        then(weatherDataAdapter).should(times(1)).transform(weather, presenter);
+        then(weatherDataAdapter).should(times(1)).transform(hourList, presenter);
+        then(weatherDataAdapter).shouldHaveNoMoreInteractions();
     }
 
     @Test
@@ -91,10 +105,10 @@ public class OverviewPresenterImplTest {
     @Test
     public void givenPresenterIsCreated_whenOnDataAdaptedIsCalled_thenShowWeatherWithTheAdaptedData() throws Exception {
         // When
-        presenter.onDataAdapted(weatherData);
+        presenter.onDataAdapted(weatherHourList);
 
         // Then
-        then(view).should(times(1)).showWeather(weatherData);
+        then(view).should(times(1)).showWeather(weatherHourList);
         then(view).shouldHaveNoMoreInteractions();
     }
 

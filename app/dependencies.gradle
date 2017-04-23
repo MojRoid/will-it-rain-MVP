@@ -14,7 +14,7 @@ ext {
     timber_version = '4.5.1'
     joda_time_version = '2.9.9'
 
-    // Testing dependencies
+    // Testing Dependencies
     espresso_version = '2.2.2'
     junit_version = '4.12'
     mockito_version = '2.7.22'
@@ -63,15 +63,15 @@ dependencies {
     // Logging
     compile "com.jakewharton.timber:timber:$timber_version"
 
+    // Joda Time
+    compile "joda-time:joda-time:$joda_time_version"
+
+    // TESTING -------------------------------------------------------------------------------------
+
     // Instrumented testing
     androidTestCompile("com.android.support.test.espresso:espresso-core:$espresso_version", {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-
-    // Joda Time
-    compile "joda-time:joda-time:$joda_time_version"
-
-    // TESTING //
 
     // JUnit
     testCompile "junit:junit:$junit_version"

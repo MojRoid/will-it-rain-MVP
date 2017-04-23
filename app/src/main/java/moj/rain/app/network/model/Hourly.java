@@ -13,11 +13,11 @@ public abstract class Hourly {
     @SerializedName("summary")
     public abstract String summary();
 
-    @SerializedName("data")
-    public abstract List<Hour> data();
-
     @SerializedName("icon")
     public abstract String icon();
+
+    @SerializedName("data")
+    public abstract List<Hour> hour();
 
     public static TypeAdapter<Hourly> typeAdapter(Gson gson) {
         return new AutoValue_Hourly.GsonTypeAdapter(gson);
