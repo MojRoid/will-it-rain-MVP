@@ -12,7 +12,6 @@ import butterknife.BindView;
 import moj.rain.R;
 import moj.rain.app.RainApp;
 import moj.rain.app.view.BaseActivity;
-import moj.rain.app.view.error.ErrorViewManager;
 import moj.rain.weather.overview.injection.OverviewModule;
 import moj.rain.weather.overview.model.WeatherHour;
 import moj.rain.weather.overview.presenter.OverviewPresenter;
@@ -21,9 +20,6 @@ public class OverviewActivity extends BaseActivity implements OverviewView {
 
     @Inject
     OverviewPresenter presenter;
-
-    @Inject
-    ErrorViewManager errorViewManager;
 
     @BindView(R.id.overview_weather_txt)
     TextView weatherTextView;
@@ -67,6 +63,13 @@ public class OverviewActivity extends BaseActivity implements OverviewView {
 
     @Override
     public void showWeatherNetworkError() {
-        errorViewManager.showError(getWindow().getDecorView().getRootView(), getString(R.string.network_error_message), Snackbar.LENGTH_SHORT);
+        showNoNetworkSnackbar();
+    }
+
+    private void showNoNetworkSnackbar() {
+        Snackbar.make(getWindow().getDecorView().getRootView(),
+                getString(R.string.network_error_message),
+                Snackbar.LENGTH_SHORT)
+                .show();
     }
 }

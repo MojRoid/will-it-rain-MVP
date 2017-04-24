@@ -5,8 +5,6 @@ import dagger.Module;
 import dagger.Provides;
 import io.reactivex.disposables.CompositeDisposable;
 import moj.rain.app.injection.scopes.PerActivity;
-import moj.rain.app.view.error.ErrorViewManager;
-import moj.rain.app.view.error.ErrorViewManagerImpl;
 import moj.rain.weather.overview.domain.GetWeatherUseCase;
 import moj.rain.weather.overview.domain.GetWeatherUseCaseImpl;
 import moj.rain.weather.overview.presenter.OverviewPresenter;
@@ -39,12 +37,6 @@ public class OverviewModule {
     @PerActivity
     GetWeatherUseCase provideGetWeatherUseCase(GetWeatherUseCaseImpl getWeatherUseCase) {
         return getWeatherUseCase;
-    }
-
-    @Provides
-    @PerActivity
-    ErrorViewManager provideErrorViewManager() {
-        return new ErrorViewManagerImpl();
     }
 
     @Provides
