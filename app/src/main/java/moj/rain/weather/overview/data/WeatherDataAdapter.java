@@ -1,7 +1,10 @@
 package moj.rain.weather.overview.data;
 
 
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+
+import org.joda.time.DateTime;
 
 import javax.inject.Inject;
 
@@ -9,10 +12,10 @@ import io.reactivex.Scheduler;
 import moj.rain.app.data.BaseDataAdapter;
 import moj.rain.app.injection.qualifiers.ForComputationThread;
 import moj.rain.app.injection.qualifiers.ForMainThread;
-import moj.rain.app.network.model.Weather;
-import moj.rain.weather.overview.model.WeatherData;
+import moj.rain.app.network.model.Hour;
+import moj.rain.weather.overview.model.WeatherHour;
 
-public class WeatherDataAdapter extends BaseDataAdapter<Weather, WeatherData> {
+public class WeatherDataAdapter extends BaseDataAdapter<Hour, WeatherHour> {
 
     @Inject
     public WeatherDataAdapter(@ForComputationThread Scheduler computationScheduler,
@@ -21,16 +24,20 @@ public class WeatherDataAdapter extends BaseDataAdapter<Weather, WeatherData> {
     }
 
     @Override
-    protected boolean isValid(@Nullable WeatherData weatherData) {
-        return weatherData != null;
+    protected boolean isValid(WeatherHour weatherHour) {
+        return weatherHour != null;
     }
+
 
     @Nullable
     @Override
-    protected WeatherData transform(@Nullable Weather weather) {
-        WeatherData weatherData = new WeatherData();
-        // TODO: transform the data
-
-        return weatherData;
+    protected WeatherHour transform(@NonNull Hour hour) {
+        return WeatherHour.builder()
+                .setHour(new DateTime(hour.getTime() * 1000))
+                .setIcon(hour.getIcon())
+                .setPrecipIntensity(hour.getPrecipIntensity())
+                .setPrecipProbability(hour.getPrecipProbability())
+                .setTemperature((hour.getTemperature() + hour.getApparentTemperature()) / 2)
+                .build();
     }
 }

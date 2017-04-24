@@ -11,13 +11,13 @@ import java.util.List;
 public abstract class Minutely {
 
     @SerializedName("summary")
-    public abstract String summary();
-
-    @SerializedName("data")
-    public abstract List<Minute> data();
+    public abstract String getSummary();
 
     @SerializedName("icon")
-    public abstract String icon();
+    public abstract String getIcon();
+
+    @SerializedName("data")
+    public abstract List<Minute> getMinute();
 
     public static TypeAdapter<Minutely> typeAdapter(Gson gson) {
         return new AutoValue_Minutely.GsonTypeAdapter(gson);

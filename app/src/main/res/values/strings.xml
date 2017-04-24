@@ -2,4 +2,8 @@
     <string name="app_name">Will It Rain?</string>
 
     <string name="network_error_message">Sorry, there is a network error.</string>
+
+    <string name="today">Today</string>
+    <string name="tomorrow">Tomorrow</string>
+    <string name="yesterday">Yesterday</string>
 </resources>

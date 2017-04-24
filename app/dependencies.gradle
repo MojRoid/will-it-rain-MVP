@@ -25,7 +25,7 @@ ext {
 android {
     junitPlatform {
         jupiterVersion '5.0.0-M3'
-        platformVersion '1.0.0-M3'
+        platformVersion project.jUnit5PlatformVersion
         vintageVersion '4.12.0-M3'
     }
 }
@@ -71,15 +71,15 @@ dependencies {
     // Logging
     compile "com.jakewharton.timber:timber:$timber_version"
 
+    // Joda Time
+    compile "joda-time:joda-time:$joda_time_version"
+
+    // TESTING -------------------------------------------------------------------------------------
+
     // Instrumented testing
     androidTestCompile("com.android.support.test.espresso:espresso-core:$espresso_version", {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-
-    // Joda Time
-    compile "joda-time:joda-time:$joda_time_version"
-
-    // TESTING //
 
     // JUnit
     testCompile junitJupiter()

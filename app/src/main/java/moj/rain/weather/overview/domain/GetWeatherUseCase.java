@@ -1,6 +1,8 @@
 package moj.rain.weather.overview.domain;
 
 
+import android.support.annotation.NonNull;
+
 import moj.rain.app.domain.BaseUseCase;
 import moj.rain.app.network.model.Weather;
 
@@ -8,7 +10,7 @@ public interface GetWeatherUseCase extends BaseUseCase {
 
     interface Callback {
 
-        void onWeatherRetrieved(Weather weather);
+        void onWeatherRetrieved(@NonNull Weather weather);
 
         void onWeatherNetworkError(Throwable throwable);
     }

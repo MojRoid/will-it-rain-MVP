@@ -8,20 +8,20 @@ import com.google.gson.annotations.SerializedName;
 @AutoValue
 public abstract class Weather {
 
-    @SerializedName("offset")
-    public abstract int offset();
-
-    @SerializedName("timezone")
-    public abstract String timezone();
-
     @SerializedName("latitude")
-    public abstract int latitude();
-
-    @SerializedName("minutely")
-    public abstract Minutely minutely();
+    public abstract int getLatitude();
 
     @SerializedName("longitude")
-    public abstract int longitude();
+    public abstract int getLongitude();
+
+    @SerializedName("timezone")
+    public abstract String getTimezone();
+
+    @SerializedName("minutely")
+    public abstract Minutely getMinutely();
+
+    @SerializedName("hourly")
+    public abstract Hourly getHourly();
 
     public static TypeAdapter<Weather> typeAdapter(Gson gson) {
         return new AutoValue_Weather.GsonTypeAdapter(gson);
