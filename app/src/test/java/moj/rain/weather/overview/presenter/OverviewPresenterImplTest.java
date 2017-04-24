@@ -1,7 +1,7 @@
 package moj.rain.weather.overview.presenter;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -41,7 +41,7 @@ public class OverviewPresenterImplTest {
 
     private OverviewPresenterImpl presenter;
 
-    @Before
+    @BeforeEach
     public void presenterIsCreated() {
         MockitoAnnotations.initMocks(this);
         presenter = new OverviewPresenterImpl(view, getWeatherUseCase, weatherDataAdapter);
