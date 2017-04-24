@@ -1,6 +1,5 @@
 package moj.rain.weather.overview.view;
 
-import android.support.design.widget.Snackbar;
 import android.widget.TextView;
 
 import org.joda.time.DateTime;
@@ -26,8 +25,6 @@ public class OverviewActivityTest extends RobolectricTestBase {
 
     @Mock
     private OverviewPresenter presenter;
-    @Mock
-    private Snackbar snackbar;
     @Mock
     private TextView weatherTextView;
 
