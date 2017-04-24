@@ -1,7 +1,5 @@
 package moj.rain.app.network.model;
 
-import android.support.annotation.Nullable;
-
 import com.google.auto.value.AutoValue;
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
@@ -54,5 +52,37 @@ public abstract class Hour {
 
     public static TypeAdapter<Hour> typeAdapter(Gson gson) {
         return new AutoValue_Hour.GsonTypeAdapter(gson);
+    }
+
+    public static Hour create(
+            long time,
+            String summary,
+            String icon,
+            double precipIntensity,
+            double precipProbability,
+            double temperature,
+            double apparentTemperature,
+            double dewPoint,
+            double humidity,
+            double windSpeed,
+            int windBearing,
+            double cloudCover,
+            double pressure,
+            double ozone) {
+        return new AutoValue_Hour(
+                time,
+                summary,
+                icon,
+                precipIntensity,
+                precipProbability,
+                temperature,
+                apparentTemperature,
+                dewPoint,
+                humidity,
+                windSpeed,
+                windBearing,
+                cloudCover,
+                pressure,
+                ozone);
     }
 }

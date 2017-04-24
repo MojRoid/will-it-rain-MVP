@@ -14,7 +14,6 @@ import moj.rain.app.RainApp;
 import moj.rain.app.view.BaseActivity;
 import moj.rain.app.view.error.ErrorViewManager;
 import moj.rain.weather.overview.injection.OverviewModule;
-import moj.rain.weather.overview.model.WeatherData;
 import moj.rain.weather.overview.model.WeatherHour;
 import moj.rain.weather.overview.presenter.OverviewPresenter;
 
