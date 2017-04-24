@@ -87,6 +87,7 @@ dependencies {
 
     // Mockito
     testCompile "org.mockito:mockito-core:$mockito_version"
+    testCompile "org.mockito:mockito-inline:$mockito_version"
 
     // Truth
     testCompile("com.google.truth:truth:$truth_version", {

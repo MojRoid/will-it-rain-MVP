@@ -5,6 +5,7 @@ import android.content.Context;
 
 import dagger.Module;
 import dagger.Provides;
+import io.reactivex.disposables.CompositeDisposable;
 import moj.rain.app.injection.qualifiers.ForActivity;
 import moj.rain.app.injection.scopes.PerActivity;
 import moj.rain.app.view.error.ErrorViewManager;
@@ -54,5 +55,10 @@ public class OverviewModule {
     @PerActivity
     ErrorViewManager provideErrorViewManager() {
         return new ErrorViewManagerImpl();
+    }
+
+    @Provides
+    CompositeDisposable provideCompositeDisposable() {
+        return new CompositeDisposable();
     }
 }

@@ -7,6 +7,7 @@ import android.widget.TextView;
 import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.robolectric.Robolectric;
@@ -16,8 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import moj.rain.R;
-import moj.rain.base.RobolectricTestBase;
 import moj.rain.app.view.error.ErrorViewManager;
+import moj.rain.base.RobolectricTestBase;
 import moj.rain.weather.overview.model.WeatherHour;
 import moj.rain.weather.overview.presenter.OverviewPresenter;
 
@@ -34,24 +35,26 @@ public class OverviewActivityTest extends RobolectricTestBase {
     private TextView weatherTextView;
 
     private ActivityController<OverviewActivity> activityController;
+
+    @InjectMocks
     private OverviewActivity activity;
 
     @Before
-    public void activityIsCreated() {
+    public void setUp() throws Exception {
         activityController = Robolectric.buildActivity(OverviewActivity.class).create();
         activity = activityController.get();
-        injectDependencies();
-    }
-
-    private void injectDependencies() {
         MockitoAnnotations.initMocks(this);
-        activity.presenter = presenter;
-        activity.weatherTextView = weatherTextView;
-        activity.errorViewManager = errorViewManager;
     }
 
     @Test
-    public void givenActivityIsCreated_whenActivityIsStarted_thenGetWeatherShouldBeCalledOnce() throws Exception {
+    public void onCreate() throws Exception {
+        // Then
+        then(presenter).should(times(0)).getWeather();
+        then(presenter).shouldHaveNoMoreInteractions();
+    }
+
+    @Test
+    public void onResume() throws Exception {
         // When
         activityController.resume();
 
@@ -61,14 +64,7 @@ public class OverviewActivityTest extends RobolectricTestBase {
     }
 
     @Test
-    public void givenActivityIsCreated_whenActivityIsNotResumed_thenGetWeatherShouldNotBeCalled() throws Exception {
-        // Then
-        then(presenter).should(times(0)).getWeather();
-        then(presenter).shouldHaveNoMoreInteractions();
-    }
-
-    @Test
-    public void givenActivityIsCreated_whenActivityIsDestroyed_thenNotifyThePresenter() throws Exception {
+    public void onDestroy() throws Exception {
         // When
         activityController.destroy();
 
@@ -78,7 +74,7 @@ public class OverviewActivityTest extends RobolectricTestBase {
     }
 
     @Test
-    public void givenWeatherDataIsProvided_whenShowWeatherIsCalled_thenShowThisWeatherData() throws Exception {
+    public void showWeather() throws Exception {
         // Given
         List<WeatherHour> weatherHourList = new ArrayList<>();
         WeatherHour weatherHour = WeatherHour.builder()
@@ -99,7 +95,7 @@ public class OverviewActivityTest extends RobolectricTestBase {
     }
 
     @Test
-    public void givenActivityIsCreated_whenShowWeatherNetworkErrorIsCalled_thenShowNetworkErrorMessage() throws Exception {
+    public void showWeatherNetworkError() throws Exception {
         // When
         activity.showWeatherNetworkError();
 

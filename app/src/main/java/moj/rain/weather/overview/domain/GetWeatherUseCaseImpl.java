@@ -4,6 +4,7 @@ package moj.rain.weather.overview.domain;
 import javax.inject.Inject;
 
 import io.reactivex.Scheduler;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import moj.rain.app.domain.BaseUseCaseImpl;
 import moj.rain.app.injection.qualifiers.ForIoThread;
@@ -19,9 +20,11 @@ public class GetWeatherUseCaseImpl extends BaseUseCaseImpl implements GetWeather
     private Callback callback;
 
     @Inject
-    public GetWeatherUseCaseImpl(WeatherRepository weatherRepository,
+    public GetWeatherUseCaseImpl(CompositeDisposable compositeDisposable,
+                                 WeatherRepository weatherRepository,
                                  @ForIoThread Scheduler ioScheduler,
                                  @ForMainThread Scheduler mainThreadScheduler) {
+        super(compositeDisposable);
         this.weatherRepository = weatherRepository;
         this.ioScheduler = ioScheduler;
         this.mainThreadScheduler = mainThreadScheduler;

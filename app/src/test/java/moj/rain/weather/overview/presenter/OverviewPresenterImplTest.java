@@ -42,13 +42,13 @@ public class OverviewPresenterImplTest {
     private OverviewPresenterImpl presenter;
 
     @BeforeEach
-    public void presenterIsCreated() {
+    public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
         presenter = new OverviewPresenterImpl(view, getWeatherUseCase, weatherDataAdapter);
     }
 
     @Test
-    public void givenPresenterIsCreated_whenUseCasesAreInjected_thenTheUseCasesCallbacksAreSetAndTheUsesCasesAreTracked() throws Exception {
+    public void OverviewPresenterImpl() throws Exception {
         // Then
         then(getWeatherUseCase).should(times(1)).setCallback(presenter);
         assertThat(presenter.getUseCaseList()).contains((getWeatherUseCase));
@@ -56,7 +56,7 @@ public class OverviewPresenterImplTest {
     }
 
     @Test
-    public void givenPresenterIsCreated_whenGetWeatherIsCalled_thenGetWeatherUseCaseIsExecuted() throws Exception {
+    public void getWeather() throws Exception {
         // When
         presenter.getWeather();
 
@@ -67,7 +67,7 @@ public class OverviewPresenterImplTest {
     }
 
     @Test
-    public void givenPresenterIsCreated_whenOnViewDestroyedIsCalled_thenUseCasesCallbacksAreNullifiedAndUseCasesAreNoLongerTracked() throws Exception {
+    public void onViewDestroyed() throws Exception {
         // When
         presenter.onViewDestroyed();
 
@@ -79,7 +79,7 @@ public class OverviewPresenterImplTest {
     }
 
     @Test
-    public void givenPresenterIsCreated_whenOnWeatherRetrievedIsCalled_thenTheWeatherDataIsTransformedAndShowWeatherIsCalled() throws Exception {
+    public void onWeatherRetrieved() throws Exception {
         // Given
         given(weather.getHourly()).willReturn(hourly);
         given(hourly.getHour()).willReturn(hourList);
@@ -93,7 +93,7 @@ public class OverviewPresenterImplTest {
     }
 
     @Test
-    public void givenPresenterIsCreated_whenOnWeatherNetworkErrorIsCalled_thenShowWeatherNetworkErrorIsCalled() throws Exception {
+    public void onWeatherNetworkError() throws Exception {
         // When
         presenter.onWeatherNetworkError(throwable);
 
@@ -103,7 +103,7 @@ public class OverviewPresenterImplTest {
     }
 
     @Test
-    public void givenPresenterIsCreated_whenOnDataAdaptedIsCalled_thenShowWeatherWithTheAdaptedData() throws Exception {
+    public void onDataAdapted() throws Exception {
         // When
         presenter.onDataAdapted(weatherHourList);
 
@@ -113,7 +113,7 @@ public class OverviewPresenterImplTest {
     }
 
     @Test
-    public void givenPresenterIsCreated_whenOnDataAdaptErrorIsCalled_thenShowWeatherNetworkError() throws Exception {
+    public void onDataAdaptError() throws Exception {
         // When
         presenter.onDataAdaptError(throwable);
 

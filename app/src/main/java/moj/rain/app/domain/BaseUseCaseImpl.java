@@ -6,12 +6,12 @@ import android.support.annotation.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
-public class BaseUseCaseImpl implements BaseUseCase {
+public abstract class BaseUseCaseImpl implements BaseUseCase {
 
     private final CompositeDisposable compositeDisposable;
 
-    protected BaseUseCaseImpl() {
-        this.compositeDisposable = new CompositeDisposable();
+    protected BaseUseCaseImpl(@NonNull CompositeDisposable compositeDisposable) {
+        this.compositeDisposable = compositeDisposable;
     }
 
     @Override
