@@ -4,8 +4,8 @@ import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.widget.TextView;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.robolectric.Robolectric;
@@ -34,7 +34,7 @@ public class OverviewActivityTest extends RobolectricTestBase {
     private ActivityController<OverviewActivity> activityController;
     private OverviewActivity activity;
 
-    @BeforeEach
+    @Before
     public void activityIsCreated() {
         MockitoAnnotations.initMocks(this);
         activityController = Robolectric.buildActivity(OverviewActivity.class).create();
