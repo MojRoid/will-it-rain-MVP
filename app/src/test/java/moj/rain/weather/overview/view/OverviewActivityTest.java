@@ -15,7 +15,7 @@ import org.robolectric.android.controller.ActivityController;
 import java.util.ArrayList;
 import java.util.List;
 
-import moj.rain.base.RobolectricTestBase;
+import moj.rain.RobolectricTestBase;
 import moj.rain.weather.overview.model.WeatherHour;
 import moj.rain.weather.overview.presenter.OverviewPresenter;
 

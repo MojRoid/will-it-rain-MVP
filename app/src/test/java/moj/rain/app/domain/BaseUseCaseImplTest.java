@@ -27,10 +27,8 @@ public class BaseUseCaseImplTest {
 
     private BaseUseCaseImpl baseUseCase;
 
-    @BeforeEach
-    public void setUp() throws Exception {
-        MockitoAnnotations.initMocks(this);
-        baseUseCase = spy(new BaseUseCaseImpl(compositeDisposable) {
+    private BaseUseCaseImpl getSpy() {
+        return spy(new BaseUseCaseImpl(compositeDisposable) {
             @Override
             public void trackDisposable(@NonNull Disposable disposable) {
                 super.trackDisposable(disposable);
@@ -41,6 +39,12 @@ public class BaseUseCaseImplTest {
                 super.cleanUp();
             }
         });
+    }
+
+    @BeforeEach
+    public void setUp() throws Exception {
+        MockitoAnnotations.initMocks(this);
+        baseUseCase = getSpy();
     }
 
     @Test

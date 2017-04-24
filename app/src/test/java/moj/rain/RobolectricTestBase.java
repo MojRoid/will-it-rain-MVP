@@ -1,4 +1,4 @@
-package moj.rain.base;
+package moj.rain;
 
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;

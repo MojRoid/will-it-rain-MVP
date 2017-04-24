@@ -70,7 +70,7 @@ public class WeatherDataAdapterTest {
                 ozone);
 
         // When
-        WeatherHour actual = weatherDataAdapter.transform(hour);
+        WeatherHour actual = weatherDataAdapter.transformSource(hour);
 
         // Then
         WeatherHour expected = WeatherHour.builder()

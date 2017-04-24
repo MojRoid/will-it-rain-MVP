@@ -31,7 +31,7 @@ public class WeatherDataAdapter extends BaseDataAdapter<Hour, WeatherHour> {
 
     @Nullable
     @Override
-    protected WeatherHour transform(@NonNull Hour hour) {
+    protected WeatherHour transformSource(@NonNull Hour hour) {
         return WeatherHour.builder()
                 .setHour(new DateTime(hour.getTime() * 1000))
                 .setIcon(hour.getIcon())

@@ -32,7 +32,7 @@ public abstract class BaseDataAdapter<SOURCE, DESTINATION> {
     protected abstract boolean isValid(DESTINATION destination);
 
     @Nullable
-    protected abstract DESTINATION transform(@NonNull SOURCE source);
+    protected abstract DESTINATION transformSource(@NonNull SOURCE source);
 
     public void transform(@Nullable List<SOURCE> sourceList, @NonNull Callback<DESTINATION> callback) {
         if (sourceList == null) {
@@ -41,7 +41,7 @@ public abstract class BaseDataAdapter<SOURCE, DESTINATION> {
         }
 
         disposable = Observable.fromIterable(sourceList)
-                .map(this::transform)
+                .map(this::transformSource)
                 .filter(this::isValid)
                 .toList()
                 .subscribeOn(computationScheduler)
