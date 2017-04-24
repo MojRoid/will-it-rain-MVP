@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import moj.rain.R;
-import moj.rain.RobolectricTestBase;
+import moj.rain.base.RobolectricTestBase;
 import moj.rain.app.view.error.ErrorViewManager;
 import moj.rain.weather.overview.model.WeatherHour;
 import moj.rain.weather.overview.presenter.OverviewPresenter;
