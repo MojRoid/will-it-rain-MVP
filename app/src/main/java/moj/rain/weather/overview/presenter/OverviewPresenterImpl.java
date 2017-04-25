@@ -16,7 +16,6 @@ import moj.rain.weather.overview.domain.GetWeatherUseCase;
 import moj.rain.weather.overview.model.WeatherData;
 import moj.rain.weather.overview.model.WeatherHour;
 import moj.rain.weather.overview.view.OverviewView;
-import timber.log.Timber;
 
 public class OverviewPresenterImpl extends BasePresenter implements OverviewPresenter, GetWeatherUseCase.Callback, WeatherDataAdapter.Callback<WeatherHour> {
 
@@ -70,7 +69,6 @@ public class OverviewPresenterImpl extends BasePresenter implements OverviewPres
 
     @Override
     public void onWeatherRetrieved(@NonNull Weather weather) {
-        Timber.i(weather.toString());
         this.weather = weather;
         weatherDataAdapter.transform(weather.getHourly().getHour(), this);
     }
