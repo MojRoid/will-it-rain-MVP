@@ -54,35 +54,41 @@ public abstract class Hour {
         return new AutoValue_Hour.GsonTypeAdapter(gson);
     }
 
-    public static Hour create(
-            long time,
-            String summary,
-            String icon,
-            double precipIntensity,
-            double precipProbability,
-            double temperature,
-            double apparentTemperature,
-            double dewPoint,
-            double humidity,
-            double windSpeed,
-            int windBearing,
-            double cloudCover,
-            double pressure,
-            double ozone) {
-        return new AutoValue_Hour(
-                time,
-                summary,
-                icon,
-                precipIntensity,
-                precipProbability,
-                temperature,
-                apparentTemperature,
-                dewPoint,
-                humidity,
-                windSpeed,
-                windBearing,
-                cloudCover,
-                pressure,
-                ozone);
+    public static Builder builder() {
+        return new AutoValue_Hour.Builder();
+    }
+
+    @AutoValue.Builder
+    public abstract static class Builder {
+
+        public abstract Builder setTime(long time);
+
+        public abstract Builder setSummary(String summary);
+
+        public abstract Builder setIcon(String icon);
+
+        public abstract Builder setPrecipIntensity(double precipIntensity);
+
+        public abstract Builder setPrecipProbability(double precipProbability);
+
+        public abstract Builder setTemperature(double temperature);
+
+        public abstract Builder setApparentTemperature(double apparentTemperature);
+
+        public abstract Builder setDewPoint(double dewPoint);
+
+        public abstract Builder setHumidity(double humidity);
+
+        public abstract Builder setWindSpeed(double windSpeed);
+
+        public abstract Builder setWindBearing(int windBearing);
+
+        public abstract Builder setCloudCover(double cloudCover);
+
+        public abstract Builder setPressure(double pressure);
+
+        public abstract Builder setOzone(double ozone);
+
+        public abstract Hour build();
     }
 }

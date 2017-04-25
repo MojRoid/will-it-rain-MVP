@@ -7,10 +7,6 @@ import org.joda.time.DateTime;
 @AutoValue
 public abstract class WeatherHour {
 
-    public static Builder builder() {
-        return new AutoValue_WeatherHour.Builder();
-    }
-
     public abstract DateTime getHour();
 
     public abstract String getIcon();
@@ -20,6 +16,10 @@ public abstract class WeatherHour {
     public abstract double getPrecipProbability();
 
     public abstract double getTemperature();
+
+    public static Builder builder() {
+        return new AutoValue_WeatherHour.Builder();
+    }
 
     @AutoValue.Builder
     public abstract static class Builder {

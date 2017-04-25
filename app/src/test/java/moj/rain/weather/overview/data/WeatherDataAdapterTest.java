@@ -53,21 +53,22 @@ public class WeatherDataAdapterTest {
     @Test
     public void transform() throws Exception {
         // Given
-        Hour hour = Hour.create(
-                time,
-                summary,
-                icon,
-                precipIntensity,
-                precipProbability,
-                temperature,
-                apparentTemperature,
-                dewPoint,
-                humidity,
-                windSpeed,
-                windBearing,
-                cloudCover,
-                pressure,
-                ozone);
+        Hour hour = Hour.builder()
+                .setTime(time)
+                .setSummary(summary)
+                .setIcon(icon)
+                .setPrecipIntensity(precipIntensity)
+                .setPrecipProbability(precipProbability)
+                .setTemperature(temperature)
+                .setApparentTemperature(apparentTemperature)
+                .setDewPoint(dewPoint)
+                .setHumidity(humidity)
+                .setWindSpeed(windSpeed)
+                .setWindBearing(windBearing)
+                .setCloudCover(cloudCover)
+                .setPressure(pressure)
+                .setOzone(ozone)
+                .build();
 
         // When
         WeatherHour actual = weatherDataAdapter.transformSource(hour);

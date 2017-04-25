@@ -16,7 +16,7 @@ import static org.mockito.Mockito.times;
 public class WeatherNetworkManagerImplTest {
 
     @Mock
-    DarkSkyApi darkSkyApi;
+    private DarkSkyApi darkSkyApi;
 
     @InjectMocks
     private WeatherNetworkManagerImpl weatherNetworkManager;
@@ -41,7 +41,5 @@ public class WeatherNetworkManagerImplTest {
         String excludes = "currently,daily,alerts,flags";
         String units = "uk2";
         then(darkSkyApi).should(times(1)).getWeather(key, latitude, longitude, excludes, units);
-
     }
-
 }

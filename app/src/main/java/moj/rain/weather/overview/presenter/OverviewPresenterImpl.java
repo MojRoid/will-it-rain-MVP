@@ -24,7 +24,6 @@ public class OverviewPresenterImpl extends BasePresenter implements OverviewPres
     private final WeatherDataAdapter weatherDataAdapter;
 
     private Weather weather;
-    private WeatherData weatherData;
 
     @Inject
     public OverviewPresenterImpl(OverviewView view,
@@ -82,7 +81,7 @@ public class OverviewPresenterImpl extends BasePresenter implements OverviewPres
     @Override
     public void onDataAdapted(@NonNull List<WeatherHour> weatherHourList) {
         DateTimeZone dateTimeZone = DateTimeZone.forID(weather.getTimezone());
-        weatherData = WeatherData.create(dateTimeZone, weatherHourList);
+        WeatherData weatherData = WeatherData.create(dateTimeZone, weatherHourList);
         view.showWeather(weatherData);
     }
 
