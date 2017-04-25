@@ -1,8 +1,10 @@
 package moj.rain.weather.overview.view;
 
+import android.support.annotation.NonNull;
 import android.widget.TextView;
 
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -15,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import moj.rain.RobolectricTestBase;
+import moj.rain.app.util.DayUtils;
+import moj.rain.weather.overview.model.WeatherData;
 import moj.rain.weather.overview.model.WeatherHour;
 import moj.rain.weather.overview.presenter.OverviewPresenter;
 
@@ -70,6 +74,7 @@ public class OverviewActivityTest extends RobolectricTestBase {
     @Test
     public void showWeather() throws Exception {
         // Given
+        DateTimeZone dateTimeZone = DateTimeZone.UTC;
         List<WeatherHour> weatherHourList = new ArrayList<>();
         WeatherHour weatherHour = WeatherHour.builder()
                 .setHour(DateTime.now())
@@ -79,13 +84,30 @@ public class OverviewActivityTest extends RobolectricTestBase {
                 .setTemperature(3)
                 .build();
         weatherHourList.add(weatherHour);
+        WeatherData weatherData = WeatherData.create(dateTimeZone, weatherHourList);
 
         // When
-        activity.showWeather(weatherHourList);
+        activity.showWeather(weatherData);
 
         // Then
-        then(weatherTextView).should(times(1)).setText(weatherHour.toString());
+        then(weatherTextView).should(times(1)).setText(getWeatherDataString(weatherData));
         then(weatherTextView).shouldHaveNoMoreInteractions();
+    }
+
+    // TODO: remove/refactor later
+    @NonNull
+    private String getWeatherDataString(@NonNull WeatherData weatherData) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (WeatherHour weatherHour : weatherData.getRainHourList()) {
+            stringBuilder.append(DayUtils.formatDayNicely(activity.getResources(), weatherHour.getHour(), weatherData.getDateTimeZone()));
+            stringBuilder.append("\n");
+            stringBuilder.append("\n");
+            stringBuilder.append(weatherHour.toString());
+            stringBuilder.append("\n");
+            stringBuilder.append("\n");
+            stringBuilder.append("\n");
+        }
+        return stringBuilder.toString().trim();
     }
 
     @Test

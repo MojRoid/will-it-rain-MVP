@@ -1,8 +1,11 @@
 package moj.rain.weather.overview.presenter;
 
+import org.joda.time.DateTimeZone;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import java.util.List;
@@ -12,6 +15,7 @@ import moj.rain.app.network.model.Hourly;
 import moj.rain.app.network.model.Weather;
 import moj.rain.weather.overview.data.WeatherDataAdapter;
 import moj.rain.weather.overview.domain.GetWeatherUseCase;
+import moj.rain.weather.overview.model.WeatherData;
 import moj.rain.weather.overview.model.WeatherHour;
 import moj.rain.weather.overview.view.OverviewView;
 
@@ -23,12 +27,6 @@ import static org.mockito.Mockito.times;
 public class OverviewPresenterImplTest {
 
     @Mock
-    private OverviewView view;
-    @Mock
-    private GetWeatherUseCase getWeatherUseCase;
-    @Mock
-    private WeatherDataAdapter weatherDataAdapter;
-    @Mock
     private Weather weather;
     @Mock
     private Hourly hourly;
@@ -39,12 +37,20 @@ public class OverviewPresenterImplTest {
     @Mock
     private Throwable throwable;
 
+    @InjectMocks
     private OverviewPresenterImpl presenter;
+
+    private OverviewView view;
+    private GetWeatherUseCase getWeatherUseCase;
+    private WeatherDataAdapter weatherDataAdapter;
 
     @BeforeEach
     public void setUp() throws Exception {
-        MockitoAnnotations.initMocks(this);
+        view = Mockito.mock(OverviewView.class);
+        getWeatherUseCase = Mockito.mock(GetWeatherUseCase.class);
+        weatherDataAdapter = Mockito.mock(WeatherDataAdapter.class);
         presenter = new OverviewPresenterImpl(view, getWeatherUseCase, weatherDataAdapter);
+        MockitoAnnotations.initMocks(this);
     }
 
     @Test
@@ -104,11 +110,16 @@ public class OverviewPresenterImplTest {
 
     @Test
     public void onDataAdapted() throws Exception {
+        // Given
+        DateTimeZone dateTimeZone = DateTimeZone.UTC;
+        given(weather.getTimezone()).willReturn(dateTimeZone.getID());
+
         // When
         presenter.onDataAdapted(weatherHourList);
 
         // Then
-        then(view).should(times(1)).showWeather(weatherHourList);
+        WeatherData weatherData = WeatherData.create(dateTimeZone, weatherHourList);
+        then(view).should(times(1)).showWeather(weatherData);
         then(view).shouldHaveNoMoreInteractions();
     }
 

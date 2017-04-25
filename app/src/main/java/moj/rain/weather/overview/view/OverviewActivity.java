@@ -4,15 +4,15 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.widget.TextView;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import moj.rain.R;
 import moj.rain.app.RainApp;
+import moj.rain.app.util.DayUtils;
 import moj.rain.app.view.BaseActivity;
 import moj.rain.weather.overview.injection.OverviewModule;
+import moj.rain.weather.overview.model.WeatherData;
 import moj.rain.weather.overview.model.WeatherHour;
 import moj.rain.weather.overview.presenter.OverviewPresenter;
 
@@ -50,15 +50,23 @@ public class OverviewActivity extends BaseActivity implements OverviewView {
     }
 
     @Override
-    public void showWeather(@NonNull List<WeatherHour> weatherHourList) {
+    public void showWeather(@NonNull WeatherData weatherData) {
+        weatherTextView.setText(getWeatherDataString(weatherData));
+    }
+
+    @NonNull
+    private String getWeatherDataString(@NonNull WeatherData weatherData) {
         StringBuilder stringBuilder = new StringBuilder();
-        for (WeatherHour weatherHour : weatherHourList) {
+        for (WeatherHour weatherHour : weatherData.getRainHourList()) {
+            stringBuilder.append(DayUtils.formatDayNicely(getResources(), weatherHour.getHour(), weatherData.getDateTimeZone()));
+            stringBuilder.append("\n");
+            stringBuilder.append("\n");
             stringBuilder.append(weatherHour.toString());
             stringBuilder.append("\n");
             stringBuilder.append("\n");
             stringBuilder.append("\n");
         }
-        weatherTextView.setText(stringBuilder.toString().trim());
+        return stringBuilder.toString().trim();
     }
 
     @Override

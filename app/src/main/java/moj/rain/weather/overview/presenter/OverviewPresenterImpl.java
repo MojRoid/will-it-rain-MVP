@@ -13,6 +13,7 @@ import moj.rain.app.network.model.Weather;
 import moj.rain.app.presenter.BasePresenter;
 import moj.rain.weather.overview.data.WeatherDataAdapter;
 import moj.rain.weather.overview.domain.GetWeatherUseCase;
+import moj.rain.weather.overview.model.WeatherData;
 import moj.rain.weather.overview.model.WeatherHour;
 import moj.rain.weather.overview.view.OverviewView;
 import timber.log.Timber;
@@ -22,6 +23,9 @@ public class OverviewPresenterImpl extends BasePresenter implements OverviewPres
     private final OverviewView view;
     private final GetWeatherUseCase getWeatherUseCase;
     private final WeatherDataAdapter weatherDataAdapter;
+
+    private Weather weather;
+    private WeatherData weatherData;
 
     @Inject
     public OverviewPresenterImpl(OverviewView view,
@@ -67,7 +71,7 @@ public class OverviewPresenterImpl extends BasePresenter implements OverviewPres
     @Override
     public void onWeatherRetrieved(@NonNull Weather weather) {
         Timber.i(weather.toString());
-        DateTimeZone dateTimeZone = DateTimeZone.forID(weather.getTimezone());
+        this.weather = weather;
         weatherDataAdapter.transform(weather.getHourly().getHour(), this);
     }
 
@@ -79,7 +83,9 @@ public class OverviewPresenterImpl extends BasePresenter implements OverviewPres
 
     @Override
     public void onDataAdapted(@NonNull List<WeatherHour> weatherHourList) {
-        view.showWeather(weatherHourList);
+        DateTimeZone dateTimeZone = DateTimeZone.forID(weather.getTimezone());
+        weatherData = WeatherData.create(dateTimeZone, weatherHourList);
+        view.showWeather(weatherData);
     }
 
     @Override
