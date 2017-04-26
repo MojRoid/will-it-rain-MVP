@@ -99,13 +99,11 @@ public class OverviewActivityTest extends RobolectricTestBase {
     private String getWeatherDataString(@NonNull WeatherData weatherData) {
         StringBuilder stringBuilder = new StringBuilder();
         for (WeatherHour weatherHour : weatherData.getRainHourList()) {
-            stringBuilder.append(DayUtils.formatDayNicely(activity.getResources(), weatherHour.getHour(), weatherData.getDateTimeZone()));
-            stringBuilder.append("\n");
-            stringBuilder.append("\n");
+            String day = DayUtils.formatDayNicely(activity.getResources(), weatherHour.getHour(), weatherData.getDateTimeZone());
+            stringBuilder.append(day);
+            stringBuilder.append("\n\n");
             stringBuilder.append(weatherHour.toString());
-            stringBuilder.append("\n");
-            stringBuilder.append("\n");
-            stringBuilder.append("\n");
+            stringBuilder.append("\n\n\n\n");
         }
         return stringBuilder.toString().trim();
     }
