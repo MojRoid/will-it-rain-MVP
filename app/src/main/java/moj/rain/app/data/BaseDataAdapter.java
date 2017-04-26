@@ -36,7 +36,7 @@ public abstract class BaseDataAdapter<SOURCE, DESTINATION> {
 
     public void transform(@Nullable List<SOURCE> sourceList, @NonNull Callback<DESTINATION> callback) {
         if (sourceList == null) {
-            Timber.w("No hour to adapt.");
+            Timber.w("No data to adapt.");
             return;
         }
 
