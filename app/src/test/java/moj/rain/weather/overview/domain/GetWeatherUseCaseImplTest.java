@@ -1,6 +1,7 @@
 package moj.rain.weather.overview.domain;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -43,29 +44,43 @@ public class GetWeatherUseCaseImplTest {
     }
 
     @Test
+    @DisplayName("GIVEN weather retrieved successfully WHEN get weather use case is executed THEN weather data is passed to callback")
     public void execute_onWeatherRetrieved() throws Exception {
-        // Given
+        givenWeatherRetrievedSuccessfully();
+        whenGetWeatherUseCaseIsExecuted();
+        thenWeatherDataIsPassedToCallback();
+    }
+
+    @Test
+    @DisplayName("GIVEN weather is not retrieved successfully WHEN get weather use case is executed THEN throwable is passed to callback")
+    public void execute_onWeatherNetworkError() throws Exception {
+        givenWeatherIsNotRetrievedSuccessfully();
+        whenGetWeatherUseCaseIsExecuted();
+        thenThrowableIsPassedToCallback();
+    }
+
+    private void givenWeatherRetrievedSuccessfully() {
         getWeatherUseCase.setCallback(callback);
         given(weatherRepository.getWeather(anyDouble(), anyDouble())).willReturn(Observable.just(weather));
+    }
 
-        // When
-        getWeatherUseCase.execute(1.2, 3.4);
+    private void givenWeatherIsNotRetrievedSuccessfully() {
+        getWeatherUseCase.setCallback(callback);
+        given(weatherRepository.getWeather(anyDouble(), anyDouble())).willReturn(Observable.error(throwable));
+    }
 
-        // Then
+    private void whenGetWeatherUseCaseIsExecuted() {
+        double latitude = 1.2;
+        double longitude = 3.4;
+        getWeatherUseCase.execute(latitude, longitude);
+    }
+
+    private void thenWeatherDataIsPassedToCallback() {
         then(callback).should(times(1)).onWeatherRetrieved(weather);
         then(callback).shouldHaveNoMoreInteractions();
     }
 
-    @Test
-    public void execute_onWeatherNetworkError() throws Exception {
-        // Given
-        getWeatherUseCase.setCallback(callback);
-        given(weatherRepository.getWeather(anyDouble(), anyDouble())).willReturn(Observable.error(throwable));
-
-        // When
-        getWeatherUseCase.execute(1.2, 3.4);
-
-        // Then
+    private void thenThrowableIsPassedToCallback() {
         then(callback).should(times(1)).onWeatherNetworkError(throwable);
         then(callback).shouldHaveNoMoreInteractions();
     }
