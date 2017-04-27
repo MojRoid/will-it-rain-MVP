@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.commons.util.StringUtils;
 import org.mockito.InjectMocks;
@@ -33,6 +34,13 @@ public class BaseDataAdapterTest {
     @InjectMocks
     private BaseDataAdapter<Integer, String> baseDataAdapter;
 
+    private String destination;
+    private boolean actualBoolean;
+    private Integer source;
+    private String actualString;
+    private List<Integer> sourceList;
+    private List<String> destinationList;
+
     private BaseDataAdapter<Integer, String> getSpy() {
         return spy(new BaseDataAdapter<Integer, String>(
                 Schedulers.trampoline(),
@@ -57,75 +65,88 @@ public class BaseDataAdapterTest {
     }
 
     @Test
+    @DisplayName("GIVEN a valid destination value WHEN destination validity is checked THEN destination should be deemed valid")
     public void isValid() throws Exception {
-        // Given
-        String destination = "123";
-
-        // When
-        boolean actual = baseDataAdapter.isValid(destination);
-
-        // Then
-        assertThat(actual).isTrue();
+        givenAValidDestinationValue();
+        whenDestinationValidityIsChecked();
+        thenDestinationShouldBeDeemedValid();
     }
 
     @Test
+    @DisplayName("GIVEN a valid source value WHEN source is transformed THEN source should be transformed")
     public void transformSource() throws Exception {
-        // Given
-        Integer source = 123;
-
-        // When
-        String actual = baseDataAdapter.transformSource(source);
-
-        // Then
-        assertThat(actual).isEqualTo("123");
+        givenAValidSourceValue();
+        whenSourceIsTransformed();
+        thenSourceShouldBeTransformed();
     }
 
     @Test
+    @DisplayName("GIVEN source data WHEN data is transformed THEN data is adapted AND passed to callback")
     public void transform_data() throws Exception {
-        // Given
-        List<Integer> integerList = new ArrayList<>();
-        Integer source1 = 123;
-        Integer source2 = 456;
-        Integer source3 = 789;
-        integerList.add(source1);
-        integerList.add(source2);
-        integerList.add(source3);
-
-        // When
-        baseDataAdapter.transform(integerList, callback);
-
-        // Then
-        List<String> stringList = new ArrayList<>();
-        String destination1 = "123";
-        String destination2 = "456";
-        String destination3 = "789";
-        stringList.add(destination1);
-        stringList.add(destination2);
-        stringList.add(destination3);
-        then(callback).should(times(1)).onDataAdapted(stringList);
+        givenSourceData(123);
+        whenDataIsTransformed();
+        thenDataIsAdaptedAndPassedToCallback("123");
     }
 
     @Test
-    public void transform_null() throws Exception {
-        // When
-        baseDataAdapter.transform(null, callback);
-
-        // Then
-        // TODO: verify
-    }
-
-    @Test
+    @DisplayName("GIVEN disposable is not disposed WHEN the transformation is canceled THEN the disposable is disposed")
     public void cancel() throws Exception {
-        // Given
+        givenDisposableIsNotDisposed();
+        whenTheTransformationIsCanceled();
+        thenTheDisposableIsDisposed();
+    }
+
+    private void givenAValidDestinationValue() {
+        destination = "123";
+    }
+
+    private void givenAValidSourceValue() {
+        source = 123;
+    }
+
+    private void givenSourceData(int source) {
+        sourceList = new ArrayList<>();
+        sourceList.add(source);
+    }
+
+    private void givenDisposableIsNotDisposed() {
         given(disposable.isDisposed()).willReturn(false);
+    }
 
-        // When
+    private void whenDestinationValidityIsChecked() {
+        actualBoolean = baseDataAdapter.isValid(destination);
+    }
+
+    private void whenTheTransformationIsCanceled() {
         baseDataAdapter.cancel();
+    }
 
-        // Then
+    private void whenSourceIsTransformed() {
+        actualString = baseDataAdapter.transformSource(source);
+    }
+
+    private void whenDataIsTransformed() {
+        baseDataAdapter.transform(sourceList, callback);
+    }
+
+    private void thenDestinationShouldBeDeemedValid() {
+        assertThat(actualBoolean).isTrue();
+    }
+
+    private void thenSourceShouldBeTransformed() {
+        assertThat(actualString).isEqualTo("123");
+    }
+
+    private void thenDataIsAdaptedAndPassedToCallback(String destination) {
+        destinationList = new ArrayList<>();
+        destinationList.add(destination);
+        then(callback).should(times(1)).onDataAdapted(destinationList);
+        then(callback).shouldHaveNoMoreInteractions();
+    }
+
+    private void thenTheDisposableIsDisposed() {
         then(disposable).should(times(1)).isDisposed();
         then(disposable).should(times(1)).dispose();
         then(disposable).shouldHaveNoMoreInteractions();
     }
-
 }

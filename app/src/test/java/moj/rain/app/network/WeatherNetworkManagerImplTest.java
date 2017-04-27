@@ -2,6 +2,7 @@ package moj.rain.app.network;
 
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -21,6 +22,9 @@ public class WeatherNetworkManagerImplTest {
     @InjectMocks
     private WeatherNetworkManagerImpl weatherNetworkManager;
 
+    private double latitude = 1.2;
+    private double longitude = 3.4;
+
     @BeforeEach
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
@@ -28,15 +32,23 @@ public class WeatherNetworkManagerImplTest {
     }
 
     @Test
+    @DisplayName("GIVEN a latitude and longitude WHEN get weather is called THEN call dark sky API")
     public void getWeather() throws Exception {
-        // Given
-        double latitude = 1.2;
-        double longitude = 3.4;
+        givenALatitudeAndLongitude();
+        whenGetWeatherIsCalled();
+        thenCallDarkSkyApi();
+    }
 
-        // When
+    private void givenALatitudeAndLongitude() {
+        latitude = 1.2;
+        longitude = 3.4;
+    }
+
+    private void whenGetWeatherIsCalled() {
         weatherNetworkManager.getWeather(latitude, longitude);
+    }
 
-        // Then
+    private void thenCallDarkSkyApi() {
         String key = BuildConfig.DARK_SKY_API_KEY;
         String excludes = "currently,daily,alerts,flags";
         String units = "uk2";
