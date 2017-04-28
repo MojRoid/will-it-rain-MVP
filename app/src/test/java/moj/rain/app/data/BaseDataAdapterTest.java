@@ -89,11 +89,27 @@ public class BaseDataAdapterTest {
     }
 
     @Test
+    @DisplayName("GIVEN source data WHEN data is transformed THEN data is not adapted")
+    public void transform_null() throws Exception {
+        givenNullSourceList();
+        whenDataIsTransformed();
+        thenDataIsNotAdapted();
+    }
+
+    @Test
     @DisplayName("GIVEN disposable is not disposed WHEN the transformation is canceled THEN the disposable is disposed")
-    public void cancel() throws Exception {
-        givenDisposableIsNotDisposed();
+    public void cancel_notDisposed() throws Exception {
+        givenDisposable(false);
         whenTheTransformationIsCanceled();
         thenTheDisposableIsDisposed();
+    }
+
+    @Test
+    @DisplayName("GIVEN disposable is not disposed WHEN the transformation is canceled THEN the disposable is disposed")
+    public void cancel_disposed() throws Exception {
+        givenDisposable(true);
+        whenTheTransformationIsCanceled();
+        thenTheDisposableIsNotDisposed();
     }
 
     private void givenValidDestinationData(String destination) {
@@ -109,8 +125,12 @@ public class BaseDataAdapterTest {
         sourceList.add(source);
     }
 
-    private void givenDisposableIsNotDisposed() {
-        given(disposable.isDisposed()).willReturn(false);
+    private void givenNullSourceList() {
+        sourceList = null;
+    }
+
+    private void givenDisposable(boolean isDisposed) {
+        given(disposable.isDisposed()).willReturn(isDisposed);
     }
 
     private void whenDestinationDataIsCheckedIfValid() {
@@ -144,9 +164,18 @@ public class BaseDataAdapterTest {
         then(callback).shouldHaveNoMoreInteractions();
     }
 
+    private void thenDataIsNotAdapted() {
+        then(callback).shouldHaveZeroInteractions();
+    }
+
     private void thenTheDisposableIsDisposed() {
         then(disposable).should(times(1)).isDisposed();
         then(disposable).should(times(1)).dispose();
+        then(disposable).shouldHaveNoMoreInteractions();
+    }
+
+    private void thenTheDisposableIsNotDisposed() {
+        then(disposable).should(times(1)).isDisposed();
         then(disposable).shouldHaveNoMoreInteractions();
     }
 }
