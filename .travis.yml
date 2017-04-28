@@ -1,10 +1,14 @@
 language: android
+jdk: oraclejdk8
+env:
+  global:
+    - ANDROID_TARGET=android-15
+    - ANDROID_ABI=armeabi-v7a
 android:
   components:
-    # Uncomment the lines below if you want to
-    # use the latest revision of Android SDK Tools
-    # - tools
-    # - platform-tools
+    # Use the latest revision of Android SDK Tools
+     - tools
+     - platform-tools
 
     # The BuildTools version used by your project
     - build-tools-25.0.2
@@ -20,5 +24,17 @@ android:
 
     # Specify at least one system image,
     # if you need to run emulator(s) during your tests
-    - sys-img-armeabi-v7a-android-24
+    - sys-img-${ANDROID_ABI}-${ANDROID_TARGET}
     - sys-img-armeabi-v7a-android-19
+
+# CodeCov script
+script:
+  - ./gradlew build jacocoTestReport assembleAndroidTest
+  - echo no | android create avd --force -n test -t $ANDROID_TARGET --abi $ANDROID_ABI
+  - emulator -avd test -no-skin -no-audio -no-window &
+  - android-wait-for-emulator
+  - adb shell setprop dalvik.vm.dexopt-flags v=n,o=v
+  - ./gradlew connectedCheck
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
