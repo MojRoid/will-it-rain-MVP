@@ -9,6 +9,7 @@ jacocoAndroidUnitTestReport {
                  '**/injection/*.*',
                  '**/model/*.*',
                  '**/*Provider*.class',
+                 '**/*Activity*.*',
                  '**/*_MembersInjector.class',
                  '**/BuildConfig.*',
                  '**/Manifest*.*',
