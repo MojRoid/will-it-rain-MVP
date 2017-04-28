@@ -3,9 +3,9 @@ package moj.rain.app.domain;
 
 import android.support.annotation.NonNull;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -42,7 +42,7 @@ public class BaseUseCaseImplTest {
         });
     }
 
-    @BeforeEach
+    @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
         baseUseCase = getSpy();

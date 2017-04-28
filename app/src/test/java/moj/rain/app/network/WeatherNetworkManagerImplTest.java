@@ -1,9 +1,9 @@
 package moj.rain.app.network;
 
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -25,7 +25,7 @@ public class WeatherNetworkManagerImplTest {
     private double latitude = 1.2;
     private double longitude = 3.4;
 
-    @BeforeEach
+    @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
         weatherNetworkManager = new WeatherNetworkManagerImpl(darkSkyApi);

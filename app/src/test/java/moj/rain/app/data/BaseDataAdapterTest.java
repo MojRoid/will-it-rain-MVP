@@ -4,9 +4,9 @@ package moj.rain.app.data;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.platform.commons.util.StringUtils;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -58,7 +58,7 @@ public class BaseDataAdapterTest {
         });
     }
 
-    @BeforeEach
+    @Before
     public void setUp() throws Exception {
         baseDataAdapter = getSpy();
         MockitoAnnotations.initMocks(this);
