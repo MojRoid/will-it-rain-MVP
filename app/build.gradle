@@ -1,7 +1,9 @@
 apply plugin: 'com.android.application'
 apply plugin: 'de.mannodermaus.android-junit5'
+apply plugin: 'jacoco-android'
 apply from: 'dependencies.gradle'
 apply from: 'config.gradle'
+apply from: 'jacoco.gradle'
 
 android {
     compileSdkVersion 25

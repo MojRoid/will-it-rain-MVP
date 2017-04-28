@@ -1,0 +1,22 @@
+jacocoAndroidUnitTestReport {
+    excludes += ['**/R.class',
+                 '**/R$*.class',
+                 '**/*$ViewInjector*.*',
+                 '**/*$ViewBinder*.*',
+                 '**/*_ViewBinding*.*',
+                 '**/*Factory*.class',
+                 '**/*AutoValue*.class',
+                 '**/injection/*.*',
+                 '**/model/*.*',
+                 '**/*Provider*.class',
+                 '**/*_MembersInjector.class',
+                 '**/BuildConfig.*',
+                 '**/Manifest*.*',
+                 '**/*Lambda*.*']
+}
+
+jacocoAndroidUnitTestReport {
+    csv.enabled false
+    html.enabled true
+    xml.enabled true
+}
