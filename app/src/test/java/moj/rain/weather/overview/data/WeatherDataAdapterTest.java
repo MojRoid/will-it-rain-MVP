@@ -2,9 +2,9 @@ package moj.rain.weather.overview.data;
 
 
 import org.joda.time.DateTime;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 
 import io.reactivex.schedulers.Schedulers;
 import moj.rain.app.network.model.Hour;
@@ -38,7 +38,7 @@ public class WeatherDataAdapterTest {
     private boolean actualBoolean;
     private WeatherHour actualWeatherHour;
 
-    @BeforeEach
+    @Before
     public void setUp() throws Exception {
         weatherDataAdapter = new WeatherDataAdapter(
                 Schedulers.trampoline(),

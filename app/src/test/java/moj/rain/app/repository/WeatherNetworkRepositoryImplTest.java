@@ -1,9 +1,9 @@
 package moj.rain.app.repository;
 
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -30,7 +30,7 @@ public class WeatherNetworkRepositoryImplTest {
     private double latitude = 1.2;
     private double longitude = 3.4;
 
-    @BeforeEach
+    @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
         weatherNetworkRepository = new WeatherNetworkRepositoryImpl(networkManager);

@@ -1,9 +1,9 @@
 package moj.rain.weather.overview.presenter;
 
 import org.joda.time.DateTimeZone;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -48,7 +48,7 @@ public class OverviewPresenterImplTest {
     private double longitude = 0;
     private DateTimeZone dateTimeZone = DateTimeZone.UTC;
 
-    @BeforeEach
+    @Before
     public void setUp() throws Exception {
         view = Mockito.mock(OverviewView.class);
         getWeatherUseCase = Mockito.mock(GetWeatherUseCase.class);

@@ -1,8 +1,8 @@
 package moj.rain.weather.overview.domain;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -33,7 +33,7 @@ public class GetWeatherUseCaseImplTest {
 
     private GetWeatherUseCaseImpl getWeatherUseCase;
 
-    @BeforeEach
+    @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
         getWeatherUseCase = new GetWeatherUseCaseImpl(
