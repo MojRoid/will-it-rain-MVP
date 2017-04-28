@@ -9,7 +9,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import moj.rain.R;
 import moj.rain.app.RainApp;
-import moj.rain.app.util.DayUtils;
+import moj.rain.app.util.DateUtils;
 import moj.rain.app.view.BaseActivity;
 import moj.rain.weather.overview.injection.OverviewModule;
 import moj.rain.weather.overview.model.WeatherData;
@@ -58,7 +58,7 @@ public class OverviewActivity extends BaseActivity implements OverviewView {
     private String getWeatherDataString(@NonNull WeatherData weatherData) {
         StringBuilder stringBuilder = new StringBuilder();
         for (WeatherHour weatherHour : weatherData.getRainHourList()) {
-            String day = DayUtils.formatDayNicely(getResources(), weatherHour.getHour(), weatherData.getDateTimeZone());
+            String day = DateUtils.formatDayNicely(getResources(), weatherHour.getHour(), weatherData.getDateTimeZone());
             stringBuilder.append(day);
             stringBuilder.append("\n\n");
             stringBuilder.append(weatherHour.toString());

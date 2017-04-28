@@ -65,25 +65,25 @@ public class BaseDataAdapterTest {
     }
 
     @Test
-    @DisplayName("GIVEN a valid destination value WHEN destination validity is checked THEN destination should be deemed valid")
+    @DisplayName("GIVEN valid destination data WHEN destination data is checked if valid THEN destination data should be deemed valid")
     public void isValid() throws Exception {
-        givenAValidDestinationValue();
-        whenDestinationValidityIsChecked();
-        thenDestinationShouldBeDeemedValid();
+        givenValidDestinationData("123");
+        whenDestinationDataIsCheckedIfValid();
+        thenDestinationDataShouldBeDeemedValid();
     }
 
     @Test
-    @DisplayName("GIVEN a valid source value WHEN source is transformed THEN source should be transformed")
+    @DisplayName("GIVEN valid source data WHEN source is transformed THEN source should be transformed to destination")
     public void transformSource() throws Exception {
-        givenAValidSourceValue();
+        givenValidSourceData(123);
         whenSourceIsTransformed();
-        thenSourceShouldBeTransformed();
+        thenSourceShouldBeTransformedToDestination("123");
     }
 
     @Test
     @DisplayName("GIVEN source data WHEN data is transformed THEN data is adapted AND passed to callback")
     public void transform_data() throws Exception {
-        givenSourceData(123);
+        givenSourceList(123);
         whenDataIsTransformed();
         thenDataIsAdaptedAndPassedToCallback("123");
     }
@@ -96,15 +96,15 @@ public class BaseDataAdapterTest {
         thenTheDisposableIsDisposed();
     }
 
-    private void givenAValidDestinationValue() {
-        destination = "123";
+    private void givenValidDestinationData(String destination) {
+        this.destination = destination;
     }
 
-    private void givenAValidSourceValue() {
-        source = 123;
+    private void givenValidSourceData(int source) {
+        this.source = source;
     }
 
-    private void givenSourceData(int source) {
+    private void givenSourceList(int source) {
         sourceList = new ArrayList<>();
         sourceList.add(source);
     }
@@ -113,7 +113,7 @@ public class BaseDataAdapterTest {
         given(disposable.isDisposed()).willReturn(false);
     }
 
-    private void whenDestinationValidityIsChecked() {
+    private void whenDestinationDataIsCheckedIfValid() {
         actualBoolean = baseDataAdapter.isValid(destination);
     }
 
@@ -129,12 +129,12 @@ public class BaseDataAdapterTest {
         baseDataAdapter.transform(sourceList, callback);
     }
 
-    private void thenDestinationShouldBeDeemedValid() {
+    private void thenDestinationDataShouldBeDeemedValid() {
         assertThat(actualBoolean).isTrue();
     }
 
-    private void thenSourceShouldBeTransformed() {
-        assertThat(actualString).isEqualTo("123");
+    private void thenSourceShouldBeTransformedToDestination(String expected) {
+        assertThat(actualString).isEqualTo(expected);
     }
 
     private void thenDataIsAdaptedAndPassedToCallback(String destination) {

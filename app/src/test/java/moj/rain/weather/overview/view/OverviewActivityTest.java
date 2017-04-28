@@ -7,6 +7,7 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import moj.rain.RobolectricTestBase;
-import moj.rain.app.util.DayUtils;
+import moj.rain.app.util.DateUtils;
 import moj.rain.weather.overview.model.WeatherData;
 import moj.rain.weather.overview.model.WeatherHour;
 import moj.rain.weather.overview.presenter.OverviewPresenter;
@@ -37,6 +38,8 @@ public class OverviewActivityTest extends RobolectricTestBase {
     @InjectMocks
     private OverviewActivity activity;
 
+    private WeatherData weatherData;
+
     @Before
     public void setUp() throws Exception {
         activityController = Robolectric.buildActivity(OverviewActivity.class).create();
@@ -45,35 +48,41 @@ public class OverviewActivityTest extends RobolectricTestBase {
     }
 
     @Test
+    @DisplayName("WHEN activity is created is called THEN get weather should not be called")
     public void onCreate() throws Exception {
-        // Then
-        then(presenter).should(times(0)).getWeather();
-        then(presenter).shouldHaveNoMoreInteractions();
+        thenGetWeatherShouldNotBeCalled();
     }
 
     @Test
+    @DisplayName("WHEN activity is resumed THEN get weather should be called")
     public void onResume() throws Exception {
-        // When
-        activityController.resume();
-
-        // Then
-        then(presenter).should(times(1)).getWeather();
-        then(presenter).shouldHaveNoMoreInteractions();
+        whenActivityIsResumed();
+        thenGetWeatherShouldBeCalled();
     }
 
     @Test
+    @DisplayName("WHEN activity is destroyed THEN notify the presenter the view has been destroyed")
     public void onDestroy() throws Exception {
-        // When
-        activityController.destroy();
-
-        // Then
-        then(presenter).should(times(1)).onViewDestroyed();
-        then(presenter).shouldHaveNoMoreInteractions();
+        whenActivityIsDestroyed();
+        thenNotifyThePresenterTheViewHasBeenDestroyed();
     }
 
     @Test
+    @DisplayName("GIVEN valid weather data WHEN weather is shown THEN weather data should be formatted and shown")
     public void showWeather() throws Exception {
-        // Given
+        givenValidWeatherData();
+        whenWeatherIsShown();
+        thenWeatherDataShouldBeFormattedAndShown();
+    }
+
+    @Test
+    @DisplayName("WHEN a weather network error is shown THEN show this error as a snackbar")
+    public void showWeatherNetworkError() throws Exception {
+        whenAWeatherNetworkErrorIsShown();
+        thenShowTheErrorAsASnackbar();
+    }
+
+    private void givenValidWeatherData() {
         DateTimeZone dateTimeZone = DateTimeZone.UTC;
         List<WeatherHour> weatherHourList = new ArrayList<>();
         WeatherHour weatherHour = WeatherHour.builder()
@@ -84,14 +93,47 @@ public class OverviewActivityTest extends RobolectricTestBase {
                 .setTemperature(3)
                 .build();
         weatherHourList.add(weatherHour);
-        WeatherData weatherData = WeatherData.create(dateTimeZone, weatherHourList);
+        weatherData = WeatherData.create(dateTimeZone, weatherHourList);
+    }
 
-        // When
+    private void whenActivityIsResumed() {
+        activityController.resume();
+    }
+
+    private void whenActivityIsDestroyed() {
+        activityController.destroy();
+    }
+
+    private void whenWeatherIsShown() {
         activity.showWeather(weatherData);
+    }
 
-        // Then
+    private void whenAWeatherNetworkErrorIsShown() {
+        activity.showWeatherNetworkError();
+    }
+
+    private void thenGetWeatherShouldNotBeCalled() {
+        then(presenter).should(times(0)).getWeather();
+        then(presenter).shouldHaveNoMoreInteractions();
+    }
+
+    private void thenGetWeatherShouldBeCalled() {
+        then(presenter).should(times(1)).getWeather();
+        then(presenter).shouldHaveNoMoreInteractions();
+    }
+
+    private void thenNotifyThePresenterTheViewHasBeenDestroyed() {
+        then(presenter).should(times(1)).onViewDestroyed();
+        then(presenter).shouldHaveNoMoreInteractions();
+    }
+
+    private void thenWeatherDataShouldBeFormattedAndShown() {
         then(weatherTextView).should(times(1)).setText(getWeatherDataString(weatherData));
         then(weatherTextView).shouldHaveNoMoreInteractions();
+    }
+
+    private void thenShowTheErrorAsASnackbar() {
+        // TODO: verify snack is created
     }
 
     // TODO: remove/refactor later
@@ -99,21 +141,12 @@ public class OverviewActivityTest extends RobolectricTestBase {
     private String getWeatherDataString(@NonNull WeatherData weatherData) {
         StringBuilder stringBuilder = new StringBuilder();
         for (WeatherHour weatherHour : weatherData.getRainHourList()) {
-            String day = DayUtils.formatDayNicely(activity.getResources(), weatherHour.getHour(), weatherData.getDateTimeZone());
+            String day = DateUtils.formatDayNicely(activity.getResources(), weatherHour.getHour(), weatherData.getDateTimeZone());
             stringBuilder.append(day);
             stringBuilder.append("\n\n");
             stringBuilder.append(weatherHour.toString());
             stringBuilder.append("\n\n\n\n");
         }
         return stringBuilder.toString().trim();
-    }
-
-    @Test
-    public void showWeatherNetworkError() throws Exception {
-        // When
-        activity.showWeatherNetworkError();
-
-        // Then
-        // TODO: verify snack is created
     }
 }

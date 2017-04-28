@@ -3,8 +3,8 @@ package moj.rain.weather.overview.data;
 
 import org.joda.time.DateTime;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 
 import io.reactivex.schedulers.Schedulers;
 import moj.rain.app.network.model.Hour;
@@ -14,7 +14,9 @@ import static com.google.common.truth.Truth.assertThat;
 
 public class WeatherDataAdapterTest {
 
-    private final long time = 123;
+    private static final long TODAY_MILLIS_FIXED = 1493377200000L; // 28/04/2017 - 12:00:00
+
+    private final long time = 1493377200L; // 28/04/2017 - 12:00:00
     private final String summary = "summary";
     private final String icon = "icon";
     private final double precipIntensity = 1.1;
@@ -29,10 +31,12 @@ public class WeatherDataAdapterTest {
     private final double pressure = 10.10;
     private final double ozone = 11.11;
 
-    @Mock
-    WeatherHour weatherHour;
-
     private WeatherDataAdapter weatherDataAdapter;
+
+    private WeatherHour weatherHour;
+    private Hour hour;
+    private boolean actualBoolean;
+    private WeatherHour actualWeatherHour;
 
     @BeforeEach
     public void setUp() throws Exception {
@@ -42,18 +46,45 @@ public class WeatherDataAdapterTest {
     }
 
     @Test
-    public void isValid() throws Exception {
-        // When
-        boolean actual = weatherDataAdapter.isValid(weatherHour);
-
-        // Then
-        assertThat(actual).isFalse();
+    @DisplayName("GIVEN valid weather hour WHEN destination data is checked if valid THEN return true")
+    public void isValid_true() throws Exception {
+        givenValidWeatherHour();
+        whenDestinationDataIsCheckedIfValid();
+        thenDestinationDataShouldBeCheckedIfValid(true);
     }
 
     @Test
+    @DisplayName("GIVEN null weather hour WHEN destination data is checked if valid THEN return false")
+    public void isValid_false() throws Exception {
+        givenNullWeatherHour();
+        whenDestinationDataIsCheckedIfValid();
+        thenDestinationDataShouldBeCheckedIfValid(false);
+    }
+
+    @Test
+    @DisplayName("GIVEN valid hour WHEN source is transformed THEN source should be transformed to destination")
     public void transform() throws Exception {
-        // Given
-        Hour hour = Hour.builder()
+        givenValidHour();
+        whenSourceIsTransformed();
+        thenSourceShouldBeTransformedToDestination();
+    }
+
+    private void givenValidWeatherHour() {
+        weatherHour = WeatherHour.builder()
+                .setHour(new DateTime(time * 1000))
+                .setIcon(icon)
+                .setPrecipIntensity(precipIntensity)
+                .setPrecipProbability(precipProbability)
+                .setTemperature((temperature + apparentTemperature) / 2)
+                .build();
+    }
+
+    private void givenNullWeatherHour() {
+        weatherHour = null;
+    }
+
+    private void givenValidHour() {
+        hour = Hour.builder()
                 .setTime(time)
                 .setSummary(summary)
                 .setIcon(icon)
@@ -69,19 +100,22 @@ public class WeatherDataAdapterTest {
                 .setPressure(pressure)
                 .setOzone(ozone)
                 .build();
+    }
 
-        // When
-        WeatherHour actual = weatherDataAdapter.transformSource(hour);
+    private void whenDestinationDataIsCheckedIfValid() {
+        actualBoolean = weatherDataAdapter.isValid(weatherHour);
+    }
 
-        // Then
-        WeatherHour expected = WeatherHour.builder()
-                .setHour(new DateTime(hour.getTime() * 1000))
-                .setIcon(hour.getIcon())
-                .setPrecipIntensity(hour.getPrecipIntensity())
-                .setPrecipProbability(hour.getPrecipProbability())
-                .setTemperature((hour.getTemperature() + hour.getApparentTemperature()) / 2)
-                .build();
+    private void whenSourceIsTransformed() {
+        actualWeatherHour = weatherDataAdapter.transformSource(hour);
+    }
 
-        assertThat(actual).isEqualTo(expected);
+    private void thenDestinationDataShouldBeCheckedIfValid(boolean expected) {
+        assertThat(actualBoolean).isEqualTo(expected);
+    }
+
+    private void thenSourceShouldBeTransformedToDestination() {
+        givenValidWeatherHour();
+        assertThat(actualWeatherHour).isEqualTo(weatherHour);
     }
 }

@@ -4,6 +4,7 @@ package moj.rain.app.domain;
 import android.support.annotation.NonNull;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -48,25 +49,36 @@ public class BaseUseCaseImplTest {
     }
 
     @Test
+    @DisplayName("WHEN disposables are tracked THEN disposables should be added to the composite disposable")
     public void trackDisposable() throws Exception {
-        // When
+        whenDisposablesAreTracked();
+        thenDisposablesShouldBeAddedToTheCompositeDisposable();
+    }
+
+    @Test
+    @DisplayName("WHEN use cases are cleaned up THEN the composite disposable should be cleared")
+    public void cleanUp() throws Exception {
+        whenUseCasesAreCleanedUp();
+        thenTheCompositeDisposableShouldBeCleared();
+    }
+
+    private void whenUseCasesAreCleanedUp() {
+        baseUseCase.cleanUp();
+    }
+
+    private void whenDisposablesAreTracked() {
         baseUseCase.trackDisposable(disposable1);
         baseUseCase.trackDisposable(disposable2);
+    }
 
-        // Then
+    private void thenDisposablesShouldBeAddedToTheCompositeDisposable() {
         then(compositeDisposable).should(times(1)).add(disposable1);
         then(compositeDisposable).should(times(1)).add(disposable2);
         then(compositeDisposable).shouldHaveNoMoreInteractions();
     }
 
-    @Test
-    public void cleanUp() throws Exception {
-        // When
-        baseUseCase.cleanUp();
-
-        // Then
+    private void thenTheCompositeDisposableShouldBeCleared() {
         then(compositeDisposable).should(times(1)).clear();
         then(compositeDisposable).shouldHaveNoMoreInteractions();
-
     }
 }
