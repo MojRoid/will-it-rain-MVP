@@ -23,6 +23,7 @@ public class DateUtilsTest extends DateUtils {
     private static final long TOMORROW_MILLIS_FIXED = 1493463600000L; // 29/04/2017 - 12:00:00
     private static final long YESTERDAY_MILLIS_FIXED = 1493290800000L; // 27/04/2017 - 12:00:00
     private static final long NEXT_MONTH_MILLIS_FIXED = 1495969200000L; // 28/05/2017 - 12:00:00
+    private static final long NEXT_YEAR_MILLIS_FIXED = 1524913200000L; // 28/05/2018 - 12:00:00
 
     private static final String TODAY = "Today";
     private static final String TOMORROW = "Tomorrow";
@@ -100,10 +101,10 @@ public class DateUtilsTest extends DateUtils {
     }
 
     @Test
-    @DisplayName("GIVEN first date is today AND second date is tomorrow WHEN dates are checked if they are the same day THEN return false")
+    @DisplayName("GIVEN first date is today this year AND second date is today next year WHEN dates are checked if they are the same day THEN return false")
     public void isSameDay_false() throws Exception {
         givenFirstDate(TODAY_MILLIS_FIXED);
-        givenSecondDate(TOMORROW_MILLIS_FIXED);
+        givenSecondDate(NEXT_YEAR_MILLIS_FIXED);
         whenDatesAreCheckedIfTheyAreTheSameDay();
         thenTheyShouldBeEvaluatedCorrectly(false);
     }
