@@ -11,7 +11,7 @@ import org.joda.time.format.DateTimeFormatter;
 
 import moj.rain.R;
 
-public final class DateUtils {
+public class DateUtils {
 
     private static final DateTimeFormatter DAY_OF_WEEK_FULL_FORMAT = DateTimeFormat.forPattern("EEEE");
 

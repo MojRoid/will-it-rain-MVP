@@ -11,7 +11,6 @@ jacocoAndroidUnitTestReport {
                  '**/*Provider*.class',
                  '**/*Activity*.*',
                  '**/*App.*',
-                 '**/*Util*.*',
                  '**/*_MembersInjector.class',
                  '**/BuildConfig.*',
                  '**/Manifest*.*',

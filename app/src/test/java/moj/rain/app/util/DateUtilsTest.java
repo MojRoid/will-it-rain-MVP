@@ -17,7 +17,7 @@ import moj.rain.R;
 import static com.google.common.truth.Truth.assertThat;
 import static org.mockito.Mockito.when;
 
-public class DateUtilsTest {
+public class DateUtilsTest extends DateUtils {
 
     private static final long TODAY_MILLIS_FIXED = 1493377200000L; // 28/04/2017 - 12:00:00
     private static final long TOMORROW_MILLIS_FIXED = 1493463600000L; // 29/04/2017 - 12:00:00
@@ -121,15 +121,15 @@ public class DateUtilsTest {
     }
 
     private void whenDateIsFormattedNicely() {
-        actualString = DateUtils.formatDayNicely(resources, dateTime, dateTimeZoneUtc);
+        actualString = formatDayNicely(resources, dateTime, dateTimeZoneUtc);
     }
 
     private void whenDateIsFormattedToFullName() {
-        actualString = DateUtils.formatDayFullName(dateTime, dateTimeZoneUtc);
+        actualString = formatDayFullName(dateTime, dateTimeZoneUtc);
     }
 
     private void whenDatesAreCheckedIfTheyAreTheSameDay() {
-        actualBoolean = DateUtils.isSameDay(firstDateTime, secondDateTime, dateTimeZoneUtc);
+        actualBoolean = isSameDay(firstDateTime, secondDateTime, dateTimeZoneUtc);
     }
 
     private void thenReturnFormattedDay(String expected) {
