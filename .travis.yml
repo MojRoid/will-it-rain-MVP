@@ -6,9 +6,17 @@ jdk:
 env:
   global:
     - ANDROID_TARGET_API=android-25
-    - ANDROID_MINIMUM_API=android-19
     - ANDROID_ABI=armeabi-v7a
     - ANDROID_TAG=google_apis
+
+sudo: false
+cache:
+  directories:
+    - $HOME/.gradle/caches/3.5
+    - $HOME/.gradle/caches/jars-1
+    - $HOME/.gradle/daemon
+    - $HOME/.gradle/native
+    - $HOME/.gradle/wrapper
 
 android:
   components:
@@ -29,20 +37,18 @@ android:
 
     # System images to run emulator(s) during tests
     - sys-img-${ANDROID_ABI}-${ANDROID_TARGET_API}
-    - sys-img-${ANDROID_ABI}-${ANDROID_MINIMUM_API}
 
 
 before_script:
   - ./gradlew jacocoTestReport
-  - android list targets    # Create AVD for given API
-  - echo no | android create avd --force --name test --$ANDROID_TARGET_API --abi $ANDROID_ABI --tag $ANDROID_TAG    # Start emulator
+  - android list targets
+  - echo no | android create avd --force --name test --target $ANDROID_TARGET_API --abi $ANDROID_ABI --tag $ANDROID_TAG
   - emulator -avd test -no-skin -no-audio -no-window &
 
 script:
   - android-wait-for-emulator
-  - adb devices   # Display list of devices
-  - adb shell input keyevent 82 &
-  - ./gradlew connectedCheck -PdisablePreDex --stacktrace
+  - adb shell setprop dalvik.vm.dexopt-flags v=n,o=v
+  - ./gradlew connectedCheck
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
