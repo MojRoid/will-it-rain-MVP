@@ -39,7 +39,7 @@ android:
 before_script:
   - ./gradlew jacocoTestReport
   - android list targets  # Create AVD for given api
-  - echo no | android create avd --force --name test --target $EMULATOR_TARGET --abi $ANDROID_ABI  # Start emulator
+  - echo no | android create avd --force --name test --target $EMULATOR_TARGET  # Start emulator
   - emulator -avd test -no-skin -no-audio -no-window &
 
 script:

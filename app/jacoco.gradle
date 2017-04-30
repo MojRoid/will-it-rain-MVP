@@ -22,7 +22,7 @@ jacocoAndroidUnitTestReport {
     html.enabled true
     xml.enabled true
 }
-
+ // JUnit 5 code coverage reporting in codecov.io not yet working :/
 project.afterEvaluate {
     def junitPlatformTestTask = project.tasks.getByName('junitPlatformTestDebug')
 
