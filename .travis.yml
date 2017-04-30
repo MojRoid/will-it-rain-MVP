@@ -8,6 +8,7 @@ env:
     - ANDROID_TARGET_API=android-25
     - ANDROID_MINIMUM_API=android-19
     - ANDROID_ABI=armeabi-v7a
+    - ANDROID_TAG=google_apis
 
 android:
   components:
@@ -33,8 +34,8 @@ android:
 
 before_script:
   - ./gradlew jacocoTestReport
-  - android list targets  # Create AVD for given API
-  - echo no | android create avd --force --name test --target $ANDROID_TARGET_API # Start emulator
+  - android list targets    # Create AVD for given API
+  - echo no | android create avd --force --name test --$ANDROID_TARGET_API --abi $ANDROID_ABI --tag $ANDROID_TAG    # Start emulator
   - emulator -avd test -no-skin -no-audio -no-window &
 
 script:
