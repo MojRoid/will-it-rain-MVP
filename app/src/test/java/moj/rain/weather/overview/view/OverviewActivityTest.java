@@ -75,13 +75,6 @@ public class OverviewActivityTest extends RobolectricTestBase {
         thenWeatherDataShouldBeFormattedAndShown();
     }
 
-    @Test
-    @DisplayName("WHEN a weather network error is shown THEN show this error as a snackbar")
-    public void showWeatherNetworkError() throws Exception {
-        whenAWeatherNetworkErrorIsShown();
-        thenShowTheErrorAsASnackbar();
-    }
-
     private void givenValidWeatherData() {
         DateTimeZone dateTimeZone = DateTimeZone.UTC;
         List<WeatherHour> weatherHourList = new ArrayList<>();
@@ -108,10 +101,6 @@ public class OverviewActivityTest extends RobolectricTestBase {
         activity.showWeather(weatherData);
     }
 
-    private void whenAWeatherNetworkErrorIsShown() {
-        activity.showWeatherNetworkError();
-    }
-
     private void thenGetWeatherShouldNotBeCalled() {
         then(presenter).should(times(0)).getWeather();
         then(presenter).shouldHaveNoMoreInteractions();
@@ -130,10 +119,6 @@ public class OverviewActivityTest extends RobolectricTestBase {
     private void thenWeatherDataShouldBeFormattedAndShown() {
         then(weatherTextView).should(times(1)).setText(getWeatherDataString(weatherData));
         then(weatherTextView).shouldHaveNoMoreInteractions();
-    }
-
-    private void thenShowTheErrorAsASnackbar() {
-        // TODO: verify snack is created
     }
 
     // TODO: remove/refactor later
