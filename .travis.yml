@@ -6,8 +6,8 @@ jdk:
 env:
   global:
     - ANDROID_TARGET_API=android-25
+    - ANDROID_EMULATOR_API=android-21
     - ANDROID_ABI=armeabi-v7a
-    - ANDROID_TAG=google_apis
 
 sudo: false
 cache:
@@ -33,16 +33,16 @@ android:
     - extra-google-android-support
     - extra-google-m2repository
     - extra-android-m2repository
-    - addon-google_apis-google-25
+    - addon-google_apis-google-19
 
     # System images to run emulator(s) during tests
-    - sys-img-${ANDROID_ABI}-${ANDROID_TARGET_API}
+    - sys-img-${ANDROID_ABI}-${ANDROID_EMULATOR_API}
 
 
 before_script:
   - ./gradlew jacocoTestReport
   - android list targets
-  - echo no | android create avd --force --name test --target $ANDROID_TARGET_API --abi $ANDROID_ABI --tag $ANDROID_TAG
+  - echo no | android create avd --force --name test --target $ANDROID_EMULATOR_API --abi $ANDROID_ABI
   - emulator -avd test -no-skin -no-audio -no-window &
 
 script:
