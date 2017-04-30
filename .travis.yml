@@ -21,9 +21,9 @@ cache:
 android:
   components:
     # The BuildTools version used by your project
-    - platform-tools
     - tools
     - build-tools-25.0.2
+    - platform-tools
 
     # The SDK version used to compile your project
     - $ANDROID_TARGET_API
@@ -33,7 +33,7 @@ android:
     - extra-google-android-support
     - extra-google-m2repository
     - extra-android-m2repository
-    - addon-google_apis-google-19
+    - addon-google_apis-google-25
 
     # System images to run emulator(s) during tests
     - sys-img-${ANDROID_ABI}-${ANDROID_TARGET_API}
