@@ -9,6 +9,7 @@ import java.util.List;
 import io.reactivex.Observable;
 import io.reactivex.Scheduler;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.internal.observers.EmptyCompletableObserver;
 import timber.log.Timber;
 
 public abstract class BaseDataAdapter<SOURCE, DESTINATION> {
@@ -27,6 +28,7 @@ public abstract class BaseDataAdapter<SOURCE, DESTINATION> {
     public BaseDataAdapter(Scheduler computationScheduler, Scheduler mainThreadScheduler) {
         this.computationScheduler = computationScheduler;
         this.mainThreadScheduler = mainThreadScheduler;
+        disposable = new EmptyCompletableObserver();
     }
 
     protected abstract boolean isValid(DESTINATION destination);
@@ -50,7 +52,7 @@ public abstract class BaseDataAdapter<SOURCE, DESTINATION> {
     }
 
     public void cancel() {
-        if (disposable != null && !disposable.isDisposed()) {
+        if (!disposable.isDisposed()) {
             disposable.dispose();
         }
     }

@@ -15,14 +15,14 @@ public class RainApp extends Application {
     @Inject
     Timber.Tree loggingTree;
 
-    private static RainApp instance;
+    private static RainApp app;
     private final RainAppComponent component;
 
     public RainApp() {
-        instance = this;
+        app = this;
         component = DaggerRainAppComponent
                 .builder()
-                .rainAppModule(new RainAppModule(instance))
+                .rainAppModule(new RainAppModule(app))
                 .build();
         component.inject(this);
     }
@@ -38,7 +38,7 @@ public class RainApp extends Application {
     }
 
     public static RainApp get() {
-        return instance;
+        return app;
     }
 
     public RainAppComponent getComponent() {
