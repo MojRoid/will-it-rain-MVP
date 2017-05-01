@@ -105,7 +105,7 @@ public class BaseDataAdapterTest {
     }
 
     @Test
-    @DisplayName("GIVEN disposable is not disposed WHEN the transformation is canceled THEN the disposable is disposed")
+    @DisplayName("GIVEN disposable is disposed WHEN the transformation is canceled THEN the disposable is not disposed")
     public void cancel_disposed() throws Exception {
         givenDisposable(true);
         whenTheTransformationIsCanceled();

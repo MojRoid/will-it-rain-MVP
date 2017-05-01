@@ -4,7 +4,6 @@ package moj.rain.app.network;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -19,7 +18,6 @@ public class WeatherNetworkManagerImplTest {
     @Mock
     private DarkSkyApi darkSkyApi;
 
-    @InjectMocks
     private WeatherNetworkManagerImpl weatherNetworkManager;
 
     private double latitude = 1.2;
