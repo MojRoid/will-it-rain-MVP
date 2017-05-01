@@ -3,6 +3,8 @@ language: android
 jdk:
   - oraclejdk8
 
+sudo: false
+
 env:
   global:
     - ANDROID_TARGET_API=android-25
@@ -11,12 +13,12 @@ env:
 
 android:
   components:
-    # The BuildTools version used by your project
+    # BuildTools
     - tools
     - build-tools-25.0.2
     - platform-tools
 
-    # The SDK version used to compile your project
+    # SDK version
     - $ANDROID_TARGET_API
 
     # Additional components
@@ -26,7 +28,7 @@ android:
     - extra-android-m2repository
     - addon-google_apis-google-19
 
-    # System images to run emulator(s) during tests
+    # System image(s) to run emulator(s) during tests
     - sys-img-${ANDROID_ABI}-${ANDROID_EMULATOR_API}
 
 
