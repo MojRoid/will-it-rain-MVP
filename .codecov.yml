@@ -1,0 +1,3 @@
+ignore:
+  - "**/injection/*.*"
+  - "**/model/*.*"

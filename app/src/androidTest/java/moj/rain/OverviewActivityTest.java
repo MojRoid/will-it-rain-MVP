@@ -1,9 +1,12 @@
 package moj.rain;
 
+import android.app.Instrumentation;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,6 +26,15 @@ public class OverviewActivityTest {
     @Rule
     public ActivityTestRule<OverviewActivity> activityRule = new ActivityTestRule<>(OverviewActivity.class);
 
+    private OverviewActivity activity;
+    private Instrumentation instrumentation;
+
+    @Before
+    public void setUp() throws Exception {
+        activity = activityRule.getActivity();
+        instrumentation = InstrumentationRegistry.getInstrumentation();
+    }
+
     @Test
     // "WHEN a weather network error is shown THEN show this error as a snackbar"
     public void showWeatherNetworkError() throws Exception {
@@ -31,7 +43,7 @@ public class OverviewActivityTest {
     }
 
     private void whenAWeatherNetworkErrorIsShown() {
-        activityRule.getActivity().showWeatherNetworkError();
+        activity.showWeatherNetworkError();
     }
 
     private void thenShowTheErrorAsASnackbar() {

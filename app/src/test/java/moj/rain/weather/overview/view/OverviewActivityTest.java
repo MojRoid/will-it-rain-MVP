@@ -121,7 +121,6 @@ public class OverviewActivityTest extends RobolectricTestBase {
         then(weatherTextView).shouldHaveNoMoreInteractions();
     }
 
-    // TODO: remove/refactor later
     @NonNull
     private String getWeatherDataString(@NonNull WeatherData weatherData) {
         StringBuilder stringBuilder = new StringBuilder();

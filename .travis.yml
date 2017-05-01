@@ -33,6 +33,7 @@ android:
 
 
 before_script:
+  - ./gradlew jacocoTestReport
   - android list targets
   - echo no | android create avd --force --name test --target $ANDROID_EMULATOR_API --abi $ANDROID_ABI
   - emulator -avd test -no-skin -no-audio -no-window &
@@ -43,5 +44,4 @@ script:
   - ./gradlew --no-daemon connectedCheck
 
 after_success:
-  - ./gradlew jacocoTestReport
   - bash <(curl -s https://codecov.io/bash
