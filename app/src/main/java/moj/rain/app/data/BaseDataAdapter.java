@@ -50,10 +50,7 @@ public abstract class BaseDataAdapter<SOURCE, DESTINATION> {
     }
 
     public void cancel() {
-        if (disposable == null) {
-            return;
-        }
-        if (!disposable.isDisposed()) {
+        if (disposable != null && !disposable.isDisposed()) {
             disposable.dispose();
         }
     }
