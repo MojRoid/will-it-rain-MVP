@@ -6,4 +6,5 @@
     <string name="today">Today</string>
     <string name="tomorrow">Tomorrow</string>
     <string name="yesterday">Yesterday</string>
+    <string name="celsius_symbol">%d\u00B0c</string>
 </resources>
