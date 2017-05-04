@@ -30,8 +30,6 @@ public class OverviewActivityTest extends RobolectricTestBase {
 
     @Mock
     private OverviewPresenter presenter;
-    @Mock
-    private TextView weatherTextView;
 
     private ActivityController<OverviewActivity> activityController;
 
@@ -72,7 +70,7 @@ public class OverviewActivityTest extends RobolectricTestBase {
     public void showWeather() throws Exception {
         givenValidWeatherData();
         whenWeatherIsShown();
-        thenWeatherDataShouldBeFormattedAndShown();
+        // TODO: then show this data in a recycler view
     }
 
     private void givenValidWeatherData() {
@@ -114,23 +112,5 @@ public class OverviewActivityTest extends RobolectricTestBase {
     private void thenNotifyThePresenterTheViewHasBeenDestroyed() {
         then(presenter).should(times(1)).onViewDestroyed();
         then(presenter).shouldHaveNoMoreInteractions();
-    }
-
-    private void thenWeatherDataShouldBeFormattedAndShown() {
-        then(weatherTextView).should(times(1)).setText(getWeatherDataString(weatherData));
-        then(weatherTextView).shouldHaveNoMoreInteractions();
-    }
-
-    @NonNull
-    private String getWeatherDataString(@NonNull WeatherData weatherData) {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (WeatherHour weatherHour : weatherData.getRainHourList()) {
-            String day = DateUtils.formatDayNicely(activity.getResources(), weatherHour.getHour(), weatherData.getDateTimeZone());
-            stringBuilder.append(day);
-            stringBuilder.append("\n\n");
-            stringBuilder.append(weatherHour.toString());
-            stringBuilder.append("\n\n\n\n");
-        }
-        return stringBuilder.toString().trim();
     }
 }
