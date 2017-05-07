@@ -32,15 +32,15 @@ public class HourListAdapterImplTest extends RobolectricTestBase {
 
     private final DateTime HOUR_1 = DateTime.now();
     private final String ICON_1 = "test icon 1";
-    private final double PRECIP_INTENSITY_1 = 1.1;
-    private final double PRECIP_PROBABILITY_1 = 2.2;
-    private final double TEMPERATURE_1 = 3.3;
+    private final double PRECIP_INTENSITY_1 = 1.2;
+    private final double PRECIP_PROBABILITY_1 = 3.4;
+    private final double TEMPERATURE_1 = 5.6;
 
     private final DateTime HOUR_2 = DateTime.now().plus(TimeUnit.HOURS.toHours(1));
     private final String ICON_2 = "test icon 1";
-    private final double PRECIP_INTENSITY_2 = 1.1;
-    private final double PRECIP_PROBABILITY_2 = 2.2;
-    private final double TEMPERATURE_2 = 3.3;
+    private final double PRECIP_INTENSITY_2 = 7.8;
+    private final double PRECIP_PROBABILITY_2 = 9.10;
+    private final double TEMPERATURE_2 = 11.12;
 
     @Spy
     private HourListAdapterImpl hourListAdapter;
