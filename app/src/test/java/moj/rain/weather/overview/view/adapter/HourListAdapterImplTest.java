@@ -90,10 +90,17 @@ public class HourListAdapterImplTest extends RobolectricTestBase {
 
 
     @Test
-    public void getItemCount() throws Exception {
+    public void getItemCount_data() throws Exception {
         givenValidWeatherData();
         givenWeatherDataIsSet();
         thenItemCountShouldMatchWeatherDataSize();
+    }
+
+    @Test
+    public void getItemCount_null() throws Exception {
+        givenNullWeatherData();
+        givenWeatherDataIsSet();
+        thenItemCountShouldBeZero();
     }
 
     @Test
@@ -101,10 +108,6 @@ public class HourListAdapterImplTest extends RobolectricTestBase {
         givenValidWeatherData();
         givenWeatherDataIsSet();
         thenNotifyThatTheDataSetHasChanged();
-    }
-
-    private void thenNotifyThatTheDataSetHasChanged() {
-        verify(hourListAdapter, times(1)).notifyDataSetChanged();
     }
 
     private void givenValidWeatherData() {
@@ -126,6 +129,10 @@ public class HourListAdapterImplTest extends RobolectricTestBase {
         weatherHourList.add(weatherHour1);
         weatherHourList.add(weatherHour2);
         weatherData = WeatherData.create(dateTimeZone, weatherHourList);
+    }
+
+    private void givenNullWeatherData() {
+        weatherData = null;
     }
 
     private void givenWeatherDataIsSet() {
@@ -155,5 +162,13 @@ public class HourListAdapterImplTest extends RobolectricTestBase {
 
     private void thenItemCountShouldMatchWeatherDataSize() {
         assertThat(hourListAdapter.getItemCount()).isEqualTo(weatherData.getRainHourList().size());
+    }
+
+    private void thenItemCountShouldBeZero() {
+        assertThat(hourListAdapter.getItemCount()).isEqualTo(0);
+    }
+
+    private void thenNotifyThatTheDataSetHasChanged() {
+        verify(hourListAdapter, times(1)).notifyDataSetChanged();
     }
 }
