@@ -6,11 +6,11 @@ buildscript {
     }
 
     project.ext {
-        jUnit5PlatformVersion = '1.0.0-M3'
+        jUnit5PlatformVersion = '1.0.0-M4'
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.4.0-alpha6'
+        classpath 'com.android.tools.build:gradle:2.4.0-alpha7'
         classpath "de.mannodermaus.gradle.plugins:android-junit5:$jUnit5PlatformVersion"
         classpath 'org.jacoco:org.jacoco.core:0.7.9'
         // NOTE: Do not place your application dependencies here; they belong

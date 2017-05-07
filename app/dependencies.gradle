@@ -24,9 +24,9 @@ ext {
 // JUnit 5 Dependencies
 android {
     junitPlatform {
-        jupiterVersion '5.0.0-M3'
+        jupiterVersion '5.0.0-M4'
         platformVersion project.jUnit5PlatformVersion
-        vintageVersion '4.12.0-M3'
+        vintageVersion '4.12.0-M4'
     }
 }
 

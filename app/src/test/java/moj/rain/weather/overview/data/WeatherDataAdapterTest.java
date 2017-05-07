@@ -16,20 +16,20 @@ public class WeatherDataAdapterTest {
 
     private static final long TODAY_MILLIS_FIXED = 1493377200000L; // 28/04/2017 - 12:00:00
 
-    private final long time = 1493377200L; // 28/04/2017 - 12:00:00
-    private final String summary = "summary";
-    private final String icon = "icon";
-    private final double precipIntensity = 1.1;
-    private final double precipProbability = 2.2;
-    private final double temperature = 3.3;
-    private final double apparentTemperature = 4.4;
-    private final double dewPoint = 5.5;
-    private final double humidity = 6.6;
-    private final double windSpeed = 7.7;
-    private final int windBearing = 8;
-    private final double cloudCover = 9.9;
-    private final double pressure = 10.10;
-    private final double ozone = 11.11;
+    private final long TIME = 1493377200L; // 28/04/2017 - 12:00:00
+    private final String SUMMARY = "SUMMARY";
+    private final String ICON = "ICON";
+    private final double PRECIP_INTENSITY = 1.1;
+    private final double PRECIP_PROBABILITY = 2.2;
+    private final double TEMPERATURE = 3.3;
+    private final double APPARENT_TEMPERATURE = 4.4;
+    private final double DEW_POINT = 5.5;
+    private final double HUMIDITY = 6.6;
+    private final double WIND_SPEED = 7.7;
+    private final int WIND_BEARING = 8;
+    private final double CLOUD_COVER = 9.9;
+    private final double PRESSURE = 10.10;
+    private final double O_ZONE = 11.11;
 
     private WeatherDataAdapter weatherDataAdapter;
 
@@ -71,11 +71,11 @@ public class WeatherDataAdapterTest {
 
     private void givenValidWeatherHour() {
         weatherHour = WeatherHour.builder()
-                .setHour(new DateTime(time * 1000))
-                .setIcon(icon)
-                .setPrecipIntensity(precipIntensity)
-                .setPrecipProbability(precipProbability)
-                .setTemperature((temperature + apparentTemperature) / 2)
+                .setHour(new DateTime(TIME * 1000))
+                .setIcon(ICON)
+                .setPrecipIntensity(PRECIP_INTENSITY)
+                .setPrecipProbability(PRECIP_PROBABILITY)
+                .setTemperature((TEMPERATURE + APPARENT_TEMPERATURE) / 2)
                 .build();
     }
 
@@ -85,20 +85,20 @@ public class WeatherDataAdapterTest {
 
     private void givenValidHour() {
         hour = Hour.builder()
-                .setTime(time)
-                .setSummary(summary)
-                .setIcon(icon)
-                .setPrecipIntensity(precipIntensity)
-                .setPrecipProbability(precipProbability)
-                .setTemperature(temperature)
-                .setApparentTemperature(apparentTemperature)
-                .setDewPoint(dewPoint)
-                .setHumidity(humidity)
-                .setWindSpeed(windSpeed)
-                .setWindBearing(windBearing)
-                .setCloudCover(cloudCover)
-                .setPressure(pressure)
-                .setOzone(ozone)
+                .setTime(TIME)
+                .setSummary(SUMMARY)
+                .setIcon(ICON)
+                .setPrecipIntensity(PRECIP_INTENSITY)
+                .setPrecipProbability(PRECIP_PROBABILITY)
+                .setTemperature(TEMPERATURE)
+                .setApparentTemperature(APPARENT_TEMPERATURE)
+                .setDewPoint(DEW_POINT)
+                .setHumidity(HUMIDITY)
+                .setWindSpeed(WIND_SPEED)
+                .setWindBearing(WIND_BEARING)
+                .setCloudCover(CLOUD_COVER)
+                .setPressure(PRESSURE)
+                .setOzone(O_ZONE)
                 .build();
     }
 

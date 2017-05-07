@@ -1,8 +1,5 @@
 package moj.rain.weather.overview.view;
 
-import android.support.annotation.NonNull;
-import android.widget.TextView;
-
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.junit.Before;
@@ -18,20 +15,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 import moj.rain.RobolectricTestBase;
-import moj.rain.app.util.DateUtils;
 import moj.rain.weather.overview.model.WeatherData;
 import moj.rain.weather.overview.model.WeatherHour;
 import moj.rain.weather.overview.presenter.OverviewPresenter;
+import moj.rain.weather.overview.view.adapter.HourListAdapter;
 
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.times;
 
 public class OverviewActivityTest extends RobolectricTestBase {
 
+    private final DateTime HOUR = DateTime.now();
+    private final String ICON = "test icon";
+    private final double PRECIP_INTENSITY = 1.1;
+    private final double PRECIP_PROBABILITY = 2.2;
+    private final double TEMPERATURE = 3.3;
+
     @Mock
     private OverviewPresenter presenter;
     @Mock
-    private TextView weatherTextView;
+    private HourListAdapter hourListAdapter;
 
     private ActivityController<OverviewActivity> activityController;
 
@@ -68,22 +71,22 @@ public class OverviewActivityTest extends RobolectricTestBase {
     }
 
     @Test
-    @DisplayName("GIVEN valid weather data WHEN weather is shown THEN weather data should be formatted and shown")
+    @DisplayName("GIVEN valid weather data WHEN weather is shown THEN weather data should be passed to the recycler view adapter to be shown")
     public void showWeather() throws Exception {
         givenValidWeatherData();
         whenWeatherIsShown();
-        thenWeatherDataShouldBeFormattedAndShown();
+        thenWeatherDataShouldBePassedToRecyclerViewAdapter();
     }
 
     private void givenValidWeatherData() {
         DateTimeZone dateTimeZone = DateTimeZone.UTC;
         List<WeatherHour> weatherHourList = new ArrayList<>();
         WeatherHour weatherHour = WeatherHour.builder()
-                .setHour(DateTime.now())
-                .setIcon("test icon")
-                .setPrecipIntensity(1)
-                .setPrecipProbability(2)
-                .setTemperature(3)
+                .setHour(HOUR)
+                .setIcon(ICON)
+                .setPrecipIntensity(PRECIP_INTENSITY)
+                .setPrecipProbability(PRECIP_PROBABILITY)
+                .setTemperature(TEMPERATURE)
                 .build();
         weatherHourList.add(weatherHour);
         weatherData = WeatherData.create(dateTimeZone, weatherHourList);
@@ -116,21 +119,8 @@ public class OverviewActivityTest extends RobolectricTestBase {
         then(presenter).shouldHaveNoMoreInteractions();
     }
 
-    private void thenWeatherDataShouldBeFormattedAndShown() {
-        then(weatherTextView).should(times(1)).setText(getWeatherDataString(weatherData));
-        then(weatherTextView).shouldHaveNoMoreInteractions();
-    }
-
-    @NonNull
-    private String getWeatherDataString(@NonNull WeatherData weatherData) {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (WeatherHour weatherHour : weatherData.getRainHourList()) {
-            String day = DateUtils.formatDayNicely(activity.getResources(), weatherHour.getHour(), weatherData.getDateTimeZone());
-            stringBuilder.append(day);
-            stringBuilder.append("\n\n");
-            stringBuilder.append(weatherHour.toString());
-            stringBuilder.append("\n\n\n\n");
-        }
-        return stringBuilder.toString().trim();
+    private void thenWeatherDataShouldBePassedToRecyclerViewAdapter() {
+        then(hourListAdapter).should(times(1)).setWeatherData(weatherData);
+        then(hourListAdapter).shouldHaveNoMoreInteractions();
     }
 }
