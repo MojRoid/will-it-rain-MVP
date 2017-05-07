@@ -70,9 +70,7 @@ public class GetWeatherUseCaseImplTest {
     }
 
     private void whenGetWeatherUseCaseIsExecuted() {
-        double latitude = 1.2;
-        double longitude = 3.4;
-        getWeatherUseCase.execute(latitude, longitude);
+        getWeatherUseCase.execute(1.2, 3.4);
     }
 
     private void thenWeatherDataIsPassedToCallback() {

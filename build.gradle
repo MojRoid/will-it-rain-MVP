@@ -6,7 +6,7 @@ buildscript {
     }
 
     project.ext {
-        jUnit5PlatformVersion = '1.0.0-M3'
+        jUnit5PlatformVersion = '1.0.0-M4'
     }
 
     dependencies {

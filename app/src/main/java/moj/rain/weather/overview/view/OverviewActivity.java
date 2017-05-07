@@ -72,10 +72,10 @@ public class OverviewActivity extends BaseActivity implements OverviewView {
 
     @Override
     public void showWeatherNetworkError() {
-        showNoNetworkSnackbar();
+        showNetworkErrorSnackbar();
     }
 
-    private void showNoNetworkSnackbar() {
+    private void showNetworkErrorSnackbar() {
         Snackbar.make(getWindow().getDecorView().getRootView(),
                 getString(R.string.network_error_message),
                 Snackbar.LENGTH_SHORT)

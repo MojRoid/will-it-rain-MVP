@@ -44,8 +44,6 @@ public class OverviewPresenterImplTest {
     private OverviewView view;
     private GetWeatherUseCase getWeatherUseCase;
     private WeatherDataAdapter weatherDataAdapter;
-    private double latitude = 50;
-    private double longitude = 0;
     private DateTimeZone dateTimeZone = DateTimeZone.UTC;
 
     @Before
@@ -145,7 +143,7 @@ public class OverviewPresenterImplTest {
 
     private void thenExecuteTheGetWeatherUseCase() {
         then(getWeatherUseCase).should(times(1)).setCallback(presenter);
-        then(getWeatherUseCase).should(times(1)).execute(latitude, longitude);
+        then(getWeatherUseCase).should(times(1)).execute(50, 0);
         then(getWeatherUseCase).shouldHaveNoMoreInteractions();
     }
 

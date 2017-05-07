@@ -16,10 +16,10 @@ import moj.rain.weather.overview.model.WeatherHour;
 
 class HourViewHolder extends RecyclerView.ViewHolder {
 
-    @BindView(R.id.hour_item_day)
-    TextView day;
     @BindView(R.id.hour_item_hour)
     TextView hour;
+    @BindView(R.id.hour_item_day)
+    TextView day;
     @BindView(R.id.hour_item_temperature)
     TextView temperature;
 
@@ -32,12 +32,22 @@ class HourViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(WeatherHour weatherHour, DateTimeZone dateTimeZone) {
+        setHour(weatherHour);
+        setDay(weatherHour, dateTimeZone);
+        setTemperature(weatherHour);
+    }
+
+    private void setHour(WeatherHour weatherHour) {
+        String formattedHour = weatherHour.getHour().toString();
+        hour.setText(formattedHour);
+    }
+
+    private void setDay(WeatherHour weatherHour, DateTimeZone dateTimeZone) {
         String formattedDay = DateUtils.formatDayNicely(resources, weatherHour.getHour(), dateTimeZone);
         day.setText(formattedDay);
+    }
 
-        String formattedHour = weatherHour.getHour().hourOfDay().get() + ":00"; // TODO: format properly
-        hour.setText(formattedHour);
-
+    private void setTemperature(WeatherHour weatherHour) {
         int formattedTemperature = (int) Math.round(weatherHour.getTemperature());
         temperature.setText(resources.getString(R.string.celsius_symbol, formattedTemperature));
     }

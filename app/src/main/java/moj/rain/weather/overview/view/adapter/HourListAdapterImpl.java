@@ -14,6 +14,7 @@ public class HourListAdapterImpl extends HourListAdapter {
     @Override
     public HourViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.hour_view, parent, false);
+        itemView.setTag(R.layout.hour_view);
         return new HourViewHolder(itemView);
     }
 

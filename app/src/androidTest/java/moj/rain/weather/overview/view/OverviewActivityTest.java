@@ -1,4 +1,4 @@
-package moj.rain;
+package moj.rain.weather.overview.view;
 
 import android.app.Instrumentation;
 import android.support.test.InstrumentationRegistry;
@@ -6,11 +6,13 @@ import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
+import org.hamcrest.CoreMatchers;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import moj.rain.R;
 import moj.rain.weather.overview.view.OverviewActivity;
 
 import static android.support.test.espresso.Espresso.onView;
@@ -36,7 +38,7 @@ public class OverviewActivityTest {
     }
 
     @Test
-    // "WHEN a weather network error is shown THEN show this error as a snackbar"
+    // WHEN a weather network error is shown THEN show this error as a snackbar
     public void showWeatherNetworkError() throws Exception {
         whenAWeatherNetworkErrorIsShown();
         thenShowTheErrorAsASnackbar();
@@ -47,8 +49,8 @@ public class OverviewActivityTest {
     }
 
     private void thenShowTheErrorAsASnackbar() {
-        onView(allOf(withId(android.support.design.R.id.snackbar_text),
-                withText(R.string.network_error_message)))
+        onView(CoreMatchers.allOf(withId(android.support.design.R.id.snackbar_text),
+                ViewMatchers.withText(R.string.network_error_message)))
                 .check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
     }
 }

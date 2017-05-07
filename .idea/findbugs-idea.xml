@@ -4,5 +4,8 @@
     <plugins>
       <plugin id="jp.f.dev.findbugs.detect.android" enabled="true" bundled="true" />
     </plugins>
+    <excludeFilterFiles>
+      <filter file="$PROJECT_DIR$/findbugs-android-exclude.xml" enabled="true" />
+    </excludeFilterFiles>
   </component>
 </project>
