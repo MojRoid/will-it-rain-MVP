@@ -17,5 +17,7 @@ public abstract class BaseWeatherViewHolder extends RecyclerView.ViewHolder {
         resources = itemView.getResources();
     }
 
+    public abstract int getLayout();
+
     public abstract void bind(WeatherData weatherData, int position);
 }

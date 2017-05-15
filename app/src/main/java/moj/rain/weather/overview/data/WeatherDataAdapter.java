@@ -37,7 +37,11 @@ public class WeatherDataAdapter extends BaseDataAdapter<Hour, WeatherHour> {
                 .setIcon(hour.getIcon())
                 .setPrecipIntensity(hour.getPrecipIntensity())
                 .setPrecipProbability(hour.getPrecipProbability())
-                .setTemperature((hour.getTemperature() + hour.getApparentTemperature()) / 2)
+                .setTemperature(getTemperature(hour.getTemperature(), hour.getApparentTemperature()))
                 .build();
+    }
+
+    protected int getTemperature(double temperature, double apparentTemperature) {
+        return Math.round((int) (temperature + apparentTemperature) / 2);
     }
 }

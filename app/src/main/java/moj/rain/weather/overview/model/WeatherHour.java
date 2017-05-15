@@ -15,7 +15,7 @@ public abstract class WeatherHour {
 
     public abstract double getPrecipProbability();
 
-    public abstract double getTemperature();
+    public abstract int getTemperature();
 
     public static Builder builder() {
         return new AutoValue_WeatherHour.Builder();
@@ -32,7 +32,7 @@ public abstract class WeatherHour {
 
         public abstract Builder setPrecipProbability(double precipProbability);
 
-        public abstract Builder setTemperature(double temperature);
+        public abstract Builder setTemperature(int temperature);
 
         public abstract WeatherHour build();
     }

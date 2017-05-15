@@ -26,6 +26,11 @@ class WeatherHourViewHolder extends BaseWeatherViewHolder {
         super(itemView);
     }
 
+    @Override
+    public int getLayout() {
+        return R.layout.weather_hour_view_holder;
+    }
+
     public void bind(WeatherData weatherData, int position) {
         WeatherHour weatherHour = weatherData.getRainHourList().get(position);
         setHour(weatherHour);
@@ -44,7 +49,7 @@ class WeatherHourViewHolder extends BaseWeatherViewHolder {
     }
 
     private void setTemperature(WeatherHour weatherHour) {
-        int formattedTemperature = (int) Math.round(weatherHour.getTemperature());
+        int formattedTemperature = weatherHour.getTemperature();
         temperature.setText(resources.getString(R.string.celsius_symbol, formattedTemperature));
     }
 }

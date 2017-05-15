@@ -70,7 +70,7 @@ public class OverviewModule {
 
     @Provides
     @PerActivity
-    DiffCallback<WeatherHour> provideRainHourDiffCallback() {
+    DiffCallback<WeatherHour> provideDiffCallback() {
         return new DiffCallback<>();
     }
 

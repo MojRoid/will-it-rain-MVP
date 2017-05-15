@@ -1,5 +1,6 @@
 package moj.rain.weather.overview.view.adapter;
 
+import android.support.annotation.NonNull;
 import android.support.v7.util.DiffUtil;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,11 +55,20 @@ public class WeatherAdapterImpl extends WeatherAdapter {
     }
 
     public void setWeatherData(WeatherData weatherData) {
+        final DiffUtil.DiffResult diffResult = calculateDiffResult(weatherData.getRainHourList());
+        updateData(weatherData);
+        diffResult.dispatchUpdatesTo(this);
+    }
+
+    private void updateData(WeatherData weatherData) {
         this.weatherData = weatherData;
-        diffCallback.setLists(this.rainHourList, weatherData.getRainHourList());
-        final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffCallback);
         this.rainHourList.clear();
         this.rainHourList.addAll(weatherData.getRainHourList());
-        diffResult.dispatchUpdatesTo(this);
+    }
+
+    @NonNull
+    private DiffUtil.DiffResult calculateDiffResult(@NonNull List<WeatherHour> rainHourList) {
+        diffCallback.setLists(this.rainHourList, rainHourList);
+        return DiffUtil.calculateDiff(diffCallback);
     }
 }

@@ -4,7 +4,6 @@ package moj.rain.app.repository;
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
-import moj.rain.app.repository.WeatherRepository;
 import moj.rain.app.network.WeatherNetworkManager;
 import moj.rain.app.network.model.Weather;
 
