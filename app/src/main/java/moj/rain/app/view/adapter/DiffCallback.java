@@ -1,7 +1,6 @@
 package moj.rain.app.view.adapter;
 
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.util.DiffUtil;
 
 import java.util.List;
@@ -36,11 +35,5 @@ public class DiffCallback<T> extends DiffUtil.Callback {
     public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
         return !(oldItemPosition >= oldList.size() || newItemPosition >= newList.size())
                 && oldList.get(oldItemPosition).equals(newList.get(newItemPosition));
-    }
-
-    @Nullable
-    @Override
-    public Object getChangePayload(int oldItemPosition, int newItemPosition) {
-        return super.getChangePayload(oldItemPosition, newItemPosition);
     }
 }

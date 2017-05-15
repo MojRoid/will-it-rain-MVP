@@ -75,7 +75,7 @@ public class OverviewActivity extends BaseActivity implements OverviewView {
 
     @Override
     public void showWeatherNetworkError() {
-        View view = getWindow().getDecorView().getRootView();
+        View view = findViewById(android.R.id.content);
         errorView.showNetworkErrorView(view);
     }
 }

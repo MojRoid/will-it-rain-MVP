@@ -119,14 +119,6 @@ public class DiffCallbackTest {
         thenContentsEqualityIsReportedAccurately(new boolean[]{false, true, true, false, false, false});
     }
 
-    @Test
-    public void getChangePayLoad() throws Exception {
-        givenOldList(Arrays.asList(weatherHour1, weatherHour2));
-        givenNewList(Arrays.asList(weatherHour1, weatherHour2));
-        whenListsAreSet();
-        thenGetChangePayloadReturnsNull();
-    }
-
     private void givenOldList(List<WeatherHour> weatherHours) {
         oldList = new ArrayList<>();
         oldList.addAll(weatherHours);
@@ -156,9 +148,5 @@ public class DiffCallbackTest {
         for (int i = 0; i < booleans.length; i++) {
             assertThat(diffCallback.areContentsTheSame(i, i)).isEqualTo(booleans[i]);
         }
-    }
-
-    private void thenGetChangePayloadReturnsNull() {
-        assertThat(diffCallback.getChangePayload(0, 0)).isNull();
     }
 }

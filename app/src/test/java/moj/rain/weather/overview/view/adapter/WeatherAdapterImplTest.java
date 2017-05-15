@@ -86,7 +86,7 @@ public class WeatherAdapterImplTest extends RobolectricTestBase {
         givenValidWeatherData();
         givenWeatherDataIsSet();
         whenWeatherHourViewHolderIsCreated();
-        whenViewHolderIsBinded(0);
+        whenViewHolderIsBound(0);
         thenTheViewHolderBindsWithWeatherData(HOUR_1, TEMPERATURE_1);
     }
 
@@ -95,7 +95,7 @@ public class WeatherAdapterImplTest extends RobolectricTestBase {
         givenValidWeatherData();
         givenWeatherDataIsSet();
         whenWeatherHourViewHolderIsCreated();
-        whenViewHolderIsBinded(1);
+        whenViewHolderIsBound(1);
         thenTheViewHolderBindsWithWeatherData(HOUR_2, TEMPERATURE_2);
     }
 
@@ -159,7 +159,7 @@ public class WeatherAdapterImplTest extends RobolectricTestBase {
         weatherHourViewHolder = (WeatherHourViewHolder) weatherAdapter.onCreateViewHolder(recyclerView, R.layout.activity_overview);
     }
 
-    private void whenViewHolderIsBinded(int position) {
+    private void whenViewHolderIsBound(int position) {
         weatherAdapter.onBindViewHolder(weatherHourViewHolder, position);
     }
 

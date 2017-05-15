@@ -139,7 +139,7 @@ public class OverviewActivityTest extends RobolectricTestBase {
     }
 
     private void thenNetworkErrorViewIsShown() {
-        View view = activity.getWindow().getDecorView().getRootView();
+        View view = activity.findViewById(android.R.id.content);
         then(errorView).should(times(1)).showNetworkErrorView(view);
         then(errorView).shouldHaveNoMoreInteractions();
     }
