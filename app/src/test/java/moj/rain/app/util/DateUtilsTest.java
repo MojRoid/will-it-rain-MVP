@@ -15,21 +15,19 @@ import org.mockito.MockitoAnnotations;
 import moj.rain.R;
 
 import static com.google.common.truth.Truth.assertThat;
+import static moj.rain.weather.overview.TestConstants.FRIDAY;
+import static moj.rain.weather.overview.TestConstants.NEXT_MONTH_MILLIS_FIXED;
+import static moj.rain.weather.overview.TestConstants.NEXT_YEAR_MILLIS_FIXED;
+import static moj.rain.weather.overview.TestConstants.SUNDAY;
+import static moj.rain.weather.overview.TestConstants.TODAY;
+import static moj.rain.weather.overview.TestConstants.TODAY_MILLIS_FIXED;
+import static moj.rain.weather.overview.TestConstants.TOMORROW;
+import static moj.rain.weather.overview.TestConstants.TOMORROW_MILLIS_FIXED;
+import static moj.rain.weather.overview.TestConstants.YESTERDAY;
+import static moj.rain.weather.overview.TestConstants.YESTERDAY_MILLIS_FIXED;
 import static org.mockito.Mockito.when;
 
 public class DateUtilsTest extends DateUtils {
-
-    private static final long TODAY_MILLIS_FIXED = 1493377200000L; // 28/04/2017 - 12:00:00
-    private static final long TOMORROW_MILLIS_FIXED = 1493463600000L; // 29/04/2017 - 12:00:00
-    private static final long YESTERDAY_MILLIS_FIXED = 1493290800000L; // 27/04/2017 - 12:00:00
-    private static final long NEXT_MONTH_MILLIS_FIXED = 1495969200000L; // 28/05/2017 - 12:00:00
-    private static final long NEXT_YEAR_MILLIS_FIXED = 1524913200000L; // 28/05/2018 - 12:00:00
-
-    private static final String TODAY = "Today";
-    private static final String TOMORROW = "Tomorrow";
-    private static final String YESTERDAY = "Yesterday";
-    private static final String SUNDAY = "Sunday";
-    private static final String FRIDAY = "Friday";
 
     @Mock
     private Resources resources;

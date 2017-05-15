@@ -11,25 +11,22 @@ import moj.rain.app.network.model.Hour;
 import moj.rain.weather.overview.model.WeatherHour;
 
 import static com.google.common.truth.Truth.assertThat;
+import static moj.rain.weather.overview.TestConstants.APPARENT_TEMPERATURE_1;
+import static moj.rain.weather.overview.TestConstants.CLOUD_COVER_1;
+import static moj.rain.weather.overview.TestConstants.DEW_POINT_1;
+import static moj.rain.weather.overview.TestConstants.HUMIDITY_1;
+import static moj.rain.weather.overview.TestConstants.ICON_1;
+import static moj.rain.weather.overview.TestConstants.O_ZONE_1;
+import static moj.rain.weather.overview.TestConstants.PRECIP_INTENSITY_1;
+import static moj.rain.weather.overview.TestConstants.PRECIP_PROBABILITY_1;
+import static moj.rain.weather.overview.TestConstants.PRESSURE_1;
+import static moj.rain.weather.overview.TestConstants.SUMMARY_1;
+import static moj.rain.weather.overview.TestConstants.TEMPERATURE_1;
+import static moj.rain.weather.overview.TestConstants.TIME_1;
+import static moj.rain.weather.overview.TestConstants.WIND_BEARING_1;
+import static moj.rain.weather.overview.TestConstants.WIND_SPEED_1;
 
 public class WeatherDataAdapterTest {
-
-    private static final long TODAY_MILLIS_FIXED = 1493377200000L; // 28/04/2017 - 12:00:00
-
-    private final long TIME = 1493377200L; // 28/04/2017 - 12:00:00
-    private final String SUMMARY = "SUMMARY";
-    private final String ICON = "ICON";
-    private final double PRECIP_INTENSITY = 1.1;
-    private final double PRECIP_PROBABILITY = 2.2;
-    private final double TEMPERATURE = 3.3;
-    private final double APPARENT_TEMPERATURE = 4.4;
-    private final double DEW_POINT = 5.5;
-    private final double HUMIDITY = 6.6;
-    private final double WIND_SPEED = 7.7;
-    private final int WIND_BEARING = 8;
-    private final double CLOUD_COVER = 9.9;
-    private final double PRESSURE = 10.10;
-    private final double O_ZONE = 11.11;
 
     private WeatherDataAdapter weatherDataAdapter;
 
@@ -71,11 +68,11 @@ public class WeatherDataAdapterTest {
 
     private void givenValidWeatherHour() {
         weatherHour = WeatherHour.builder()
-                .setHour(new DateTime(TIME * 1000))
-                .setIcon(ICON)
-                .setPrecipIntensity(PRECIP_INTENSITY)
-                .setPrecipProbability(PRECIP_PROBABILITY)
-                .setTemperature((TEMPERATURE + APPARENT_TEMPERATURE) / 2)
+                .setHour(new DateTime(TIME_1 * 1000))
+                .setIcon(ICON_1)
+                .setPrecipIntensity(PRECIP_INTENSITY_1)
+                .setPrecipProbability(PRECIP_PROBABILITY_1)
+                .setTemperature(weatherDataAdapter.getTemperature(TEMPERATURE_1, APPARENT_TEMPERATURE_1))
                 .build();
     }
 
@@ -85,20 +82,20 @@ public class WeatherDataAdapterTest {
 
     private void givenValidHour() {
         hour = Hour.builder()
-                .setTime(TIME)
-                .setSummary(SUMMARY)
-                .setIcon(ICON)
-                .setPrecipIntensity(PRECIP_INTENSITY)
-                .setPrecipProbability(PRECIP_PROBABILITY)
-                .setTemperature(TEMPERATURE)
-                .setApparentTemperature(APPARENT_TEMPERATURE)
-                .setDewPoint(DEW_POINT)
-                .setHumidity(HUMIDITY)
-                .setWindSpeed(WIND_SPEED)
-                .setWindBearing(WIND_BEARING)
-                .setCloudCover(CLOUD_COVER)
-                .setPressure(PRESSURE)
-                .setOzone(O_ZONE)
+                .setTime(TIME_1)
+                .setSummary(SUMMARY_1)
+                .setIcon(ICON_1)
+                .setPrecipIntensity(PRECIP_INTENSITY_1)
+                .setPrecipProbability(PRECIP_PROBABILITY_1)
+                .setTemperature(TEMPERATURE_1)
+                .setApparentTemperature(APPARENT_TEMPERATURE_1)
+                .setDewPoint(DEW_POINT_1)
+                .setHumidity(HUMIDITY_1)
+                .setWindSpeed(WIND_SPEED_1)
+                .setWindBearing(WIND_BEARING_1)
+                .setCloudCover(CLOUD_COVER_1)
+                .setPressure(PRESSURE_1)
+                .setOzone(O_ZONE_1)
                 .build();
     }
 

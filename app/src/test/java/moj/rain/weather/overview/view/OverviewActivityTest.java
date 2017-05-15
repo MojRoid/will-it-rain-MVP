@@ -1,6 +1,7 @@
 package moj.rain.weather.overview.view;
 
-import org.joda.time.DateTime;
+import android.view.View;
+
 import org.joda.time.DateTimeZone;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,26 +16,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 import moj.rain.RobolectricTestBase;
+import moj.rain.app.view.error.ErrorView;
 import moj.rain.weather.overview.model.WeatherData;
 import moj.rain.weather.overview.model.WeatherHour;
 import moj.rain.weather.overview.presenter.OverviewPresenter;
-import moj.rain.weather.overview.view.adapter.HourListAdapter;
+import moj.rain.weather.overview.view.adapter.WeatherAdapter;
 
+import static moj.rain.weather.overview.TestConstants.HOUR_1;
+import static moj.rain.weather.overview.TestConstants.ICON_1;
+import static moj.rain.weather.overview.TestConstants.PRECIP_INTENSITY_1;
+import static moj.rain.weather.overview.TestConstants.PRECIP_PROBABILITY_1;
+import static moj.rain.weather.overview.TestConstants.TEMPERATURE_1;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.times;
 
 public class OverviewActivityTest extends RobolectricTestBase {
 
-    private final DateTime HOUR = DateTime.now();
-    private final String ICON = "test icon";
-    private final double PRECIP_INTENSITY = 1.1;
-    private final double PRECIP_PROBABILITY = 2.2;
-    private final double TEMPERATURE = 3.3;
-
     @Mock
     private OverviewPresenter presenter;
     @Mock
-    private HourListAdapter hourListAdapter;
+    private ErrorView errorView;
+    @Mock
+    private WeatherAdapter weatherAdapter;
 
     private ActivityController<OverviewActivity> activityController;
 
@@ -78,15 +81,22 @@ public class OverviewActivityTest extends RobolectricTestBase {
         thenWeatherDataShouldBePassedToRecyclerViewAdapter();
     }
 
+    @Test
+    @DisplayName("WHEN weather network error THEN network error view is shown")
+    public void showWeatherNetworkError() throws Exception {
+        whenWeatherNetworkError();
+        thenNetworkErrorViewIsShown();
+    }
+
     private void givenValidWeatherData() {
         DateTimeZone dateTimeZone = DateTimeZone.UTC;
         List<WeatherHour> weatherHourList = new ArrayList<>();
         WeatherHour weatherHour = WeatherHour.builder()
-                .setHour(HOUR)
-                .setIcon(ICON)
-                .setPrecipIntensity(PRECIP_INTENSITY)
-                .setPrecipProbability(PRECIP_PROBABILITY)
-                .setTemperature(TEMPERATURE)
+                .setHour(HOUR_1)
+                .setIcon(ICON_1)
+                .setPrecipIntensity(PRECIP_INTENSITY_1)
+                .setPrecipProbability(PRECIP_PROBABILITY_1)
+                .setTemperature(TEMPERATURE_1)
                 .build();
         weatherHourList.add(weatherHour);
         weatherData = WeatherData.create(dateTimeZone, weatherHourList);
@@ -102,6 +112,10 @@ public class OverviewActivityTest extends RobolectricTestBase {
 
     private void whenWeatherIsShown() {
         activity.showWeather(weatherData);
+    }
+
+    private void whenWeatherNetworkError() {
+        activity.showWeatherNetworkError();
     }
 
     private void thenGetWeatherShouldNotBeCalled() {
@@ -120,7 +134,13 @@ public class OverviewActivityTest extends RobolectricTestBase {
     }
 
     private void thenWeatherDataShouldBePassedToRecyclerViewAdapter() {
-        then(hourListAdapter).should(times(1)).setWeatherData(weatherData);
-        then(hourListAdapter).shouldHaveNoMoreInteractions();
+        then(weatherAdapter).should(times(1)).setWeatherData(weatherData);
+        then(weatherAdapter).shouldHaveNoMoreInteractions();
+    }
+
+    private void thenNetworkErrorViewIsShown() {
+        View view = activity.findViewById(android.R.id.content);
+        then(errorView).should(times(1)).showNetworkErrorView(view);
+        then(errorView).shouldHaveNoMoreInteractions();
     }
 }

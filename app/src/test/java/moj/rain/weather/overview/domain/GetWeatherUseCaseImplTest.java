@@ -12,6 +12,8 @@ import io.reactivex.schedulers.Schedulers;
 import moj.rain.app.network.model.Weather;
 import moj.rain.app.repository.WeatherRepository;
 
+import static moj.rain.weather.overview.TestConstants.LATITUDE_1;
+import static moj.rain.weather.overview.TestConstants.LONGITUDE_1;
 import static org.mockito.ArgumentMatchers.anyDouble;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
@@ -70,7 +72,7 @@ public class GetWeatherUseCaseImplTest {
     }
 
     private void whenGetWeatherUseCaseIsExecuted() {
-        getWeatherUseCase.execute(1.2, 3.4);
+        getWeatherUseCase.execute(LATITUDE_1, LONGITUDE_1);
     }
 
     private void thenWeatherDataIsPassedToCallback() {

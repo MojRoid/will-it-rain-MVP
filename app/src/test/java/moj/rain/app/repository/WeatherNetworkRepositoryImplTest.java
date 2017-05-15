@@ -22,8 +22,6 @@ public class WeatherNetworkRepositoryImplTest {
     private WeatherNetworkManager networkManager;
     @Mock
     private Weather weather;
-    @Mock
-    private Throwable throwable;
 
     private WeatherNetworkRepositoryImpl weatherNetworkRepository;
 
