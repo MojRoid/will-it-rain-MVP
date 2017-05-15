@@ -10,14 +10,18 @@ import dagger.Provides;
 import io.reactivex.disposables.CompositeDisposable;
 import moj.rain.app.injection.qualifiers.ForActivity;
 import moj.rain.app.injection.scopes.PerActivity;
+import moj.rain.app.view.adapter.DiffCallback;
+import moj.rain.app.view.error.ErrorView;
+import moj.rain.app.view.error.ErrorViewImpl;
 import moj.rain.weather.overview.domain.GetWeatherUseCase;
 import moj.rain.weather.overview.domain.GetWeatherUseCaseImpl;
+import moj.rain.weather.overview.model.WeatherHour;
 import moj.rain.weather.overview.presenter.OverviewPresenter;
 import moj.rain.weather.overview.presenter.OverviewPresenterImpl;
 import moj.rain.weather.overview.view.OverviewActivity;
 import moj.rain.weather.overview.view.OverviewView;
-import moj.rain.weather.overview.view.adapter.HourListAdapter;
-import moj.rain.weather.overview.view.adapter.HourListAdapterImpl;
+import moj.rain.weather.overview.view.adapter.WeatherAdapter;
+import moj.rain.weather.overview.view.adapter.WeatherAdapterImpl;
 
 @Module
 public class OverviewModule {
@@ -66,7 +70,19 @@ public class OverviewModule {
 
     @Provides
     @PerActivity
-    HourListAdapter provideRainAdapter() {
-        return new HourListAdapterImpl();
+    DiffCallback<WeatherHour> provideRainHourDiffCallback() {
+        return new DiffCallback<>();
+    }
+
+    @Provides
+    @PerActivity
+    ErrorView provideErrorView() {
+        return new ErrorViewImpl();
+    }
+
+    @Provides
+    @PerActivity
+    WeatherAdapter provideRainAdapter(WeatherAdapterImpl rainHourAdapter) {
+        return rainHourAdapter;
     }
 }

@@ -26,7 +26,7 @@ import static com.google.common.truth.Truth.assertThat;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-public class HourListAdapterImplTest extends RobolectricTestBase {
+public class WeatherAdapterImplTest extends RobolectricTestBase {
 
     private final DateTimeZone dateTimeZone = DateTimeZone.UTC;
 
@@ -43,17 +43,17 @@ public class HourListAdapterImplTest extends RobolectricTestBase {
     private final double TEMPERATURE_2 = 11.12;
 
     @Spy
-    private HourListAdapterImpl hourListAdapter;
+    private WeatherAdapterImpl hourListAdapter;
 
     private Context context;
     private WeatherData weatherData;
     private RecyclerView recyclerView;
-    private HourViewHolder hourViewHolder;
+    private WeatherHourViewHolder weatherHourViewHolder;
 
     @Before
     public void setUp() throws Exception {
         context = RuntimeEnvironment.application;
-        hourListAdapter = Mockito.spy(new HourListAdapterImpl());
+        hourListAdapter = Mockito.spy(new WeatherAdapterImpl());
         setUpRecyclerView();
     }
 
@@ -140,23 +140,23 @@ public class HourListAdapterImplTest extends RobolectricTestBase {
     }
 
     private void whenViewHolderIsCreated() {
-        hourViewHolder = hourListAdapter.onCreateViewHolder(recyclerView, 0);
+        weatherHourViewHolder = hourListAdapter.onCreateViewHolder(recyclerView, 0);
     }
 
     private void whenViewHolderIsBinded(int position) {
-        hourListAdapter.onBindViewHolder(hourViewHolder, position);
+        hourListAdapter.onBindViewHolder(weatherHourViewHolder, position);
     }
 
     private void thenTheCorrectViewTypeIsCreated() {
-        assertThat(hourViewHolder.itemView.getTag()).isEqualTo(R.layout.hour_view);
+        assertThat(weatherHourViewHolder.itemView.getTag()).isEqualTo(R.layout.weather_hour_view_holder);
     }
 
     private void thenTheViewHolderBindsWithWeatherData(DateTime hour, double temperature) {
-        assertThat(hourViewHolder.hour.getText())
+        assertThat(weatherHourViewHolder.hour.getText())
                 .isEqualTo(hour.toString());
-        assertThat(hourViewHolder.day.getText())
+        assertThat(weatherHourViewHolder.day.getText())
                 .isEqualTo(DateUtils.formatDayNicely(context.getResources(), hour, dateTimeZone));
-        assertThat(hourViewHolder.temperature.getText())
+        assertThat(weatherHourViewHolder.temperature.getText())
                 .isEqualTo(context.getString(R.string.celsius_symbol, (int) Math.round(temperature)));
     }
 

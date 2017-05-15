@@ -9,6 +9,6 @@
         android:id="@+id/hour_list_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/hour_view" />
+        tools:listitem="@layout/weather_hour_view_holder" />
 
 </LinearLayout>

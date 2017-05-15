@@ -18,7 +18,7 @@ import moj.rain.RobolectricTestBase;
 import moj.rain.weather.overview.model.WeatherData;
 import moj.rain.weather.overview.model.WeatherHour;
 import moj.rain.weather.overview.presenter.OverviewPresenter;
-import moj.rain.weather.overview.view.adapter.HourListAdapter;
+import moj.rain.weather.overview.view.adapter.WeatherAdapter;
 
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.times;
@@ -34,7 +34,7 @@ public class OverviewActivityTest extends RobolectricTestBase {
     @Mock
     private OverviewPresenter presenter;
     @Mock
-    private HourListAdapter hourListAdapter;
+    private WeatherAdapter weatherAdapter;
 
     private ActivityController<OverviewActivity> activityController;
 
@@ -120,7 +120,7 @@ public class OverviewActivityTest extends RobolectricTestBase {
     }
 
     private void thenWeatherDataShouldBePassedToRecyclerViewAdapter() {
-        then(hourListAdapter).should(times(1)).setWeatherData(weatherData);
-        then(hourListAdapter).shouldHaveNoMoreInteractions();
+        then(weatherAdapter).should(times(1)).setWeatherData(weatherData);
+        then(weatherAdapter).shouldHaveNoMoreInteractions();
     }
 }
