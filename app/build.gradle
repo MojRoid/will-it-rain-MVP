@@ -4,16 +4,21 @@ apply from: 'dependencies.gradle'
 apply from: 'config.gradle'
 apply from: 'jacoco.gradle'
 
+def versionMajor = 1
+def versionMinor = 0
+def versionPatch = 0
+def versionBuild = 0
+
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    buildToolsVersion "25.0.3"
 
     defaultConfig {
         applicationId "moj.rain"
         minSdkVersion 19
         targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
+        versionCode versionMajor * 10000000 + versionMinor * 100000 + versionPatch * 1000 + versionBuild
+        versionName "${versionMajor}.${versionMinor}.${versionPatch}"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         javaCompileOptions {
@@ -22,24 +27,37 @@ android {
             }
         }
 
-        buildConfigField "String", "DARK_SKY_BASE_URL", "\"${config.properties.dark_sky_base_url}\""
-        buildConfigField "String", "DARK_SKY_API_KEY", "\"${config.properties.dark_sky_api_key}\""
-    }
+        buildConfigField "String", "DARK_SKY_BASE_URL", "\"${config.configProperties.dark_sky_base_url}\""
+        buildConfigField "String", "DARK_SKY_API_KEY", "\"${config.configProperties.dark_sky_api_key}\""
 
-    buildTypes {
-        release {
-            minifyEnabled true
-            useProguard true
-            shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        signingConfigs {
+            release {
+                keyAlias config.keystoreProperties.key_alias
+                keyPassword config.keystoreProperties.key_password
+                storeFile file(config.keystoreProperties.store_file)
+                storePassword config.keystoreProperties.store_password
+            }
         }
-        debug {
-            testCoverageEnabled true
-        }
-    }
 
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        buildTypes {
+            debug {
+                testCoverageEnabled true
+                applicationIdSuffix ".debug"
+                resValue "string", "app_name", config.getAppName("DEBUG")
+            }
+            release {
+                minifyEnabled true
+                useProguard true
+                shrinkResources true
+                resValue "string", "app_name", config.getAppName("RELEASE")
+                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+                signingConfig signingConfigs.release
+            }
+        }
+
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_1_8
+            targetCompatibility JavaVersion.VERSION_1_8
+        }
     }
 }

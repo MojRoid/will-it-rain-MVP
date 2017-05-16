@@ -1,11 +1,35 @@
+enum BuildType {
+    RELEASE, DEBUG
+}
+
 class Config {
-    Properties properties
+    Properties configProperties
+    Properties keystoreProperties
+
+    String APP_NAME = "Will It Rain?"
+
+    def getAppName(String buildType) {
+        switch (buildType) {
+            case BuildType.RELEASE.name():
+                return APP_NAME
+            case BuildType.DEBUG.name():
+                return APP_NAME + " - " + BuildType.DEBUG.name()
+
+        }
+    }
 }
 
 ext {
     config = new Config()
-    config.properties = new Properties()
     def basePath = rootDir.absolutePath + "/app/config/"
-    def propertiesFilename = "common.properties"
-    config.properties.load(new FileInputStream(rootProject.file((basePath + propertiesFilename))))
+
+    config.configProperties = new Properties()
+    def configPropertiesFileName = "common.properties"
+    config.configProperties.load(new FileInputStream(rootProject.file((basePath + configPropertiesFileName))))
+
+    config.keystoreProperties = new Properties()
+    def keystoreFileName = "keystore.properties"
+    if (file(rootProject.file((basePath + keystoreFileName))).exists()) {
+        config.keystoreProperties.load(new FileInputStream(rootProject.file((basePath + keystoreFileName))))
+    }
 }
