@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.platform.commons.util.StringUtils;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -65,7 +64,6 @@ public class BaseDataAdapterTest {
     }
 
     @Test
-    @DisplayName("GIVEN valid destination data WHEN destination data is checked if valid THEN destination data should be deemed valid")
     public void isValid() throws Exception {
         givenValidDestinationData("123");
         whenDestinationDataIsCheckedIfValid();
@@ -73,7 +71,6 @@ public class BaseDataAdapterTest {
     }
 
     @Test
-    @DisplayName("GIVEN valid source data WHEN source is transformed THEN source should be transformed to destination")
     public void transformSource() throws Exception {
         givenValidSourceData(123);
         whenSourceIsTransformed();
@@ -81,7 +78,6 @@ public class BaseDataAdapterTest {
     }
 
     @Test
-    @DisplayName("GIVEN source data WHEN data is transformed THEN data is adapted AND passed to callback")
     public void transform_data() throws Exception {
         givenSourceList(123);
         whenDataIsTransformed();
@@ -89,7 +85,6 @@ public class BaseDataAdapterTest {
     }
 
     @Test
-    @DisplayName("GIVEN source data WHEN data is transformed THEN data is not adapted")
     public void transform_null() throws Exception {
         givenNullSourceList();
         whenDataIsTransformed();
@@ -97,7 +92,6 @@ public class BaseDataAdapterTest {
     }
 
     @Test
-    @DisplayName("GIVEN disposable is not disposed WHEN the transformation is canceled THEN the disposable is disposed")
     public void cancel_notDisposed() throws Exception {
         givenDisposable(false);
         whenTheTransformationIsCanceled();
@@ -105,7 +99,6 @@ public class BaseDataAdapterTest {
     }
 
     @Test
-    @DisplayName("GIVEN disposable is disposed WHEN the transformation is canceled THEN the disposable is not disposed")
     public void cancel_disposed() throws Exception {
         givenDisposable(true);
         whenTheTransformationIsCanceled();

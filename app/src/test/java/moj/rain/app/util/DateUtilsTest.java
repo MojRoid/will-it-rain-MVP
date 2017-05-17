@@ -8,7 +8,6 @@ import org.joda.time.DateTimeUtils;
 import org.joda.time.DateTimeZone;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.DisplayName;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -50,7 +49,6 @@ public class DateUtilsTest extends DateUtils {
     }
 
     @Test
-    @DisplayName("GIVEN date is today WHEN date is formatted nicely THEN formatted date should be today")
     public void formatDayNicely_today() throws Exception {
         givenADate(TODAY_MILLIS_FIXED);
         whenDateIsFormattedNicely();
@@ -58,7 +56,6 @@ public class DateUtilsTest extends DateUtils {
     }
 
     @Test
-    @DisplayName("GIVEN date is tomorrow WHEN date is formatted nicely THEN formatted date should be tomorrow")
     public void formatDayNicely_tomorrow() throws Exception {
         givenADate(TOMORROW_MILLIS_FIXED);
         whenDateIsFormattedNicely();
@@ -66,7 +63,6 @@ public class DateUtilsTest extends DateUtils {
     }
 
     @Test
-    @DisplayName("GIVEN date is yesterday WHEN date is formatted nicely THEN formatted date should be yesterday")
     public void formatDayNicely_yesterday() throws Exception {
         givenADate(YESTERDAY_MILLIS_FIXED);
         whenDateIsFormattedNicely();
@@ -74,7 +70,6 @@ public class DateUtilsTest extends DateUtils {
     }
 
     @Test
-    @DisplayName("GIVEN date is next month WHEN date is formatted nicely THEN formatted date should be Sunday")
     public void formatDayNicely_nextMonth() throws Exception {
         givenADate(NEXT_MONTH_MILLIS_FIXED);
         whenDateIsFormattedNicely();
@@ -82,7 +77,6 @@ public class DateUtilsTest extends DateUtils {
     }
 
     @Test
-    @DisplayName("GIVEN date is today WHEN date is formatted to full name THEN formatted date should be Friday")
     public void formatDayFullName() throws Exception {
         givenADate(TODAY_MILLIS_FIXED);
         whenDateIsFormattedToFullName();
@@ -90,7 +84,6 @@ public class DateUtilsTest extends DateUtils {
     }
 
     @Test
-    @DisplayName("GIVEN first date is today AND second date is today WHEN dates are checked if they are the same day THEN return true")
     public void isSameDay_true() throws Exception {
         givenFirstDate(NEXT_MONTH_MILLIS_FIXED);
         givenSecondDate(NEXT_MONTH_MILLIS_FIXED);
@@ -99,7 +92,6 @@ public class DateUtilsTest extends DateUtils {
     }
 
     @Test
-    @DisplayName("GIVEN first date is today this year AND second date is today next year WHEN dates are checked if they are the same day THEN return false")
     public void isSameDay_false() throws Exception {
         givenFirstDate(TODAY_MILLIS_FIXED);
         givenSecondDate(NEXT_YEAR_MILLIS_FIXED);

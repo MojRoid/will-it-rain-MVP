@@ -2,7 +2,6 @@ package moj.rain.weather.overview.presenter;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.DisplayName;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -62,27 +61,23 @@ public class OverviewPresenterImplTest {
     }
 
     @Test
-    @DisplayName("GIVEN presenter is created WHEN a use case exists THEN use cases should be tracked and have callbacks set")
     public void OverviewPresenterImpl() throws Exception {
         thenUseCasesShouldBeTrackedAndHaveCallbacksSet();
     }
 
     @Test
-    @DisplayName("WHEN get weather is called THEN execute the get weather use case")
     public void getWeather() throws Exception {
         whenGetWeatherIsCalled();
         thenExecuteTheGetWeatherUseCase();
     }
 
     @Test
-    @DisplayName("WHEN view is destroyed THEN use cases should be canceled AND cleaned up AND have callbacks nullified")
     public void onViewDestroyed() throws Exception {
         whenViewIsDestroyed();
         thenCancelAndCleanUpAndNullifyCallbacks();
     }
 
     @Test
-    @DisplayName("GIVEN valid weather data WHEN weather data is retrieved THEN transform weather data")
     public void onWeatherRetrieved() throws Exception {
         givenValidWeatherData();
         whenWeatherDataIsRetrieved();
@@ -90,14 +85,12 @@ public class OverviewPresenterImplTest {
     }
 
     @Test
-    @DisplayName("WHEN a weather network error occurs THEN show a weather network error to the view")
     public void onWeatherNetworkError() throws Exception {
         whenWeatherNetworkErrorOccurs();
         thenShowWeatherNetworkErrorToTheView();
     }
 
     @Test
-    @DisplayName("GIVEN a UTC time zone WHEN weather data is adapted THEN weather data should be adapted and shown")
     public void onDataAdapted() throws Exception {
         givenDateTimeZoneUTC();
         whenWeatherDataIsAdapted();
@@ -105,7 +98,6 @@ public class OverviewPresenterImplTest {
     }
 
     @Test
-    @DisplayName("WHEN an error occurs adapting data THEN show a weather network error to the view")
     public void onDataAdaptError() throws Exception {
         whenAnErrorOccursAdaptingData();
         thenShowWeatherNetworkErrorToTheView();

@@ -5,7 +5,6 @@ import android.view.View;
 import org.joda.time.DateTimeZone;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.DisplayName;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -50,27 +49,23 @@ public class OverviewActivityTest extends RobolectricTestBase {
     }
 
     @Test
-    @DisplayName("WHEN activity is created is called THEN get weather should not be called")
     public void onCreate() throws Exception {
         thenGetWeatherShouldNotBeCalled();
     }
 
     @Test
-    @DisplayName("WHEN activity is resumed THEN get weather should be called")
     public void onResume() throws Exception {
         whenActivityIsResumed();
         thenGetWeatherShouldBeCalled();
     }
 
     @Test
-    @DisplayName("WHEN activity is destroyed THEN notify the presenter the view has been destroyed")
     public void onDestroy() throws Exception {
         whenActivityIsDestroyed();
         thenNotifyThePresenterTheViewHasBeenDestroyed();
     }
 
     @Test
-    @DisplayName("GIVEN valid weather data WHEN weather is shown THEN weather data should be passed to the recycler view adapter to be shown")
     public void showWeather() throws Exception {
         givenValidWeatherData();
         whenWeatherIsShown();
@@ -78,7 +73,6 @@ public class OverviewActivityTest extends RobolectricTestBase {
     }
 
     @Test
-    @DisplayName("WHEN weather network error THEN network error view is shown")
     public void showWeatherNetworkError() throws Exception {
         whenWeatherNetworkError();
         thenNetworkErrorViewIsShown();

@@ -4,7 +4,6 @@ package moj.rain.weather.overview.data;
 import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.DisplayName;
 
 import io.reactivex.schedulers.Schedulers;
 import moj.rain.app.network.model.Hour;
@@ -47,7 +46,6 @@ public class WeatherDataAdapterTest {
     }
 
     @Test
-    @DisplayName("GIVEN valid weather hour WHEN destination data is checked if valid THEN return true")
     public void isValid_true() throws Exception {
         givenValidWeatherHour();
         whenDestinationDataIsCheckedIfValid();
@@ -55,7 +53,6 @@ public class WeatherDataAdapterTest {
     }
 
     @Test
-    @DisplayName("GIVEN null weather hour WHEN destination data is checked if valid THEN return false")
     public void isValid_false() throws Exception {
         givenNullWeatherHour();
         whenDestinationDataIsCheckedIfValid();
@@ -63,7 +60,6 @@ public class WeatherDataAdapterTest {
     }
 
     @Test
-    @DisplayName("GIVEN valid hour WHEN source is transformed THEN source should be transformed to destination")
     public void transform() throws Exception {
         givenValidHour();
         whenSourceIsTransformed();

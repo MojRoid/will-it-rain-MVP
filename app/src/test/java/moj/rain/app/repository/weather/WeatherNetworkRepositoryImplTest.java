@@ -3,7 +3,6 @@ package moj.rain.app.repository.weather;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.DisplayName;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -34,7 +33,6 @@ public class WeatherNetworkRepositoryImplTest {
     }
 
     @Test
-    @DisplayName("GIVEN network manager will return weather observable WHEN get weather is called THEN request weather from network")
     public void getWeather() throws Exception {
         givenNetworkManagerWillReturnWeather();
         whenGetWeatherIsCalled();

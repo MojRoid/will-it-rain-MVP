@@ -2,7 +2,6 @@ package moj.rain.weather.overview.domain.geocoding;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.DisplayName;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -45,7 +44,6 @@ public class GetCoordinatesUseCaseImplTest {
     }
 
     @Test
-    @DisplayName("GIVEN weather retrieved successfully WHEN get weather use case is executed THEN weather data is passed to callback")
     public void execute_onWeatherRetrieved() throws Exception {
         givenCoordinatesRetrievedSuccessfully();
         whenGetCoordinatesUseCaseIsExecuted();
@@ -53,7 +51,6 @@ public class GetCoordinatesUseCaseImplTest {
     }
 
     @Test
-    @DisplayName("GIVEN weather is not retrieved successfully WHEN get weather use case is executed THEN throwable is passed to callback")
     public void execute_onWeatherNetworkError() throws Exception {
         givenCoordinatesAreNotRetrievedSuccessfully();
         whenGetCoordinatesUseCaseIsExecuted();

@@ -3,7 +3,6 @@ package moj.rain.app.network.weather;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.DisplayName;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -29,7 +28,6 @@ public class WeatherNetworkManagerImplTest {
     }
 
     @Test
-    @DisplayName("GIVEN a latitude and longitude WHEN get weather is called THEN call dark sky API")
     public void getWeather() throws Exception {
         whenGetWeatherIsCalled();
         thenCallDarkSkyApi();
