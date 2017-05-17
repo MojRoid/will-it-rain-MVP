@@ -9,10 +9,12 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import moj.rain.BuildConfig;
-import moj.rain.app.network.WeatherNetworkManager;
-import moj.rain.app.network.WeatherNetworkManagerImpl;
 import moj.rain.app.network.api.DarkSkyApi;
+import moj.rain.app.network.geocoding.GeocodingNetworkManager;
+import moj.rain.app.network.geocoding.GeocodingNetworkManagerImpl;
 import moj.rain.app.network.parsing.WeatherAutoValueGsonFactory;
+import moj.rain.app.network.weather.WeatherNetworkManager;
+import moj.rain.app.network.weather.WeatherNetworkManagerImpl;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Converter;
@@ -27,6 +29,12 @@ public class NetworkModule {
     @Singleton
     WeatherNetworkManager provideWeatherNetworkManager(WeatherNetworkManagerImpl weatherNetworkManager) {
         return weatherNetworkManager;
+    }
+
+    @Provides
+    @Singleton
+    GeocodingNetworkManager provideGeocodingNetworkManager(GeocodingNetworkManagerImpl geocodingNetworkManager) {
+        return geocodingNetworkManager;
     }
 
     @Provides

@@ -1,4 +1,4 @@
-package moj.rain.weather.overview.domain;
+package moj.rain.weather.overview.domain.weather;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -10,7 +10,9 @@ import io.reactivex.Observable;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 import moj.rain.app.network.model.Weather;
-import moj.rain.app.repository.WeatherRepository;
+import moj.rain.app.repository.weather.WeatherRepository;
+import moj.rain.weather.overview.domain.weather.GetWeatherUseCase;
+import moj.rain.weather.overview.domain.weather.GetWeatherUseCaseImpl;
 
 import static moj.rain.TestConstants.LATITUDE_1;
 import static moj.rain.TestConstants.LONGITUDE_1;
@@ -28,6 +30,7 @@ public class GetWeatherUseCaseImplTest {
     private WeatherRepository weatherRepository;
     @Mock
     private GetWeatherUseCase.Callback callback;
+
     @Mock
     private Weather weather;
     @Mock

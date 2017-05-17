@@ -1,10 +1,10 @@
-package moj.rain.app.repository;
+package moj.rain.app.repository.weather;
 
 
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
-import moj.rain.app.network.WeatherNetworkManager;
+import moj.rain.app.network.weather.WeatherNetworkManager;
 import moj.rain.app.network.model.Weather;
 
 public class WeatherNetworkRepositoryImpl implements WeatherRepository {

@@ -1,4 +1,4 @@
-package moj.rain.app.network;
+package moj.rain.app.network.weather;
 
 
 import org.junit.Before;
@@ -10,6 +10,8 @@ import org.mockito.MockitoAnnotations;
 import moj.rain.BuildConfig;
 import moj.rain.app.network.api.DarkSkyApi;
 
+import static moj.rain.TestConstants.LATITUDE_1;
+import static moj.rain.TestConstants.LONGITUDE_1;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.times;
 
@@ -20,9 +22,6 @@ public class WeatherNetworkManagerImplTest {
 
     private WeatherNetworkManagerImpl weatherNetworkManager;
 
-    private double latitude = 1.2;
-    private double longitude = 3.4;
-
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
@@ -32,24 +31,18 @@ public class WeatherNetworkManagerImplTest {
     @Test
     @DisplayName("GIVEN a latitude and longitude WHEN get weather is called THEN call dark sky API")
     public void getWeather() throws Exception {
-        givenALatitudeAndLongitude();
         whenGetWeatherIsCalled();
         thenCallDarkSkyApi();
     }
 
-    private void givenALatitudeAndLongitude() {
-        latitude = 1.2;
-        longitude = 3.4;
-    }
-
     private void whenGetWeatherIsCalled() {
-        weatherNetworkManager.getWeather(latitude, longitude);
+        weatherNetworkManager.getWeather(LATITUDE_1, LONGITUDE_1);
     }
 
     private void thenCallDarkSkyApi() {
         String key = BuildConfig.DARK_SKY_API_KEY;
         String excludes = "currently,daily,alerts,flags";
         String units = "uk2";
-        then(darkSkyApi).should(times(1)).getWeather(key, latitude, longitude, excludes, units);
+        then(darkSkyApi).should(times(1)).getWeather(key, LATITUDE_1, LONGITUDE_1, excludes, units);
     }
 }

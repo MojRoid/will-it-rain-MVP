@@ -1,4 +1,4 @@
-package moj.rain.weather.overview.domain;
+package moj.rain.weather.overview.domain.weather;
 
 
 import android.support.annotation.NonNull;

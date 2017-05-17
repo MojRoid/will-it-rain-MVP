@@ -1,4 +1,4 @@
-package moj.rain.app.network;
+package moj.rain.app.network.weather;
 
 
 import javax.inject.Inject;

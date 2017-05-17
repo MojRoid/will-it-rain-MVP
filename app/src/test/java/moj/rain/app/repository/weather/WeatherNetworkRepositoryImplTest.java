@@ -1,4 +1,4 @@
-package moj.rain.app.repository;
+package moj.rain.app.repository.weather;
 
 
 import org.junit.Before;
@@ -8,9 +8,11 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import io.reactivex.Observable;
-import moj.rain.app.network.WeatherNetworkManager;
 import moj.rain.app.network.model.Weather;
+import moj.rain.app.network.weather.WeatherNetworkManager;
 
+import static moj.rain.TestConstants.LATITUDE_1;
+import static moj.rain.TestConstants.LONGITUDE_1;
 import static org.mockito.ArgumentMatchers.anyDouble;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
@@ -24,9 +26,6 @@ public class WeatherNetworkRepositoryImplTest {
     private Weather weather;
 
     private WeatherNetworkRepositoryImpl weatherNetworkRepository;
-
-    private double latitude = 1.2;
-    private double longitude = 3.4;
 
     @Before
     public void setUp() throws Exception {
@@ -47,11 +46,11 @@ public class WeatherNetworkRepositoryImplTest {
     }
 
     private void whenGetWeatherIsCalled() {
-        weatherNetworkRepository.getWeather(latitude, longitude);
+        weatherNetworkRepository.getWeather(LATITUDE_1, LONGITUDE_1);
     }
 
     private void thenRequestWeatherFromNetwork() {
-        then(networkManager).should(times(1)).getWeather(latitude, longitude);
+        then(networkManager).should(times(1)).getWeather(LATITUDE_1, LONGITUDE_1);
         then(networkManager).shouldHaveNoMoreInteractions();
     }
 }
