@@ -18,8 +18,6 @@ import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withEffectiveVisibility;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static org.hamcrest.CoreMatchers.allOf;
 
 @RunWith(AndroidJUnit4.class)
 public class OverviewActivityTest {
@@ -37,7 +35,6 @@ public class OverviewActivityTest {
     }
 
     @Test
-    // WHEN a weather network error is shown THEN show this error as a snackbar
     public void showWeatherNetworkError() throws Exception {
         whenAWeatherNetworkErrorIsShown();
         thenShowTheErrorAsASnackbar();
