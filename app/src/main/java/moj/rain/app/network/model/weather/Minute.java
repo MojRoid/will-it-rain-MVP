@@ -1,4 +1,4 @@
-package moj.rain.app.network.model;
+package moj.rain.app.network.model.weather;
 
 import com.google.auto.value.AutoValue;
 import com.google.gson.Gson;

@@ -7,10 +7,10 @@ import com.google.gson.TypeAdapterFactory;
 import com.ryanharter.auto.value.gson.GsonTypeAdapterFactory;
 
 @GsonTypeAdapterFactory
-public abstract class WeatherAutoValueGsonFactory implements TypeAdapterFactory {
+public abstract class AutoValueGsonFactory implements TypeAdapterFactory {
 
     @NonNull
     public static TypeAdapterFactory create() {
-        return new AutoValueGson_WeatherAutoValueGsonFactory();
+        return new AutoValueGson_AutoValueGsonFactory();
     }
 }

@@ -1,8 +1,8 @@
-package moj.rain.app.repository;
+package moj.rain.app.repository.repos.weather;
 
 
 import io.reactivex.Observable;
-import moj.rain.app.network.model.Weather;
+import moj.rain.app.network.model.weather.Weather;
 
 public interface WeatherRepository {
 

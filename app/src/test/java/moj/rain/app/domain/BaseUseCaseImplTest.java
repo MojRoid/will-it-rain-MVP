@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.DisplayName;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -49,14 +48,12 @@ public class BaseUseCaseImplTest {
     }
 
     @Test
-    @DisplayName("WHEN disposables are tracked THEN disposables should be added to the composite disposable")
     public void trackDisposable() throws Exception {
         whenDisposablesAreTracked();
         thenDisposablesShouldBeAddedToTheCompositeDisposable();
     }
 
     @Test
-    @DisplayName("WHEN use cases are cleaned up THEN the composite disposable should be cleared")
     public void cleanUp() throws Exception {
         whenUseCasesAreCleanedUp();
         thenTheCompositeDisposableShouldBeCleared();

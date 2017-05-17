@@ -61,6 +61,8 @@ public class TestConstants {
     public static final String SUNDAY = "Sunday";
     public static final String FRIDAY = "Friday";
 
+    public static final String LOCATION_1 = "LONDON";
+
     public static final WeatherHour WEATHER_HOUR_1 = WeatherHour.builder()
             .setHour(HOUR_1)
             .setIcon(ICON_1)

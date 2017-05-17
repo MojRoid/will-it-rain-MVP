@@ -1,16 +1,15 @@
-package moj.rain.weather.overview.domain;
+package moj.rain.weather.overview.domain.weather;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.DisplayName;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import io.reactivex.Observable;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
-import moj.rain.app.network.model.Weather;
-import moj.rain.app.repository.WeatherRepository;
+import moj.rain.app.network.model.weather.Weather;
+import moj.rain.app.repository.repos.weather.WeatherRepository;
 
 import static moj.rain.TestConstants.LATITUDE_1;
 import static moj.rain.TestConstants.LONGITUDE_1;
@@ -28,6 +27,7 @@ public class GetWeatherUseCaseImplTest {
     private WeatherRepository weatherRepository;
     @Mock
     private GetWeatherUseCase.Callback callback;
+
     @Mock
     private Weather weather;
     @Mock
@@ -46,7 +46,6 @@ public class GetWeatherUseCaseImplTest {
     }
 
     @Test
-    @DisplayName("GIVEN weather retrieved successfully WHEN get weather use case is executed THEN weather data is passed to callback")
     public void execute_onWeatherRetrieved() throws Exception {
         givenWeatherRetrievedSuccessfully();
         whenGetWeatherUseCaseIsExecuted();
@@ -54,7 +53,6 @@ public class GetWeatherUseCaseImplTest {
     }
 
     @Test
-    @DisplayName("GIVEN weather is not retrieved successfully WHEN get weather use case is executed THEN throwable is passed to callback")
     public void execute_onWeatherNetworkError() throws Exception {
         givenWeatherIsNotRetrievedSuccessfully();
         whenGetWeatherUseCaseIsExecuted();

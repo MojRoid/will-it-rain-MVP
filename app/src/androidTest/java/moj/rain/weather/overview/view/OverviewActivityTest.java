@@ -13,7 +13,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import moj.rain.R;
-import moj.rain.weather.overview.view.OverviewActivity;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -45,7 +44,7 @@ public class OverviewActivityTest {
     }
 
     private void whenAWeatherNetworkErrorIsShown() {
-        activity.showWeatherNetworkError();
+        activity.showNetworkError();
     }
 
     private void thenShowTheErrorAsASnackbar() {

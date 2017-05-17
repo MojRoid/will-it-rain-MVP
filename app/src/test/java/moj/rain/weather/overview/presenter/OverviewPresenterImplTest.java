@@ -1,9 +1,7 @@
 package moj.rain.weather.overview.presenter;
 
-import org.joda.time.DateTimeZone;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.DisplayName;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -11,16 +9,22 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.List;
 
-import moj.rain.app.network.model.Hour;
-import moj.rain.app.network.model.Hourly;
-import moj.rain.app.network.model.Weather;
+import moj.rain.app.network.model.geocoding.Geocoding;
+import moj.rain.app.network.model.weather.Hour;
+import moj.rain.app.network.model.weather.Hourly;
+import moj.rain.app.network.model.weather.Weather;
 import moj.rain.weather.overview.data.WeatherDataAdapter;
-import moj.rain.weather.overview.domain.GetWeatherUseCase;
+import moj.rain.weather.overview.domain.geocoding.GetCoordinatesUseCase;
+import moj.rain.weather.overview.domain.weather.GetWeatherUseCase;
 import moj.rain.weather.overview.model.WeatherData;
 import moj.rain.weather.overview.model.WeatherHour;
 import moj.rain.weather.overview.view.OverviewView;
 
 import static com.google.common.truth.Truth.assertThat;
+import static moj.rain.TestConstants.DATE_TIME_ZONE_UTC;
+import static moj.rain.TestConstants.LATITUDE_1;
+import static moj.rain.TestConstants.LOCATION_1;
+import static moj.rain.TestConstants.LONGITUDE_1;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.times;
@@ -29,6 +33,8 @@ public class OverviewPresenterImplTest {
 
     @Mock
     private Weather weather;
+    @Mock
+    private Geocoding geocoding;
     @Mock
     private Hourly hourly;
     @Mock
@@ -43,42 +49,57 @@ public class OverviewPresenterImplTest {
 
     private OverviewView view;
     private GetWeatherUseCase getWeatherUseCase;
+    private GetCoordinatesUseCase getCoordinatesUseCase;
     private WeatherDataAdapter weatherDataAdapter;
-    private DateTimeZone dateTimeZone = DateTimeZone.UTC;
 
     @Before
     public void setUp() throws Exception {
         view = Mockito.mock(OverviewView.class);
         getWeatherUseCase = Mockito.mock(GetWeatherUseCase.class);
+        getCoordinatesUseCase = Mockito.mock(GetCoordinatesUseCase.class);
         weatherDataAdapter = Mockito.mock(WeatherDataAdapter.class);
-        presenter = new OverviewPresenterImpl(view, getWeatherUseCase, weatherDataAdapter);
+        presenter = new OverviewPresenterImpl(view, getWeatherUseCase, getCoordinatesUseCase, weatherDataAdapter);
 
         MockitoAnnotations.initMocks(this);
-        given(weather.getTimezone()).willReturn(dateTimeZone.getID());
     }
 
     @Test
-    @DisplayName("GIVEN presenter is created WHEN a use case exists THEN use cases should be tracked and have callbacks set")
     public void OverviewPresenterImpl() throws Exception {
         thenUseCasesShouldBeTrackedAndHaveCallbacksSet();
     }
 
     @Test
-    @DisplayName("WHEN get weather is called THEN execute the get weather use case")
     public void getWeather() throws Exception {
         whenGetWeatherIsCalled();
         thenExecuteTheGetWeatherUseCase();
     }
 
     @Test
-    @DisplayName("WHEN view is destroyed THEN use cases should be canceled AND cleaned up AND have callbacks nullified")
+    public void getCoordinates() throws Exception {
+        whenGetCoordinatesIsCalled();
+        thenExecuteTheGetCoordinatesUseCase();
+    }
+
+    @Test
     public void onViewDestroyed() throws Exception {
         whenViewIsDestroyed();
         thenCancelAndCleanUpAndNullifyCallbacks();
     }
 
     @Test
-    @DisplayName("GIVEN valid weather data WHEN weather data is retrieved THEN transform weather data")
+    public void onDataAdapted() throws Exception {
+        givenDateTimeZoneUTC();
+        whenWeatherDataIsAdapted();
+        thenWeatherDataShouldBeAdaptedAndShown();
+    }
+
+    @Test
+    public void onDataAdaptError() throws Exception {
+        whenAnErrorOccursAdaptingData();
+        thenShowNetworkErrorToTheView();
+    }
+
+    @Test
     public void onWeatherRetrieved() throws Exception {
         givenValidWeatherData();
         whenWeatherDataIsRetrieved();
@@ -86,24 +107,21 @@ public class OverviewPresenterImplTest {
     }
 
     @Test
-    @DisplayName("WHEN a weather network error occurs THEN show a weather network error to the view")
     public void onWeatherNetworkError() throws Exception {
         whenWeatherNetworkErrorOccurs();
-        thenShowWeatherNetworkErrorToTheView();
+        thenShowNetworkErrorToTheView();
     }
 
     @Test
-    @DisplayName("WHEN weather data is adapted THEN weather data should be adapted and shown")
-    public void onDataAdapted() throws Exception {
-        whenWeatherDataIsAdapted();
-        thenWeatherDataShouldBeAdaptedAndShown();
+    public void onCoordinatesRetrieved() throws Exception {
+        whenCoordinatesDataIsRetrieved();
+        thenGeocoderResultsShouldBePassedToTheView();
     }
 
     @Test
-    @DisplayName("WHEN an error occurs adapting data THEN show a weather network error to the view")
-    public void onDataAdaptError() throws Exception {
-        whenAnErrorOccursAdaptingData();
-        thenShowWeatherNetworkErrorToTheView();
+    public void onCoordinatesNetworkError() throws Exception {
+        whenCoordinatesNetworkErrorOccurs();
+        thenShowNetworkErrorToTheView();
     }
 
     private void givenValidWeatherData() {
@@ -111,8 +129,16 @@ public class OverviewPresenterImplTest {
         given(hourly.getHour()).willReturn(hourList);
     }
 
+    private void givenDateTimeZoneUTC() {
+        given(weather.getTimezone()).willReturn(DATE_TIME_ZONE_UTC.getID());
+    }
+
     private void whenGetWeatherIsCalled() {
         presenter.getWeather();
+    }
+
+    private void whenGetCoordinatesIsCalled() {
+        presenter.getCoordinates(LOCATION_1);
     }
 
     private void whenViewIsDestroyed() {
@@ -121,6 +147,10 @@ public class OverviewPresenterImplTest {
 
     private void whenWeatherNetworkErrorOccurs() {
         presenter.onWeatherNetworkError(throwable);
+    }
+
+    private void whenCoordinatesNetworkErrorOccurs() {
+        presenter.onCoordinatesNetworkError(throwable);
     }
 
     private void whenAnErrorOccursAdaptingData() {
@@ -135,22 +165,38 @@ public class OverviewPresenterImplTest {
         presenter.onWeatherRetrieved(weather);
     }
 
+    private void whenCoordinatesDataIsRetrieved() {
+        presenter.onCoordinatesRetrieved(geocoding);
+    }
+
     private void thenUseCasesShouldBeTrackedAndHaveCallbacksSet() {
         then(getWeatherUseCase).should(times(1)).setCallback(presenter);
+        then(getCoordinatesUseCase).should(times(1)).setCallback(presenter);
+
         assertThat(presenter.getUseCaseList()).contains((getWeatherUseCase));
+        assertThat(presenter.getUseCaseList()).contains((getCoordinatesUseCase));
         assertThat(presenter.getUseCaseList()).containsNoDuplicates();
     }
 
     private void thenExecuteTheGetWeatherUseCase() {
         then(getWeatherUseCase).should(times(1)).setCallback(presenter);
-        then(getWeatherUseCase).should(times(1)).execute(50, 0);
+        then(getWeatherUseCase).should(times(1)).execute(LATITUDE_1, LONGITUDE_1);
         then(getWeatherUseCase).shouldHaveNoMoreInteractions();
+    }
+
+    private void thenExecuteTheGetCoordinatesUseCase() {
+        then(getCoordinatesUseCase).should(times(1)).setCallback(presenter);
+        then(getCoordinatesUseCase).should(times(1)).execute(LOCATION_1);
+        then(getCoordinatesUseCase).shouldHaveNoMoreInteractions();
     }
 
     private void thenCancelAndCleanUpAndNullifyCallbacks() {
         then(weatherDataAdapter).should(times(1)).cancel();
         then(weatherDataAdapter).shouldHaveNoMoreInteractions();
+
         then(getWeatherUseCase).should(times(1)).setCallback(null);
+        then(getCoordinatesUseCase).should(times(1)).setCallback(null);
+
         assertThat(presenter.getUseCaseList()).isEmpty();
     }
 
@@ -159,14 +205,18 @@ public class OverviewPresenterImplTest {
         then(weatherDataAdapter).shouldHaveNoMoreInteractions();
     }
 
-    private void thenShowWeatherNetworkErrorToTheView() {
-        then(view).should(times(1)).showWeatherNetworkError();
+    private void thenShowNetworkErrorToTheView() {
+        then(view).should(times(1)).showNetworkError();
         then(view).shouldHaveNoMoreInteractions();
     }
 
     private void thenWeatherDataShouldBeAdaptedAndShown() {
-        WeatherData weatherData = WeatherData.create(dateTimeZone, weatherHourList);
+        WeatherData weatherData = WeatherData.create(DATE_TIME_ZONE_UTC, weatherHourList);
         then(view).should(times(1)).showWeather(weatherData);
         then(view).shouldHaveNoMoreInteractions();
+    }
+
+    private void thenGeocoderResultsShouldBePassedToTheView() {
+        then(view).should(times(1)).showGeocoding(geocoding);
     }
 }

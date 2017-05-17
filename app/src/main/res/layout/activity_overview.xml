@@ -3,10 +3,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="moj.rain.weather.overview.view.OverviewActivity">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:clipToPadding="false">
+
+        <TextView
+            android:id="@+id/geocoder_results_txt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:textStyle="italic"
+            tools:text="geocoder results go here" />
+
+    </ScrollView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@android:color/black" />
+
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/hour_list_recycler_view"
+        android:id="@+id/hour_list_rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:listitem="@layout/weather_hour_view_holder" />

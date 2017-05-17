@@ -1,4 +1,4 @@
-package moj.rain.app.network.model;
+package moj.rain.app.network.model.weather;
 
 import com.google.auto.value.AutoValue;
 import com.google.gson.Gson;
@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 @AutoValue
-public abstract class Minutely {
+public abstract class Hourly {
 
     @SerializedName("summary")
     public abstract String getSummary();
@@ -17,9 +17,9 @@ public abstract class Minutely {
     public abstract String getIcon();
 
     @SerializedName("data")
-    public abstract List<Minute> getMinute();
+    public abstract List<Hour> getHour();
 
-    public static TypeAdapter<Minutely> typeAdapter(Gson gson) {
-        return new AutoValue_Minutely.GsonTypeAdapter(gson);
+    public static TypeAdapter<Hourly> typeAdapter(Gson gson) {
+        return new AutoValue_Hourly.GsonTypeAdapter(gson);
     }
 }

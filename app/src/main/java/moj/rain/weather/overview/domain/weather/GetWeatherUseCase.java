@@ -1,10 +1,10 @@
-package moj.rain.weather.overview.domain;
+package moj.rain.weather.overview.domain.weather;
 
 
 import android.support.annotation.NonNull;
 
 import moj.rain.app.domain.BaseUseCase;
-import moj.rain.app.network.model.Weather;
+import moj.rain.app.network.model.weather.Weather;
 
 public interface GetWeatherUseCase extends BaseUseCase {
 
