@@ -13,10 +13,8 @@ class Config {
         switch (buildType) {
             case BuildType.RELEASE.name():
                 return APP_NAME
-                break
             case BuildType.DEBUG.name():
                 return APP_NAME + " - " + BuildType.DEBUG.name()
-                break
         }
     }
 }
