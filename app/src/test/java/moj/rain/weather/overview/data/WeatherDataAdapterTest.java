@@ -11,20 +11,20 @@ import moj.rain.app.network.model.Hour;
 import moj.rain.weather.overview.model.WeatherHour;
 
 import static com.google.common.truth.Truth.assertThat;
-import static moj.rain.weather.overview.TestConstants.APPARENT_TEMPERATURE_1;
-import static moj.rain.weather.overview.TestConstants.CLOUD_COVER_1;
-import static moj.rain.weather.overview.TestConstants.DEW_POINT_1;
-import static moj.rain.weather.overview.TestConstants.HUMIDITY_1;
-import static moj.rain.weather.overview.TestConstants.ICON_1;
-import static moj.rain.weather.overview.TestConstants.O_ZONE_1;
-import static moj.rain.weather.overview.TestConstants.PRECIP_INTENSITY_1;
-import static moj.rain.weather.overview.TestConstants.PRECIP_PROBABILITY_1;
-import static moj.rain.weather.overview.TestConstants.PRESSURE_1;
-import static moj.rain.weather.overview.TestConstants.SUMMARY_1;
-import static moj.rain.weather.overview.TestConstants.TEMPERATURE_1;
-import static moj.rain.weather.overview.TestConstants.TIME_1;
-import static moj.rain.weather.overview.TestConstants.WIND_BEARING_1;
-import static moj.rain.weather.overview.TestConstants.WIND_SPEED_1;
+import static moj.rain.TestConstants.APPARENT_TEMPERATURE_1;
+import static moj.rain.TestConstants.CLOUD_COVER_1;
+import static moj.rain.TestConstants.DEW_POINT_1;
+import static moj.rain.TestConstants.HUMIDITY_1;
+import static moj.rain.TestConstants.ICON_1;
+import static moj.rain.TestConstants.O_ZONE_1;
+import static moj.rain.TestConstants.PRECIP_INTENSITY_1;
+import static moj.rain.TestConstants.PRECIP_PROBABILITY_1;
+import static moj.rain.TestConstants.PRESSURE_1;
+import static moj.rain.TestConstants.SUMMARY_1;
+import static moj.rain.TestConstants.TEMPERATURE_1;
+import static moj.rain.TestConstants.TIME_1;
+import static moj.rain.TestConstants.WIND_BEARING_1;
+import static moj.rain.TestConstants.WIND_SPEED_1;
 
 public class WeatherDataAdapterTest {
 
@@ -34,6 +34,10 @@ public class WeatherDataAdapterTest {
     private Hour hour;
     private boolean actualBoolean;
     private WeatherHour actualWeatherHour;
+    private double expectedDouble;
+    private int actualInt;
+    private double temperature;
+    private double apparentTemperature;
 
     @Before
     public void setUp() throws Exception {
@@ -66,12 +70,54 @@ public class WeatherDataAdapterTest {
         thenSourceShouldBeTransformedToDestination();
     }
 
+    @Test
+    public void getRoundedToNearestFive_1() throws Exception {
+        givenADouble(5.4);
+        whenMultipliedByOneHundredAndRoundedToNearestFive();
+        thenDoubleShouldReturnCorrectlyAsAnInt(540);
+    }
+
+    @Test
+    public void getRoundedToNearestFive_2() throws Exception {
+        givenADouble(5.434);
+        whenMultipliedByOneHundredAndRoundedToNearestFive();
+        thenDoubleShouldReturnCorrectlyAsAnInt(545);
+    }
+
+    @Test
+    public void getRoundedToNearestFive_3() throws Exception {
+        givenADouble(0.032);
+        whenMultipliedByOneHundredAndRoundedToNearestFive();
+        thenDoubleShouldReturnCorrectlyAsAnInt(5);
+    }
+
+    @Test
+    public void getTemperature_1() throws Exception {
+        givenTemperatureAndApparentTemperatures(1.2, 2.3);
+        whenAnAverageTemperatureIsCalculated();
+        thenTheCorrectAverageIsReturnedAsAnInt(2);
+    }
+
+    @Test
+    public void getTemperature_2() throws Exception {
+        givenTemperatureAndApparentTemperatures(10.2, 10.8);
+        whenAnAverageTemperatureIsCalculated();
+        thenTheCorrectAverageIsReturnedAsAnInt(11);
+    }
+
+    @Test
+    public void getTemperature_3() throws Exception {
+        givenTemperatureAndApparentTemperatures(-15.2, 15.2);
+        whenAnAverageTemperatureIsCalculated();
+        thenTheCorrectAverageIsReturnedAsAnInt(0);
+    }
+
     private void givenValidWeatherHour() {
         weatherHour = WeatherHour.builder()
                 .setHour(new DateTime(TIME_1 * 1000))
                 .setIcon(ICON_1)
-                .setPrecipIntensity(PRECIP_INTENSITY_1)
-                .setPrecipProbability(PRECIP_PROBABILITY_1)
+                .setPrecipIntensity(weatherDataAdapter.getMultipliedByOneHundredAndRoundedToNearestFive(PRECIP_INTENSITY_1))
+                .setPrecipProbability(weatherDataAdapter.getMultipliedByOneHundredAndRoundedToNearestFive(PRECIP_PROBABILITY_1))
                 .setTemperature(weatherDataAdapter.getTemperature(TEMPERATURE_1, APPARENT_TEMPERATURE_1))
                 .build();
     }
@@ -99,12 +145,29 @@ public class WeatherDataAdapterTest {
                 .build();
     }
 
+    private void givenADouble(double expectedDouble) {
+        this.expectedDouble = expectedDouble;
+    }
+
+    private void givenTemperatureAndApparentTemperatures(double temperature, double apparentTemperature) {
+        this.temperature = temperature;
+        this.apparentTemperature = apparentTemperature;
+    }
+
     private void whenDestinationDataIsCheckedIfValid() {
         actualBoolean = weatherDataAdapter.isValid(weatherHour);
     }
 
     private void whenSourceIsTransformed() {
         actualWeatherHour = weatherDataAdapter.transformSource(hour);
+    }
+
+    private void whenMultipliedByOneHundredAndRoundedToNearestFive() {
+        actualInt = weatherDataAdapter.getMultipliedByOneHundredAndRoundedToNearestFive(expectedDouble);
+    }
+
+    private void whenAnAverageTemperatureIsCalculated() {
+        actualInt = weatherDataAdapter.getTemperature(temperature, apparentTemperature);
     }
 
     private void thenDestinationDataShouldBeCheckedIfValid(boolean expected) {
@@ -114,5 +177,13 @@ public class WeatherDataAdapterTest {
     private void thenSourceShouldBeTransformedToDestination() {
         givenValidWeatherHour();
         assertThat(actualWeatherHour).isEqualTo(weatherHour);
+    }
+
+    private void thenDoubleShouldReturnCorrectlyAsAnInt(int expectedInt) {
+        assertThat(actualInt).isEqualTo(expectedInt);
+    }
+
+    private void thenTheCorrectAverageIsReturnedAsAnInt(int expectedAverageTemperature) {
+        assertThat(actualInt).isEqualTo(expectedAverageTemperature);
     }
 }

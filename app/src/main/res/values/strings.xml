@@ -5,4 +5,7 @@
     <string name="tomorrow">Tomorrow</string>
     <string name="yesterday">Yesterday</string>
     <string name="celsius_symbol">%d\u00B0c</string>
+
+    <string name="weather_hour_precip_intensity">%d (inches x 100) of liquid water per hour</string>
+    <string name="weather_hour_precip_probability">%d%%</string>
 </resources>

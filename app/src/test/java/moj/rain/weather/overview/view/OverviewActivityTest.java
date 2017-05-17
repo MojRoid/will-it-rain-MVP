@@ -22,11 +22,7 @@ import moj.rain.weather.overview.model.WeatherHour;
 import moj.rain.weather.overview.presenter.OverviewPresenter;
 import moj.rain.weather.overview.view.adapter.WeatherAdapter;
 
-import static moj.rain.weather.overview.TestConstants.HOUR_1;
-import static moj.rain.weather.overview.TestConstants.ICON_1;
-import static moj.rain.weather.overview.TestConstants.PRECIP_INTENSITY_1;
-import static moj.rain.weather.overview.TestConstants.PRECIP_PROBABILITY_1;
-import static moj.rain.weather.overview.TestConstants.TEMPERATURE_1;
+import static moj.rain.TestConstants.WEATHER_HOUR_1;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.times;
 
@@ -91,14 +87,7 @@ public class OverviewActivityTest extends RobolectricTestBase {
     private void givenValidWeatherData() {
         DateTimeZone dateTimeZone = DateTimeZone.UTC;
         List<WeatherHour> weatherHourList = new ArrayList<>();
-        WeatherHour weatherHour = WeatherHour.builder()
-                .setHour(HOUR_1)
-                .setIcon(ICON_1)
-                .setPrecipIntensity(PRECIP_INTENSITY_1)
-                .setPrecipProbability(PRECIP_PROBABILITY_1)
-                .setTemperature(TEMPERATURE_1)
-                .build();
-        weatherHourList.add(weatherHour);
+        weatherHourList.add(WEATHER_HOUR_1);
         weatherData = WeatherData.create(dateTimeZone, weatherHourList);
     }
 

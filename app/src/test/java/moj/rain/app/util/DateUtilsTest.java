@@ -15,16 +15,16 @@ import org.mockito.MockitoAnnotations;
 import moj.rain.R;
 
 import static com.google.common.truth.Truth.assertThat;
-import static moj.rain.weather.overview.TestConstants.FRIDAY;
-import static moj.rain.weather.overview.TestConstants.NEXT_MONTH_MILLIS_FIXED;
-import static moj.rain.weather.overview.TestConstants.NEXT_YEAR_MILLIS_FIXED;
-import static moj.rain.weather.overview.TestConstants.SUNDAY;
-import static moj.rain.weather.overview.TestConstants.TODAY;
-import static moj.rain.weather.overview.TestConstants.TODAY_MILLIS_FIXED;
-import static moj.rain.weather.overview.TestConstants.TOMORROW;
-import static moj.rain.weather.overview.TestConstants.TOMORROW_MILLIS_FIXED;
-import static moj.rain.weather.overview.TestConstants.YESTERDAY;
-import static moj.rain.weather.overview.TestConstants.YESTERDAY_MILLIS_FIXED;
+import static moj.rain.TestConstants.FRIDAY;
+import static moj.rain.TestConstants.NEXT_MONTH_MILLIS_FIXED;
+import static moj.rain.TestConstants.NEXT_YEAR_MILLIS_FIXED;
+import static moj.rain.TestConstants.SUNDAY;
+import static moj.rain.TestConstants.TODAY;
+import static moj.rain.TestConstants.TODAY_MILLIS_FIXED;
+import static moj.rain.TestConstants.TOMORROW;
+import static moj.rain.TestConstants.TOMORROW_MILLIS_FIXED;
+import static moj.rain.TestConstants.YESTERDAY;
+import static moj.rain.TestConstants.YESTERDAY_MILLIS_FIXED;
 import static org.mockito.Mockito.when;
 
 public class DateUtilsTest extends DateUtils {

@@ -1,11 +1,11 @@
-package moj.rain.weather.overview;
+package moj.rain;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
 import java.util.concurrent.TimeUnit;
 
-import moj.rain.R;
+import moj.rain.weather.overview.model.WeatherHour;
 
 public class TestConstants {
 
@@ -30,8 +30,8 @@ public class TestConstants {
     public static final double PRECIP_INTENSITY_2 = 2.3;
     public static final double PRECIP_PROBABILITY_1 = 3.4;
     public static final double PRECIP_PROBABILITY_2 = 4.5;
-    public static final int TEMPERATURE_1 = 5;
-    public static final int TEMPERATURE_2 = 6;
+    public static final double TEMPERATURE_1 = 5.6;
+    public static final double TEMPERATURE_2 = 6.7;
     public static final double APPARENT_TEMPERATURE_1 = 7.8;
     public static final double APPARENT_TEMPERATURE_2 = 8.9;
     public static final double DEW_POINT_1 = 9.10;
@@ -60,4 +60,28 @@ public class TestConstants {
     public static final String YESTERDAY = "Yesterday";
     public static final String SUNDAY = "Sunday";
     public static final String FRIDAY = "Friday";
+
+    public static final WeatherHour WEATHER_HOUR_1 = WeatherHour.builder()
+            .setHour(HOUR_1)
+            .setIcon(ICON_1)
+            .setPrecipIntensity((int) PRECIP_INTENSITY_1)
+            .setPrecipProbability((int) PRECIP_PROBABILITY_1)
+            .setTemperature((int) TEMPERATURE_1)
+            .build();
+
+    public static final WeatherHour WEATHER_HOUR_2 = WeatherHour.builder()
+            .setHour(HOUR_2)
+            .setIcon(ICON_2)
+            .setPrecipIntensity((int) PRECIP_INTENSITY_2)
+            .setPrecipProbability((int) PRECIP_PROBABILITY_2)
+            .setTemperature((int) TEMPERATURE_2)
+            .build();
+
+    public static final WeatherHour WEATHER_HOUR_MIX = WeatherHour.builder()
+            .setHour(HOUR_1)
+            .setIcon(ICON_2)
+            .setPrecipIntensity((int) PRECIP_INTENSITY_1)
+            .setPrecipProbability((int) PRECIP_PROBABILITY_2)
+            .setTemperature((int) TEMPERATURE_1)
+            .build();
 }
