@@ -9,18 +9,17 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import moj.rain.app.data.BaseDataAdapter;
-import moj.rain.app.network.model.Weather;
+import moj.rain.app.network.model.geocoding.Geocoding;
+import moj.rain.app.network.model.weather.Weather;
 import moj.rain.app.presenter.BasePresenter;
 import moj.rain.weather.overview.data.WeatherDataAdapter;
 import moj.rain.weather.overview.domain.geocoding.GetCoordinatesUseCase;
 import moj.rain.weather.overview.domain.weather.GetWeatherUseCase;
-import moj.rain.weather.overview.model.Coordinates;
 import moj.rain.weather.overview.model.WeatherData;
 import moj.rain.weather.overview.model.WeatherHour;
 import moj.rain.weather.overview.view.OverviewView;
 
-public class OverviewPresenterImpl extends BasePresenter implements OverviewPresenter, GetWeatherUseCase.Callback, WeatherDataAdapter.Callback<WeatherHour>,GetCoordinatesUseCase.Callback {
+public class OverviewPresenterImpl extends BasePresenter implements OverviewPresenter, WeatherDataAdapter.Callback<WeatherHour>, GetWeatherUseCase.Callback, GetCoordinatesUseCase.Callback {
 
     private final OverviewView view;
     private final GetWeatherUseCase getWeatherUseCase;
@@ -69,22 +68,15 @@ public class OverviewPresenterImpl extends BasePresenter implements OverviewPres
     }
 
     @Override
+    public void getCoordinates(String location) {
+        getCoordinatesUseCase.execute(location);
+    }
+
+    @Override
     public void onViewDestroyed() {
         weatherDataAdapter.cancel();
         nullifyUseCaseCallbacks();
         cleanUp();
-    }
-
-    @Override
-    public void onWeatherRetrieved(@NonNull Weather weather) {
-        this.weather = weather;
-        weatherDataAdapter.transform(weather.getHourly().getHour(), this);
-    }
-
-    @Override
-    public void onWeatherNetworkError(Throwable throwable) {
-        throwable.printStackTrace();
-        view.showWeatherNetworkError();
     }
 
     @Override
@@ -97,16 +89,29 @@ public class OverviewPresenterImpl extends BasePresenter implements OverviewPres
     @Override
     public void onDataAdaptError(Throwable throwable) {
         throwable.printStackTrace();
-        view.showWeatherNetworkError();
+        view.showNetworkError();
     }
 
     @Override
-    public void onCoordinatesRetrieved(@NonNull Coordinates coordinates) {
+    public void onWeatherRetrieved(@NonNull Weather weather) {
+        this.weather = weather;
+        weatherDataAdapter.transform(weather.getHourly().getHour(), this);
+    }
 
+    @Override
+    public void onWeatherNetworkError(Throwable throwable) {
+        throwable.printStackTrace();
+        view.showNetworkError();
+    }
+
+    @Override
+    public void onCoordinatesRetrieved(@NonNull Geocoding geocoding) {
+        view.showGeocoding(geocoding);
     }
 
     @Override
     public void onCoordinatesNetworkError(Throwable throwable) {
-
+        throwable.printStackTrace();
+        view.showNetworkError();
     }
 }

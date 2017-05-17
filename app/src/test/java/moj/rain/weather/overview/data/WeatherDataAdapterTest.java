@@ -6,7 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import io.reactivex.schedulers.Schedulers;
-import moj.rain.app.network.model.Hour;
+import moj.rain.app.network.model.weather.Hour;
 import moj.rain.weather.overview.model.WeatherHour;
 
 import static com.google.common.truth.Truth.assertThat;

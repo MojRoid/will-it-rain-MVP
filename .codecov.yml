@@ -1,6 +1,7 @@
 ignore:
   - "**/injection/*.*"
   - "**/model/*.*"
+  - "**/model/*/*.*"
   - "**/*App.*"
   - "**/*AutoValue*.*"
   

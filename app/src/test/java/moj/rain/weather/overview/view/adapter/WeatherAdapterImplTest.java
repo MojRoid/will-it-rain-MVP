@@ -165,22 +165,22 @@ public class WeatherAdapterImplTest extends RobolectricTestBase {
     }
 
     private void thenTheViewHolderBindsWithWeatherData(DateTime hour, int precipIntensity, int precipProbability, String icon, int temperature) {
-        assertThat(weatherHourViewHolder.hour.getText())
+        assertThat(weatherHourViewHolder.hourTxt.getText())
                 .isEqualTo(hour.toString());
 
-        assertThat(weatherHourViewHolder.day.getText())
+        assertThat(weatherHourViewHolder.dayTxt.getText())
                 .isEqualTo(DateUtils.formatDayNicely(context.getResources(), hour, DATE_TIME_ZONE_UTC));
 
-        assertThat(weatherHourViewHolder.intensity.getText())
+        assertThat(weatherHourViewHolder.intensityTxt.getText())
                 .isEqualTo(context.getString(R.string.weather_hour_precip_intensity, precipIntensity));
 
-        assertThat(weatherHourViewHolder.probability.getText())
+        assertThat(weatherHourViewHolder.probabilityTxt.getText())
                 .isEqualTo(context.getString(R.string.weather_hour_precip_probability, precipProbability));
 
-        assertThat(weatherHourViewHolder.icon.getText())
+        assertThat(weatherHourViewHolder.iconTxt.getText())
                 .isEqualTo(icon);
 
-        assertThat(weatherHourViewHolder.temperature.getText())
+        assertThat(weatherHourViewHolder.temperatureTxt.getText())
                 .isEqualTo(context.getString(R.string.celsius_symbol, temperature));
     }
 

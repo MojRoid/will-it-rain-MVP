@@ -98,7 +98,7 @@ public class OverviewActivityTest extends RobolectricTestBase {
     }
 
     private void whenWeatherNetworkError() {
-        activity.showWeatherNetworkError();
+        activity.showNetworkError();
     }
 
     private void thenGetWeatherShouldNotBeCalled() {

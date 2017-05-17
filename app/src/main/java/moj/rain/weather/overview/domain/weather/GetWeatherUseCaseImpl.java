@@ -9,7 +9,7 @@ import io.reactivex.disposables.Disposable;
 import moj.rain.app.domain.BaseUseCaseImpl;
 import moj.rain.app.injection.qualifiers.ForIoThread;
 import moj.rain.app.injection.qualifiers.ForMainThread;
-import moj.rain.app.repository.weather.WeatherRepository;
+import moj.rain.app.repository.repos.weather.WeatherRepository;
 
 public class GetWeatherUseCaseImpl extends BaseUseCaseImpl implements GetWeatherUseCase {
 

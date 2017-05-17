@@ -8,8 +8,8 @@ import org.mockito.MockitoAnnotations;
 import io.reactivex.Observable;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
-import moj.rain.app.network.model.Weather;
-import moj.rain.app.repository.weather.WeatherRepository;
+import moj.rain.app.network.model.weather.Weather;
+import moj.rain.app.repository.repos.weather.WeatherRepository;
 
 import static moj.rain.TestConstants.LATITUDE_1;
 import static moj.rain.TestConstants.LONGITUDE_1;

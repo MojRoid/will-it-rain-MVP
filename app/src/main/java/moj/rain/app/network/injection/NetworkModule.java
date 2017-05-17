@@ -9,12 +9,12 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import moj.rain.BuildConfig;
-import moj.rain.app.network.api.DarkSkyApi;
-import moj.rain.app.network.geocoding.GeocodingNetworkManager;
-import moj.rain.app.network.geocoding.GeocodingNetworkManagerImpl;
-import moj.rain.app.network.parsing.WeatherAutoValueGsonFactory;
-import moj.rain.app.network.weather.WeatherNetworkManager;
-import moj.rain.app.network.weather.WeatherNetworkManagerImpl;
+import moj.rain.app.network.api.NetworkApi;
+import moj.rain.app.network.managers.geocoding.GeocodingNetworkManager;
+import moj.rain.app.network.managers.geocoding.GeocodingNetworkManagerImpl;
+import moj.rain.app.network.parsing.AutoValueGsonFactory;
+import moj.rain.app.network.managers.weather.WeatherNetworkManager;
+import moj.rain.app.network.managers.weather.WeatherNetworkManagerImpl;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Converter;
@@ -65,13 +65,13 @@ public class NetworkModule {
     @Singleton
     Gson provideGson() {
         return new GsonBuilder()
-                .registerTypeAdapterFactory(WeatherAutoValueGsonFactory.create())
+                .registerTypeAdapterFactory(AutoValueGsonFactory.create())
                 .create();
     }
 
     @Provides
     @Singleton
-    DarkSkyApi provideDarkSkyApi(Retrofit.Builder builder,
+    NetworkApi provideDarkSkyApi(Retrofit.Builder builder,
                                  OkHttpClient.Builder okHttpClientBuilder,
                                  HttpLoggingInterceptor httpLoggingInterceptor,
                                  Converter.Factory converterFactory) {
@@ -85,6 +85,6 @@ public class NetworkModule {
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(converterFactory)
                 .build()
-                .create(DarkSkyApi.class);
+                .create(NetworkApi.class);
     }
 }

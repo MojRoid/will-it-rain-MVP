@@ -5,12 +5,14 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.TextView;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import moj.rain.R;
 import moj.rain.app.RainApp;
+import moj.rain.app.network.model.geocoding.Geocoding;
 import moj.rain.app.view.BaseActivity;
 import moj.rain.app.view.error.ErrorView;
 import moj.rain.weather.overview.injection.OverviewModule;
@@ -20,7 +22,9 @@ import moj.rain.weather.overview.view.adapter.WeatherAdapter;
 
 public class OverviewActivity extends BaseActivity implements OverviewView {
 
-    @BindView(R.id.hour_list_recycler_view)
+    @BindView(R.id.geocoder_results_txt)
+    TextView geocodingResultsTxt;
+    @BindView(R.id.hour_list_rv)
     RecyclerView recyclerView;
 
     @Inject
@@ -49,6 +53,7 @@ public class OverviewActivity extends BaseActivity implements OverviewView {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setUpRecyclerView();
+        presenter.getCoordinates("London");
     }
 
     private void setUpRecyclerView() {
@@ -69,13 +74,18 @@ public class OverviewActivity extends BaseActivity implements OverviewView {
     }
 
     @Override
+    public void showNetworkError() {
+        View view = findViewById(android.R.id.content);
+        errorView.showNetworkErrorView(view);
+    }
+
+    @Override
     public void showWeather(@NonNull WeatherData weatherData) {
         weatherAdapter.setWeatherData(weatherData);
     }
 
     @Override
-    public void showWeatherNetworkError() {
-        View view = findViewById(android.R.id.content);
-        errorView.showNetworkErrorView(view);
+    public void showGeocoding(Geocoding geocoding) {
+        geocodingResultsTxt.setText(geocoding.toString());
     }
 }

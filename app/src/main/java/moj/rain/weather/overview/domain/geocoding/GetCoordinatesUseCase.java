@@ -3,13 +3,13 @@ package moj.rain.weather.overview.domain.geocoding;
 import android.support.annotation.NonNull;
 
 import moj.rain.app.domain.BaseUseCase;
-import moj.rain.weather.overview.model.Coordinates;
+import moj.rain.app.network.model.geocoding.Geocoding;
 
 public interface GetCoordinatesUseCase extends BaseUseCase {
 
     interface Callback {
 
-        void onCoordinatesRetrieved(@NonNull Coordinates coordinates);
+        void onCoordinatesRetrieved(@NonNull Geocoding geocoding);
 
         void onCoordinatesNetworkError(Throwable throwable);
     }

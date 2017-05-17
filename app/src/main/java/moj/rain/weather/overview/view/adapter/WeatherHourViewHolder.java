@@ -16,18 +16,18 @@ import moj.rain.weather.overview.model.WeatherHour;
 
 class WeatherHourViewHolder extends BaseWeatherViewHolder {
 
-    @BindView(R.id.hour_item_hour)
-    TextView hour;
-    @BindView(R.id.hour_item_day)
-    TextView day;
-    @BindView(R.id.hour_item_precip_intensity)
-    TextView intensity;
-    @BindView(R.id.hour_item_precip_probability)
-    TextView probability;
-    @BindView(R.id.hour_item_icon)
-    TextView icon;
-    @BindView(R.id.hour_item_temperature)
-    TextView temperature;
+    @BindView(R.id.hour_item_hour_txt)
+    TextView hourTxt;
+    @BindView(R.id.hour_item_day_txt)
+    TextView dayTxt;
+    @BindView(R.id.hour_item_precip_intensity_txt)
+    TextView intensityTxt;
+    @BindView(R.id.hour_item_precip_probability_txt)
+    TextView probabilityTxt;
+    @BindView(R.id.hour_item_icon_txt)
+    TextView iconTxt;
+    @BindView(R.id.hour_item_temperature_txt)
+    TextView temperatureTxt;
 
     public WeatherHourViewHolder(View itemView) {
         super(itemView);
@@ -48,30 +48,30 @@ class WeatherHourViewHolder extends BaseWeatherViewHolder {
         setTemperature(weatherHour.getTemperature());
     }
 
-    protected void setHour(DateTime hour) {
+    private void setHour(DateTime hour) {
         String formattedHour = hour.toString();
-        this.hour.setText(formattedHour);
+        hourTxt.setText(formattedHour);
     }
 
-    protected void setDay(DateTime hour, DateTimeZone dateTimeZone) {
+    private void setDay(DateTime hour, DateTimeZone dateTimeZone) {
         String formattedDay = DateUtils.formatDayNicely(resources, hour, dateTimeZone);
-        this.day.setText(formattedDay);
+        dayTxt.setText(formattedDay);
     }
 
-    protected void setPrecipIntensity(int precipIntensity) {
-        this.intensity.setText(resources.getString(R.string.weather_hour_precip_intensity, precipIntensity));
+    private void setPrecipIntensity(int precipIntensity) {
+        intensityTxt.setText(resources.getString(R.string.weather_hour_precip_intensity, precipIntensity));
     }
 
-    protected void setPrecipProbability(int precipProbability) {
-        this.probability.setText(resources.getString(R.string.weather_hour_precip_probability, precipProbability));
+    private void setPrecipProbability(int precipProbability) {
+        probabilityTxt.setText(resources.getString(R.string.weather_hour_precip_probability, precipProbability));
     }
 
 
-    protected void setIcon(String icon) {
-        this.icon.setText(icon);
+    private void setIcon(String icon) {
+        iconTxt.setText(icon);
     }
 
-    protected void setTemperature(int temperature) {
-        this.temperature.setText(resources.getString(R.string.celsius_symbol, temperature));
+    private void setTemperature(int temperature) {
+        temperatureTxt.setText(resources.getString(R.string.celsius_symbol, temperature));
     }
 }

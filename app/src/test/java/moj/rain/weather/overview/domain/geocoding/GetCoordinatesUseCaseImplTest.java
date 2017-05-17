@@ -8,8 +8,8 @@ import org.mockito.MockitoAnnotations;
 import io.reactivex.Observable;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
-import moj.rain.app.repository.geocoding.GeocodingRepository;
-import moj.rain.weather.overview.model.Coordinates;
+import moj.rain.app.network.model.geocoding.Geocoding;
+import moj.rain.app.repository.repos.geocoding.GeocodingRepository;
 
 import static moj.rain.TestConstants.LOCATION_1;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -27,7 +27,7 @@ public class GetCoordinatesUseCaseImplTest {
     private GetCoordinatesUseCase.Callback callback;
 
     @Mock
-    private Coordinates coordinates;
+    private Geocoding geocoding;
     @Mock
     private Throwable throwable;
 
@@ -59,7 +59,7 @@ public class GetCoordinatesUseCaseImplTest {
 
     private void givenCoordinatesRetrievedSuccessfully() {
         getCoordinatesUseCase.setCallback(callback);
-        given(geocodingRepository.getCoordinates(anyString())).willReturn(Observable.just(coordinates));
+        given(geocodingRepository.getCoordinates(anyString())).willReturn(Observable.just(geocoding));
     }
 
     private void givenCoordinatesAreNotRetrievedSuccessfully() {
@@ -72,7 +72,7 @@ public class GetCoordinatesUseCaseImplTest {
     }
 
     private void thenCoordinatesDataIsPassedToCallback() {
-        then(callback).should(times(1)).onCoordinatesRetrieved(coordinates);
+        then(callback).should(times(1)).onCoordinatesRetrieved(geocoding);
         then(callback).shouldHaveNoMoreInteractions();
     }
 

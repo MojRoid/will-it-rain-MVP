@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/hour_item_day"
+        android:id="@+id/hour_item_day_txt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:text="Monday" />
@@ -17,7 +17,7 @@
         android:layout_height="2dp" />
 
     <TextView
-        android:id="@+id/hour_item_hour"
+        android:id="@+id/hour_item_hour_txt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:text="2:00pm" />
@@ -28,7 +28,7 @@
         android:layout_height="2dp" />
 
     <TextView
-        android:id="@+id/hour_item_precip_intensity"
+        android:id="@+id/hour_item_precip_intensity_txt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:text="0.001 inches of liquid water per hour" />
@@ -38,7 +38,7 @@
         android:layout_height="2dp" />
 
     <TextView
-        android:id="@+id/hour_item_precip_probability"
+        android:id="@+id/hour_item_precip_probability_txt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:text="15%" />
@@ -49,7 +49,7 @@
         android:layout_height="2dp" />
 
     <TextView
-        android:id="@+id/hour_item_icon"
+        android:id="@+id/hour_item_icon_txt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:text="sunny" />
@@ -59,7 +59,7 @@
         android:layout_height="2dp" />
 
     <TextView
-        android:id="@+id/hour_item_temperature"
+        android:id="@+id/hour_item_temperature_txt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textStyle="bold"

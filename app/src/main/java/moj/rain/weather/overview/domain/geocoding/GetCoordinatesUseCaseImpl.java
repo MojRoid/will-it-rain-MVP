@@ -8,7 +8,7 @@ import io.reactivex.disposables.Disposable;
 import moj.rain.app.domain.BaseUseCaseImpl;
 import moj.rain.app.injection.qualifiers.ForIoThread;
 import moj.rain.app.injection.qualifiers.ForMainThread;
-import moj.rain.app.repository.geocoding.GeocodingRepository;
+import moj.rain.app.repository.repos.geocoding.GeocodingRepository;
 
 public class GetCoordinatesUseCaseImpl extends BaseUseCaseImpl implements GetCoordinatesUseCase {
 

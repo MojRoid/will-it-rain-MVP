@@ -12,7 +12,7 @@ import io.reactivex.Scheduler;
 import moj.rain.app.data.BaseDataAdapter;
 import moj.rain.app.injection.qualifiers.ForComputationThread;
 import moj.rain.app.injection.qualifiers.ForMainThread;
-import moj.rain.app.network.model.Hour;
+import moj.rain.app.network.model.weather.Hour;
 import moj.rain.weather.overview.model.WeatherHour;
 
 public class WeatherDataAdapter extends BaseDataAdapter<Hour, WeatherHour> {

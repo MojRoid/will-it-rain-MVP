@@ -3,7 +3,8 @@ enum BuildType {
 }
 
 class Config {
-    Properties configProperties
+    Properties commonProperties
+    Properties keysProperties
     Properties keystoreProperties
 
     String APP_NAME = "Will It Rain?"
@@ -12,9 +13,10 @@ class Config {
         switch (buildType) {
             case BuildType.RELEASE.name():
                 return APP_NAME
+                break
             case BuildType.DEBUG.name():
                 return APP_NAME + " - " + BuildType.DEBUG.name()
-
+                break
         }
     }
 }
@@ -23,13 +25,19 @@ ext {
     config = new Config()
     def basePath = rootDir.absolutePath + "/app/config/"
 
-    config.configProperties = new Properties()
-    def configPropertiesFileName = "common.properties"
-    config.configProperties.load(new FileInputStream(rootProject.file((basePath + configPropertiesFileName))))
+    config.commonProperties = new Properties()
+    def commonPropertiesFileName = "common.properties"
+    config.commonProperties.load(new FileInputStream(rootProject.file((basePath + commonPropertiesFileName))))
+
+    config.keysProperties = new Properties()
+    def keysPropertiesFileName = "keys.properties"
+    if (file(rootProject.file((basePath + keysPropertiesFileName))).exists()) {
+        config.keysProperties.load(new FileInputStream(rootProject.file((basePath + keysPropertiesFileName))))
+    }
 
     config.keystoreProperties = new Properties()
-    def keystoreFileName = "keystore.properties"
-    if (file(rootProject.file((basePath + keystoreFileName))).exists()) {
-        config.keystoreProperties.load(new FileInputStream(rootProject.file((basePath + keystoreFileName))))
+    def keystorePropertiesFileName = "keystore.properties"
+    if (file(rootProject.file((basePath + keystorePropertiesFileName))).exists()) {
+        config.keystoreProperties.load(new FileInputStream(rootProject.file((basePath + keystorePropertiesFileName))))
     }
 }

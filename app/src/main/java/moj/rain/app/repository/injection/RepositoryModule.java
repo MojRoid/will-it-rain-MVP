@@ -4,10 +4,10 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import moj.rain.app.repository.geocoding.GeocodingRepository;
-import moj.rain.app.repository.geocoding.GeocodingRepositoryImpl;
-import moj.rain.app.repository.weather.WeatherNetworkRepositoryImpl;
-import moj.rain.app.repository.weather.WeatherRepository;
+import moj.rain.app.repository.repos.geocoding.GeocodingRepository;
+import moj.rain.app.repository.repos.geocoding.GeocodingRepositoryImpl;
+import moj.rain.app.repository.repos.weather.WeatherNetworkRepositoryImpl;
+import moj.rain.app.repository.repos.weather.WeatherRepository;
 
 @Module
 public class RepositoryModule {
