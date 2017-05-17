@@ -31,12 +31,13 @@ public class WeatherDataAdapterTest {
 
     private WeatherHour weatherHour;
     private Hour hour;
-    private boolean actualBoolean;
-    private WeatherHour actualWeatherHour;
-    private double expectedDouble;
-    private int actualInt;
     private double temperature;
     private double apparentTemperature;
+    private double doubleValue;
+
+    private boolean actualBoolean;
+    private WeatherHour actualWeatherHour;
+    private int actualInt;
 
     @Before
     public void setUp() throws Exception {
@@ -91,21 +92,21 @@ public class WeatherDataAdapterTest {
     public void getTemperature_1() throws Exception {
         givenTemperatureAndApparentTemperatures(1.2, 2.3);
         whenAnAverageTemperatureIsCalculated();
-        thenTheCorrectAverageIsReturnedAsAnInt(2);
+        thenDoubleShouldReturnCorrectlyAsAnInt(2);
     }
 
     @Test
     public void getTemperature_2() throws Exception {
         givenTemperatureAndApparentTemperatures(10.2, 10.8);
         whenAnAverageTemperatureIsCalculated();
-        thenTheCorrectAverageIsReturnedAsAnInt(11);
+        thenDoubleShouldReturnCorrectlyAsAnInt(11);
     }
 
     @Test
     public void getTemperature_3() throws Exception {
         givenTemperatureAndApparentTemperatures(-15.2, 15.2);
         whenAnAverageTemperatureIsCalculated();
-        thenTheCorrectAverageIsReturnedAsAnInt(0);
+        thenDoubleShouldReturnCorrectlyAsAnInt(0);
     }
 
     private void givenValidWeatherHour() {
@@ -142,7 +143,7 @@ public class WeatherDataAdapterTest {
     }
 
     private void givenADouble(double expectedDouble) {
-        this.expectedDouble = expectedDouble;
+        this.doubleValue = expectedDouble;
     }
 
     private void givenTemperatureAndApparentTemperatures(double temperature, double apparentTemperature) {
@@ -159,7 +160,7 @@ public class WeatherDataAdapterTest {
     }
 
     private void whenMultipliedByOneHundredAndRoundedToNearestFive() {
-        actualInt = weatherDataAdapter.getMultipliedByOneHundredAndRoundedToNearestFive(expectedDouble);
+        actualInt = weatherDataAdapter.getMultipliedByOneHundredAndRoundedToNearestFive(doubleValue);
     }
 
     private void whenAnAverageTemperatureIsCalculated() {
@@ -177,9 +178,5 @@ public class WeatherDataAdapterTest {
 
     private void thenDoubleShouldReturnCorrectlyAsAnInt(int expectedInt) {
         assertThat(actualInt).isEqualTo(expectedInt);
-    }
-
-    private void thenTheCorrectAverageIsReturnedAsAnInt(int expectedAverageTemperature) {
-        assertThat(actualInt).isEqualTo(expectedAverageTemperature);
     }
 }

@@ -41,8 +41,8 @@ public class WeatherDataAdapter extends BaseDataAdapter<Hour, WeatherHour> {
                 .build();
     }
 
-    protected int getMultipliedByOneHundredAndRoundedToNearestFive(double value) {
-        return (int) Math.round(value / 0.05) * 5;
+    protected int getMultipliedByOneHundredAndRoundedToNearestFive(double doubleValue) {
+        return (int) Math.round(doubleValue / 0.05) * 5;
     }
 
     protected int getTemperature(double temperature, double apparentTemperature) {
