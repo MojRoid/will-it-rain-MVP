@@ -11,9 +11,9 @@ public abstract class WeatherHour {
 
     public abstract String getIcon();
 
-    public abstract double getPrecipIntensity();
+    public abstract int getPrecipIntensity();
 
-    public abstract double getPrecipProbability();
+    public abstract int getPrecipProbability();
 
     public abstract int getTemperature();
 
@@ -28,9 +28,9 @@ public abstract class WeatherHour {
 
         public abstract Builder setIcon(String icon);
 
-        public abstract Builder setPrecipIntensity(double precipIntensity);
+        public abstract Builder setPrecipIntensity(int precipIntensity);
 
-        public abstract Builder setPrecipProbability(double precipProbability);
+        public abstract Builder setPrecipProbability(int precipProbability);
 
         public abstract Builder setTemperature(int temperature);
 

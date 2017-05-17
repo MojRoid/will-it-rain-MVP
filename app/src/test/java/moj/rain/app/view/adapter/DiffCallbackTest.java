@@ -11,16 +11,9 @@ import java.util.List;
 import moj.rain.weather.overview.model.WeatherHour;
 
 import static com.google.common.truth.Truth.assertThat;
-import static moj.rain.weather.overview.TestConstants.HOUR_1;
-import static moj.rain.weather.overview.TestConstants.HOUR_2;
-import static moj.rain.weather.overview.TestConstants.ICON_1;
-import static moj.rain.weather.overview.TestConstants.ICON_2;
-import static moj.rain.weather.overview.TestConstants.PRECIP_INTENSITY_1;
-import static moj.rain.weather.overview.TestConstants.PRECIP_INTENSITY_2;
-import static moj.rain.weather.overview.TestConstants.PRECIP_PROBABILITY_1;
-import static moj.rain.weather.overview.TestConstants.PRECIP_PROBABILITY_2;
-import static moj.rain.weather.overview.TestConstants.TEMPERATURE_1;
-import static moj.rain.weather.overview.TestConstants.TEMPERATURE_2;
+import static moj.rain.TestConstants.WEATHER_HOUR_1;
+import static moj.rain.TestConstants.WEATHER_HOUR_2;
+import static moj.rain.TestConstants.WEATHER_HOUR_MIX;
 
 public class DiffCallbackTest {
 
@@ -28,30 +21,6 @@ public class DiffCallbackTest {
 
     private List<WeatherHour> oldList;
     private List<WeatherHour> newList;
-
-    private final WeatherHour weatherHour1 = WeatherHour.builder()
-            .setHour(HOUR_1)
-            .setIcon(ICON_1)
-            .setPrecipIntensity(PRECIP_INTENSITY_1)
-            .setPrecipProbability(PRECIP_PROBABILITY_1)
-            .setTemperature(TEMPERATURE_1)
-            .build();
-
-    private final WeatherHour weatherHour2 = WeatherHour.builder()
-            .setHour(HOUR_2)
-            .setIcon(ICON_2)
-            .setPrecipIntensity(PRECIP_INTENSITY_2)
-            .setPrecipProbability(PRECIP_PROBABILITY_2)
-            .setTemperature(TEMPERATURE_2)
-            .build();
-
-    private final WeatherHour weatherHour3 = WeatherHour.builder()
-            .setHour(HOUR_1)
-            .setIcon(ICON_2)
-            .setPrecipIntensity(PRECIP_INTENSITY_2)
-            .setPrecipProbability(PRECIP_PROBABILITY_2)
-            .setTemperature(TEMPERATURE_2)
-            .build();
 
     @Before
     public void setUp() throws Exception {
@@ -71,7 +40,7 @@ public class DiffCallbackTest {
     @Test
     public void setData_emptyOldList() throws Exception {
         givenOldList(Collections.emptyList());
-        givenNewList(Arrays.asList(weatherHour1, weatherHour2));
+        givenNewList(Arrays.asList(WEATHER_HOUR_1, WEATHER_HOUR_2));
         whenListsAreSet();
         thenListSizesAreReportedAccurately();
         thenItemsEqualityIsReportedAccurately(new boolean[]{false, false});
@@ -81,7 +50,7 @@ public class DiffCallbackTest {
 
     @Test
     public void setData_emptyNewList() throws Exception {
-        givenOldList(Arrays.asList(weatherHour1, weatherHour2));
+        givenOldList(Arrays.asList(WEATHER_HOUR_1, WEATHER_HOUR_2));
         givenNewList(Collections.emptyList());
         whenListsAreSet();
         thenListSizesAreReportedAccurately();
@@ -91,8 +60,8 @@ public class DiffCallbackTest {
 
     @Test
     public void setData_equal() throws Exception {
-        givenOldList(Arrays.asList(weatherHour1, weatherHour2));
-        givenNewList(Arrays.asList(weatherHour1, weatherHour2));
+        givenOldList(Arrays.asList(WEATHER_HOUR_1, WEATHER_HOUR_2));
+        givenNewList(Arrays.asList(WEATHER_HOUR_1, WEATHER_HOUR_2));
         whenListsAreSet();
         thenListSizesAreReportedAccurately();
         thenItemsEqualityIsReportedAccurately(new boolean[]{true, true});
@@ -101,8 +70,8 @@ public class DiffCallbackTest {
 
     @Test
     public void setData_equalVariedSize() throws Exception {
-        givenOldList(Arrays.asList(weatherHour1, weatherHour2));
-        givenNewList(Arrays.asList(weatherHour1, weatherHour2, weatherHour1));
+        givenOldList(Arrays.asList(WEATHER_HOUR_1, WEATHER_HOUR_2));
+        givenNewList(Arrays.asList(WEATHER_HOUR_1, WEATHER_HOUR_2, WEATHER_HOUR_1, WEATHER_HOUR_1));
         whenListsAreSet();
         thenListSizesAreReportedAccurately();
         thenItemsEqualityIsReportedAccurately(new boolean[]{true, true, false});
@@ -111,8 +80,8 @@ public class DiffCallbackTest {
 
     @Test
     public void setData_partiallyEqual() throws Exception {
-        givenOldList(Arrays.asList(weatherHour1, weatherHour2, weatherHour1, weatherHour1, weatherHour2, weatherHour1));
-        givenNewList(Arrays.asList(weatherHour2, weatherHour2, weatherHour1, weatherHour2, weatherHour3, weatherHour3));
+        givenOldList(Arrays.asList(WEATHER_HOUR_1, WEATHER_HOUR_2, WEATHER_HOUR_1, WEATHER_HOUR_1, WEATHER_HOUR_2, WEATHER_HOUR_1));
+        givenNewList(Arrays.asList(WEATHER_HOUR_2, WEATHER_HOUR_2, WEATHER_HOUR_1, WEATHER_HOUR_2, WEATHER_HOUR_MIX, WEATHER_HOUR_MIX));
         whenListsAreSet();
         thenListSizesAreReportedAccurately();
         thenItemsEqualityIsReportedAccurately(new boolean[]{false, true, true, false, false, false});

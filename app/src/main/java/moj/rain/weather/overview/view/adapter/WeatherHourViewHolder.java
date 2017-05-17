@@ -3,6 +3,7 @@ package moj.rain.weather.overview.view.adapter;
 import android.view.View;
 import android.widget.TextView;
 
+import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
 import butterknife.BindView;
@@ -19,6 +20,12 @@ class WeatherHourViewHolder extends BaseWeatherViewHolder {
     TextView hour;
     @BindView(R.id.hour_item_day)
     TextView day;
+    @BindView(R.id.hour_item_precip_intensity)
+    TextView intensity;
+    @BindView(R.id.hour_item_precip_probability)
+    TextView probability;
+    @BindView(R.id.hour_item_icon)
+    TextView icon;
     @BindView(R.id.hour_item_temperature)
     TextView temperature;
 
@@ -33,23 +40,38 @@ class WeatherHourViewHolder extends BaseWeatherViewHolder {
 
     public void bind(WeatherData weatherData, int position) {
         WeatherHour weatherHour = weatherData.getRainHourList().get(position);
-        setHour(weatherHour);
-        setDay(weatherHour, weatherData.getDateTimeZone());
-        setTemperature(weatherHour);
+        setHour(weatherHour.getHour());
+        setDay(weatherHour.getHour(), weatherData.getDateTimeZone());
+        setPrecipIntensity(weatherHour.getPrecipIntensity());
+        setPrecipProbability(weatherHour.getPrecipProbability());
+        setIcon(weatherHour.getIcon());
+        setTemperature(weatherHour.getTemperature());
     }
 
-    private void setHour(WeatherHour weatherHour) {
-        String formattedHour = weatherHour.getHour().toString();
-        hour.setText(formattedHour);
+    protected void setHour(DateTime hour) {
+        String formattedHour = hour.toString();
+        this.hour.setText(formattedHour);
     }
 
-    private void setDay(WeatherHour weatherHour, DateTimeZone dateTimeZone) {
-        String formattedDay = DateUtils.formatDayNicely(resources, weatherHour.getHour(), dateTimeZone);
-        day.setText(formattedDay);
+    protected void setDay(DateTime hour, DateTimeZone dateTimeZone) {
+        String formattedDay = DateUtils.formatDayNicely(resources, hour, dateTimeZone);
+        this.day.setText(formattedDay);
     }
 
-    private void setTemperature(WeatherHour weatherHour) {
-        int formattedTemperature = weatherHour.getTemperature();
-        temperature.setText(resources.getString(R.string.celsius_symbol, formattedTemperature));
+    protected void setPrecipIntensity(int precipIntensity) {
+        this.intensity.setText(resources.getString(R.string.weather_hour_precip_intensity, precipIntensity));
+    }
+
+    protected void setPrecipProbability(int precipProbability) {
+        this.probability.setText(resources.getString(R.string.weather_hour_precip_probability, precipProbability));
+    }
+
+
+    protected void setIcon(String icon) {
+        this.icon.setText(icon);
+    }
+
+    protected void setTemperature(int temperature) {
+        this.temperature.setText(resources.getString(R.string.celsius_symbol, temperature));
     }
 }

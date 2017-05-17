@@ -21,18 +21,10 @@ import moj.rain.weather.overview.model.WeatherData;
 import moj.rain.weather.overview.model.WeatherHour;
 
 import static com.google.common.truth.Truth.assertThat;
-import static moj.rain.weather.overview.TestConstants.DATE_TIME_ZONE_UTC;
-import static moj.rain.weather.overview.TestConstants.HOUR_1;
-import static moj.rain.weather.overview.TestConstants.HOUR_2;
-import static moj.rain.weather.overview.TestConstants.ICON_1;
-import static moj.rain.weather.overview.TestConstants.ICON_2;
-import static moj.rain.weather.overview.TestConstants.PRECIP_INTENSITY_1;
-import static moj.rain.weather.overview.TestConstants.PRECIP_INTENSITY_2;
-import static moj.rain.weather.overview.TestConstants.PRECIP_PROBABILITY_1;
-import static moj.rain.weather.overview.TestConstants.PRECIP_PROBABILITY_2;
-import static moj.rain.weather.overview.TestConstants.TEMPERATURE_1;
-import static moj.rain.weather.overview.TestConstants.TEMPERATURE_2;
-import static moj.rain.weather.overview.TestConstants.WEATHER_HOUR_VIEW_HOLDER;
+import static moj.rain.TestConstants.DATE_TIME_ZONE_UTC;
+import static moj.rain.TestConstants.WEATHER_HOUR_1;
+import static moj.rain.TestConstants.WEATHER_HOUR_2;
+import static moj.rain.TestConstants.WEATHER_HOUR_VIEW_HOLDER;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.times;
 
@@ -87,7 +79,12 @@ public class WeatherAdapterImplTest extends RobolectricTestBase {
         givenWeatherDataIsSet();
         whenWeatherHourViewHolderIsCreated();
         whenViewHolderIsBound(0);
-        thenTheViewHolderBindsWithWeatherData(HOUR_1, TEMPERATURE_1);
+        thenTheViewHolderBindsWithWeatherData(
+                WEATHER_HOUR_1.getHour(),
+                WEATHER_HOUR_1.getPrecipIntensity(),
+                WEATHER_HOUR_1.getPrecipProbability(),
+                WEATHER_HOUR_1.getIcon(),
+                WEATHER_HOUR_1.getTemperature());
     }
 
     @Test
@@ -96,7 +93,12 @@ public class WeatherAdapterImplTest extends RobolectricTestBase {
         givenWeatherDataIsSet();
         whenWeatherHourViewHolderIsCreated();
         whenViewHolderIsBound(1);
-        thenTheViewHolderBindsWithWeatherData(HOUR_2, TEMPERATURE_2);
+        thenTheViewHolderBindsWithWeatherData(
+                WEATHER_HOUR_2.getHour(),
+                WEATHER_HOUR_2.getPrecipIntensity(),
+                WEATHER_HOUR_2.getPrecipProbability(),
+                WEATHER_HOUR_2.getIcon(),
+                WEATHER_HOUR_2.getTemperature());
     }
 
     @Test
@@ -124,22 +126,8 @@ public class WeatherAdapterImplTest extends RobolectricTestBase {
 
     private void givenValidWeatherData() {
         List<WeatherHour> weatherHourList = new ArrayList<>();
-        WeatherHour weatherHour1 = WeatherHour.builder()
-                .setHour(HOUR_1)
-                .setIcon(ICON_1)
-                .setPrecipIntensity(PRECIP_INTENSITY_1)
-                .setPrecipProbability(PRECIP_PROBABILITY_1)
-                .setTemperature(TEMPERATURE_1)
-                .build();
-        WeatherHour weatherHour2 = WeatherHour.builder()
-                .setHour(HOUR_2)
-                .setIcon(ICON_2)
-                .setPrecipIntensity(PRECIP_INTENSITY_2)
-                .setPrecipProbability(PRECIP_PROBABILITY_2)
-                .setTemperature(TEMPERATURE_2)
-                .build();
-        weatherHourList.add(weatherHour1);
-        weatherHourList.add(weatherHour2);
+        weatherHourList.add(WEATHER_HOUR_1);
+        weatherHourList.add(WEATHER_HOUR_2);
         weatherData = WeatherData.create(DATE_TIME_ZONE_UTC, weatherHourList);
     }
 
@@ -176,11 +164,22 @@ public class WeatherAdapterImplTest extends RobolectricTestBase {
         assertThat(weatherHourViewHolder).isNull();
     }
 
-    private void thenTheViewHolderBindsWithWeatherData(DateTime hour, int temperature) {
+    private void thenTheViewHolderBindsWithWeatherData(DateTime hour, int precipIntensity, int precipProbability, String icon, int temperature) {
         assertThat(weatherHourViewHolder.hour.getText())
                 .isEqualTo(hour.toString());
+
         assertThat(weatherHourViewHolder.day.getText())
                 .isEqualTo(DateUtils.formatDayNicely(context.getResources(), hour, DATE_TIME_ZONE_UTC));
+
+        assertThat(weatherHourViewHolder.intensity.getText())
+                .isEqualTo(context.getString(R.string.weather_hour_precip_intensity, precipIntensity));
+
+        assertThat(weatherHourViewHolder.probability.getText())
+                .isEqualTo(context.getString(R.string.weather_hour_precip_probability, precipProbability));
+
+        assertThat(weatherHourViewHolder.icon.getText())
+                .isEqualTo(icon);
+
         assertThat(weatherHourViewHolder.temperature.getText())
                 .isEqualTo(context.getString(R.string.celsius_symbol, temperature));
     }

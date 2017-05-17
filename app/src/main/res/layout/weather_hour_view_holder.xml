@@ -22,6 +22,38 @@
         android:layout_height="wrap_content"
         tools:text="2:00pm" />
 
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp" />
+
+    <TextView
+        android:id="@+id/hour_item_precip_intensity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="0.001 inches of liquid water per hour" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp" />
+
+    <TextView
+        android:id="@+id/hour_item_precip_probability"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="15%" />
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp" />
+
+    <TextView
+        android:id="@+id/hour_item_icon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="sunny" />
+
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp" />
