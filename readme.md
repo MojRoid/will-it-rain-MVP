@@ -1,6 +1,6 @@
 ## Will It Rain?
 
-[![Build Status](https://travis-ci.org/MojRoid/Will_It_Rain-MVP.svg?branch=master)](https://travis-ci.org/MojRoid/Will_It_Rain-MVP) [![codecov](https://codecov.io/gh/mojroid/Will_It_Rain-MVP/branch/master/graph/badge.svg)](https://codecov.io/gh/mojroid/Will_It_Rain-MVP) [![Dependency Status](https://www.versioneye.com/user/projects/59205bae8dcc4100591a0566/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/59205bae8dcc4100591a0566)
+[![Build Status](https://travis-ci.org/MojRoid/Will_It_Rain-MVP.svg?branch=master)](https://travis-ci.org/MojRoid/Will_It_Rain-MVP) [![codecov](https://codecov.io/gh/mojroid/Will_It_Rain-MVP/branch/master/graph/badge.svg)](https://codecov.io/gh/mojroid/Will_It_Rain-MVP) [![Dependency Status](https://www.versioneye.com/user/projects/5921b302da94de0043771e5e/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/5921b302da94de0043771e5e)
 
 **Android applicaton to:**
 
