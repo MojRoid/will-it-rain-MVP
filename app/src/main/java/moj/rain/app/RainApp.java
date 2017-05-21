@@ -22,19 +22,9 @@ public class RainApp extends Application {
         app = this;
         component = DaggerRainAppComponent
                 .builder()
-                .rainAppModule(new RainAppModule(app))
+                .rainAppModule(new RainAppModule(this))
                 .build();
         component.inject(this);
-    }
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        setupLogger();
-    }
-
-    private void setupLogger() {
-        Timber.plant(loggingTree);
     }
 
     public static RainApp get() {

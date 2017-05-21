@@ -53,7 +53,7 @@ public class OverviewActivity extends BaseActivity implements OverviewView {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setUpRecyclerView();
-        presenter.getCoordinates("London");
+        presenter.getGeocoding("London");
     }
 
     private void setUpRecyclerView() {

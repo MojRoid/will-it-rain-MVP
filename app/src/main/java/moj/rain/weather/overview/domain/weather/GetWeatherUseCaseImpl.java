@@ -7,14 +7,14 @@ import io.reactivex.Scheduler;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import moj.rain.app.domain.BaseUseCaseImpl;
-import moj.rain.app.injection.qualifiers.ForIoThread;
-import moj.rain.app.injection.qualifiers.ForMainThread;
+import moj.rain.app.injection.qualifiers.ForIoScheduler;
+import moj.rain.app.injection.qualifiers.ForMainThreadScheduler;
 import moj.rain.app.repository.repos.weather.WeatherRepository;
 
 public class GetWeatherUseCaseImpl extends BaseUseCaseImpl implements GetWeatherUseCase {
 
     private final WeatherRepository weatherRepository;
-    private final Scheduler ioScheduler;
+    private final Scheduler Scheduler;
     private final Scheduler mainThreadScheduler;
 
     private Callback callback;
@@ -22,11 +22,11 @@ public class GetWeatherUseCaseImpl extends BaseUseCaseImpl implements GetWeather
     @Inject
     public GetWeatherUseCaseImpl(CompositeDisposable compositeDisposable,
                                  WeatherRepository weatherRepository,
-                                 @ForIoThread Scheduler ioScheduler,
-                                 @ForMainThread Scheduler mainThreadScheduler) {
+                                 @ForIoScheduler Scheduler Scheduler,
+                                 @ForMainThreadScheduler Scheduler mainThreadScheduler) {
         super(compositeDisposable);
         this.weatherRepository = weatherRepository;
-        this.ioScheduler = ioScheduler;
+        this.Scheduler = Scheduler;
         this.mainThreadScheduler = mainThreadScheduler;
     }
 
@@ -38,7 +38,7 @@ public class GetWeatherUseCaseImpl extends BaseUseCaseImpl implements GetWeather
     @Override
     public void execute(double latitude, double longitude) {
         Disposable disposable = weatherRepository.getWeather(latitude, longitude)
-                .subscribeOn(ioScheduler)
+                .subscribeOn(Scheduler)
                 .observeOn(mainThreadScheduler)
                 .subscribe(callback::onWeatherRetrieved, callback::onWeatherNetworkError);
 

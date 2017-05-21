@@ -8,17 +8,8 @@ import com.google.gson.annotations.SerializedName;
 @AutoValue
 public abstract class Geometry {
 
-    @SerializedName("viewport")
-    public abstract Viewport viewport();
-
-    @SerializedName("bounds")
-    public abstract Bounds bounds();
-
     @SerializedName("location")
     public abstract Location location();
-
-    @SerializedName("location_type")
-    public abstract String locationType();
 
     public static TypeAdapter<Geometry> typeAdapter(Gson gson) {
         return new AutoValue_Geometry.GsonTypeAdapter(gson);

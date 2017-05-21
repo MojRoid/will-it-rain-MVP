@@ -17,26 +17,26 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.times;
 
-public class GetCoordinatesUseCaseImplTest {
+public class CallGeocoderUseCaseImplTest {
 
     @Mock
     private CompositeDisposable compositeDisposable;
     @Mock
     private GeocodingRepository geocodingRepository;
     @Mock
-    private GetCoordinatesUseCase.Callback callback;
+    private CallGeocoderUseCase.Callback callback;
 
     @Mock
     private Geocoding geocoding;
     @Mock
     private Throwable throwable;
 
-    private GetCoordinatesUseCaseImpl getCoordinatesUseCase;
+    private CallGeocoderUseCaseImpl getCoordinatesUseCase;
 
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        getCoordinatesUseCase = new GetCoordinatesUseCaseImpl(
+        getCoordinatesUseCase = new CallGeocoderUseCaseImpl(
                 compositeDisposable,
                 geocodingRepository,
                 Schedulers.trampoline(),
@@ -59,12 +59,12 @@ public class GetCoordinatesUseCaseImplTest {
 
     private void givenCoordinatesRetrievedSuccessfully() {
         getCoordinatesUseCase.setCallback(callback);
-        given(geocodingRepository.getCoordinates(anyString())).willReturn(Observable.just(geocoding));
+        given(geocodingRepository.getGeocoding(anyString())).willReturn(Observable.just(geocoding));
     }
 
     private void givenCoordinatesAreNotRetrievedSuccessfully() {
         getCoordinatesUseCase.setCallback(callback);
-        given(geocodingRepository.getCoordinates(anyString())).willReturn(Observable.error(throwable));
+        given(geocodingRepository.getGeocoding(anyString())).willReturn(Observable.error(throwable));
     }
 
     private void whenGetCoordinatesUseCaseIsExecuted() {
@@ -72,12 +72,12 @@ public class GetCoordinatesUseCaseImplTest {
     }
 
     private void thenCoordinatesDataIsPassedToCallback() {
-        then(callback).should(times(1)).onCoordinatesRetrieved(geocoding);
+        then(callback).should(times(1)).onGeocodingRetrieved(geocoding);
         then(callback).shouldHaveNoMoreInteractions();
     }
 
     private void thenThrowableIsPassedToCallback() {
-        then(callback).should(times(1)).onCoordinatesNetworkError(throwable);
+        then(callback).should(times(1)).onGeocodingNetworkError(throwable);
         then(callback).shouldHaveNoMoreInteractions();
     }
 }

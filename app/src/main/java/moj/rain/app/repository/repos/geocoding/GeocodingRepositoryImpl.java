@@ -5,7 +5,6 @@ import javax.inject.Inject;
 import io.reactivex.Observable;
 import moj.rain.app.network.managers.geocoding.GeocodingNetworkManager;
 import moj.rain.app.network.model.geocoding.Geocoding;
-import moj.rain.weather.overview.model.Coordinates;
 
 public class GeocodingRepositoryImpl implements GeocodingRepository {
 
@@ -17,7 +16,7 @@ public class GeocodingRepositoryImpl implements GeocodingRepository {
     }
 
     @Override
-    public Observable<Geocoding> getCoordinates(String location) {
-        return networkManager.getCoordinates(location);
+    public Observable<Geocoding> getGeocoding(String location) {
+        return networkManager.getGeocoding(location);
     }
 }

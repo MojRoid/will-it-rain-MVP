@@ -32,13 +32,13 @@ public class GeocodingNetworkManagerImplTest {
     }
 
     private void whenGetWeatherIsCalled() {
-        geocodingNetworkManager.getCoordinates(LOCATION_1);
+        geocodingNetworkManager.getGeocoding(LOCATION_1);
     }
 
     private void thenCallDarkSkyApi() {
         String url = BuildConfig.GEOCODER_BASE_URL;
         String key = BuildConfig.GECODER_API_KEY;
-        then(networkApi).should(times(1)).getCoordinates(
+        then(networkApi).should(times(1)).getGeocoding(
                 url, key, LOCATION_1);
     }
 }

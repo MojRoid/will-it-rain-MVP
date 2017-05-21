@@ -13,8 +13,8 @@ import moj.rain.app.injection.scopes.PerActivity;
 import moj.rain.app.view.adapter.DiffCallback;
 import moj.rain.app.view.error.ErrorView;
 import moj.rain.app.view.error.ErrorViewImpl;
-import moj.rain.weather.overview.domain.geocoding.GetCoordinatesUseCase;
-import moj.rain.weather.overview.domain.geocoding.GetCoordinatesUseCaseImpl;
+import moj.rain.weather.overview.domain.geocoding.CallGeocoderUseCase;
+import moj.rain.weather.overview.domain.geocoding.CallGeocoderUseCaseImpl;
 import moj.rain.weather.overview.domain.weather.GetWeatherUseCase;
 import moj.rain.weather.overview.domain.weather.GetWeatherUseCaseImpl;
 import moj.rain.weather.overview.model.WeatherHour;
@@ -61,7 +61,7 @@ public class OverviewModule {
 
     @Provides
     @PerActivity
-    GetCoordinatesUseCase provideGetCoordinatesUseCase(GetCoordinatesUseCaseImpl getCoordinatesUseCase) {
+    CallGeocoderUseCase provideGetCoordinatesUseCase(CallGeocoderUseCaseImpl getCoordinatesUseCase) {
         return getCoordinatesUseCase;
     }
 

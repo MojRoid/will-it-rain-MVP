@@ -17,8 +17,8 @@ public class GeocodingNetworkManagerImpl implements GeocodingNetworkManager {
     }
 
     @Override
-    public Observable<Geocoding> getCoordinates(String location) {
-        return networkApi.getCoordinates(
+    public Observable<Geocoding> getGeocoding(String location) {
+        return networkApi.getGeocoding(
                 BuildConfig.GEOCODER_BASE_URL,
                 BuildConfig.GECODER_API_KEY,
                 location);

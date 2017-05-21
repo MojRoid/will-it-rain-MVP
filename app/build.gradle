@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'de.mannodermaus.android-junit5'
 apply from: 'dependencies.gradle'
 apply from: 'config.gradle'
 apply from: 'jacoco.gradle'
@@ -51,7 +50,6 @@ android {
             release {
                 minifyEnabled true
                 useProguard true
-                shrinkResources true
                 resValue "string", "app_name", config.getAppName("RELEASE")
                 proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
                 signingConfig signingConfigs.release

@@ -5,7 +5,7 @@ public interface OverviewPresenter {
 
     void getWeather();
 
-    void getCoordinates(String location);
+    void getGeocoding(String location);
 
     void onViewDestroyed();
 }

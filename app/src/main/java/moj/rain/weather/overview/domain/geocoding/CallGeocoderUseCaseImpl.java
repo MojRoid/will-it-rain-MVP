@@ -6,26 +6,27 @@ import io.reactivex.Scheduler;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import moj.rain.app.domain.BaseUseCaseImpl;
-import moj.rain.app.injection.qualifiers.ForIoThread;
-import moj.rain.app.injection.qualifiers.ForMainThread;
+import moj.rain.app.injection.qualifiers.ForComputationScheduler;
+import moj.rain.app.injection.qualifiers.ForIoScheduler;
+import moj.rain.app.injection.qualifiers.ForMainThreadScheduler;
 import moj.rain.app.repository.repos.geocoding.GeocodingRepository;
 
-public class GetCoordinatesUseCaseImpl extends BaseUseCaseImpl implements GetCoordinatesUseCase {
+public class CallGeocoderUseCaseImpl extends BaseUseCaseImpl implements CallGeocoderUseCase {
 
     private final GeocodingRepository geocodingRepository;
-    private final Scheduler ioScheduler;
+    private final Scheduler scheduler;
     private final Scheduler mainThreadScheduler;
 
     private Callback callback;
 
     @Inject
-    public GetCoordinatesUseCaseImpl(CompositeDisposable compositeDisposable,
-                                     GeocodingRepository geocodingRepository,
-                                     @ForIoThread Scheduler ioScheduler,
-                                     @ForMainThread Scheduler mainThreadScheduler) {
+    public CallGeocoderUseCaseImpl(CompositeDisposable compositeDisposable,
+                                   GeocodingRepository geocodingRepository,
+                                   @ForIoScheduler Scheduler scheduler,
+                                   @ForMainThreadScheduler Scheduler mainThreadScheduler) {
         super(compositeDisposable);
         this.geocodingRepository = geocodingRepository;
-        this.ioScheduler = ioScheduler;
+        this.scheduler = scheduler;
         this.mainThreadScheduler = mainThreadScheduler;
     }
 
@@ -36,10 +37,10 @@ public class GetCoordinatesUseCaseImpl extends BaseUseCaseImpl implements GetCoo
 
     @Override
     public void execute(String location) {
-        Disposable disposable = geocodingRepository.getCoordinates(location)
-                .subscribeOn(ioScheduler)
+        Disposable disposable = geocodingRepository.getGeocoding(location)
+                .subscribeOn(scheduler)
                 .observeOn(mainThreadScheduler)
-                .subscribe(callback::onCoordinatesRetrieved, callback::onCoordinatesNetworkError);
+                .subscribe(callback::onGeocodingRetrieved, callback::onGeocodingNetworkError);
 
         trackDisposable(disposable);
     }

@@ -9,16 +9,13 @@ import com.google.gson.annotations.SerializedName;
 public abstract class Weather {
 
     @SerializedName("latitude")
-    public abstract int getLatitude();
+    public abstract double getLatitude();
 
     @SerializedName("longitude")
-    public abstract int getLongitude();
+    public abstract double getLongitude();
 
     @SerializedName("timezone")
     public abstract String getTimezone();
-
-    @SerializedName("minutely")
-    public abstract Minutely getMinutely();
 
     @SerializedName("hourly")
     public abstract Hourly getHourly();

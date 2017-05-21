@@ -5,16 +5,16 @@ import android.support.annotation.NonNull;
 import moj.rain.app.domain.BaseUseCase;
 import moj.rain.app.network.model.geocoding.Geocoding;
 
-public interface GetCoordinatesUseCase extends BaseUseCase {
+public interface CallGeocoderUseCase extends BaseUseCase {
 
     interface Callback {
 
-        void onCoordinatesRetrieved(@NonNull Geocoding geocoding);
+        void onGeocodingRetrieved(@NonNull Geocoding geocoding);
 
-        void onCoordinatesNetworkError(Throwable throwable);
+        void onGeocodingNetworkError(Throwable throwable);
     }
 
-    void setCallback(GetCoordinatesUseCase.Callback callback);
+    void setCallback(CallGeocoderUseCase.Callback callback);
 
     void execute(String location);
 }
