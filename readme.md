@@ -1,6 +1,6 @@
 ## Will It Rain?
 
-[![Build Status](https://travis-ci.org/MojRoid/Will_It_Rain-MVP.svg?branch=master)](https://travis-ci.org/MojRoid/Will_It_Rain-MVP) [![codecov](https://codecov.io/gh/mojroid/Will_It_Rain-MVP/branch/master/graph/badge.svg)](https://codecov.io/gh/mojroid/Will_It_Rain-MVP) [![Dependency Status](https://www.versioneye.com/user/projects/59220b9c8dcc4100636c91fb/badge.svg)](https://www.versioneye.com/user/projects/59220b9c8dcc4100636c91fb)
+[![Build Status](https://travis-ci.org/MojRoid/Will_It_Rain-MVP.svg?branch=master)](https://travis-ci.org/MojRoid/Will_It_Rain-MVP)
 
 **Android applicaton to:**
 
@@ -13,7 +13,6 @@
 - [x] 90%+ code coverage
 - [x] Travis CI
 - [x] Code coverage reporting
-- [x] Dependency out-of-date reporting
 - [ ] [Multi process application](https://medium.com/@rotxed/going-multiprocess-on-android-52975ed8863c)
 - [ ] Feature written in Kotlin
-- [ ] [Module based structure based on features](https://medium.freecodecamp.com/how-modularisation-affects-build-time-of-an-android-application-43a984ce9968)
+- [ ] [Module based structure](https://medium.freecodecamp.com/how-modularisation-affects-build-time-of-an-android-application-43a984ce9968)
