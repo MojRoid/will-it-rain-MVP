@@ -4,9 +4,9 @@ package moj.rain.app.data;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import org.codehaus.plexus.util.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.platform.commons.util.StringUtils;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -46,7 +46,7 @@ public class BaseDataAdapterTest {
                 Schedulers.trampoline()) {
             @Override
             protected boolean isValid(String destination) {
-                return !StringUtils.isBlank(destination);
+                return !StringUtils.isEmpty(destination);
             }
 
             @Nullable

@@ -70,14 +70,16 @@ dependencies {
     // TESTING LIBRARIES                                                                          //
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
+    // JUnit //
+    testCompile(deps.junit) {
+        exclude group: 'org.hamcrest'
+    }
+
     // Espresso //
-    androidTestCompile (deps.espresso) {
+    androidTestCompile(deps.espresso) {
         exclude group: 'com.android.support',
                 module: 'support-annotations'
     }
-
-    // JUnit //
-    testCompile junitJupiter()
 
     // Mockito //
     testCompile deps.mockito
@@ -89,7 +91,7 @@ dependencies {
     }
 
     // Robolectric //
-    testCompile (deps.robolectric) {
+    testCompile(deps.robolectric) {
         exclude group: 'org.assertj'
     }
     testCompile deps.robolectricShadows
