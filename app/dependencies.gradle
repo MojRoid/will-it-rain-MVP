@@ -5,94 +5,95 @@ dependencies {
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     //compile project(':other module, i.e. core')
+    compile fileTree(dir: 'libs', include: ['*.jar'])
 
     // Support Library //
-    compile deps.appCompat
-    compile deps.supportLibrary
+    compile "com.android.support:appcompat-v7:$support_library_version"
+    compile "com.android.support:design:$support_library_version"
 
     // Dagger //
-    compile deps.dagger
-    annotationProcessor deps.daggerCompiler
+    compile "com.google.dagger:dagger:$dagger_version"
+    annotationProcessor "com.google.dagger:dagger-compiler:$dagger_version"
 
     // RxJava //
-    compile deps.rxAndroid
-    compile deps.rxJava
+    compile "io.reactivex.rxjava2:rxandroid:$rxAndroid_version"
+    compile "io.reactivex.rxjava2:rxjava:$rxJava_version"
 
     // Butterknife //
-    compile deps.butterknife
-    annotationProcessor deps.butterknifeCompiler
+    compile "com.jakewharton:butterknife:$butterknife_version"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$butterknife_version"
 
     // Retrofit //
-    compile deps.retrofit
-    compile deps.retrofitConverterGson
-    compile deps.retrofitAdapter
+    compile "com.squareup.retrofit2:retrofit:$retrofit_version"
+    compile "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    compile "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
 
     // OkHttp //
-    compile deps.okHttp
-    compile deps.okHttpInterceptor
+    compile "com.squareup.okhttp3:okhttp:$okhttp_version"
+    compile "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
 
     // Gson //
-    compile deps.gson
+    compile "com.google.code.gson:gson:$gson_version"
 
     // AutoValue //
-    provided deps.autoValue
-    annotationProcessor deps.autoValue
-    provided deps.autoValueGson
-    annotationProcessor deps.autoValueGson
+    provided "com.google.auto.value:auto-value:$auto_value_version"
+    annotationProcessor "com.google.auto.value:auto-value:$auto_value_version"
+    provided "com.ryanharter.auto.value:auto-value-gson:$auto_value_gson_version"
+    annotationProcessor "com.ryanharter.auto.value:auto-value-gson:$auto_value_gson_version"
 
     // Logging //
-    compile deps.timber
+    compile "com.jakewharton.timber:timber:$timber_version"
 
     // Joda Time //
-    compile deps.jodaTime
+    compile "joda-time:joda-time:$joda_time_version"
 
     // Architecture Components //
-    compile deps.lifecycleRuntime
-    compile deps.lifecycleExtensions
-    annotationProcessor deps.lifecycleCompiler
+    compile "android.arch.lifecycle:runtime:$architecture_components_version"
+    compile "android.arch.lifecycle:extensions:$architecture_components_version"
+    annotationProcessor "android.arch.lifecycle:compiler:$architecture_components_version"
 
     // Room //
-    compile deps.roomRuntime
-    annotationProcessor deps.roomCompiler
+    compile "android.arch.persistence.room:runtime:$architecture_components_version"
+    annotationProcessor "android.arch.persistence.room:compiler:$architecture_components_version"
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // DEBUG LIBRARIES                                                                            //
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     // Leak Canary //
-    debugCompile deps.leakCanary
+    debugCompile "com.squareup.leakcanary:leakcanary-android:$leakcanary_version"
 
     // Stetho //
-    debugCompile deps.stetho
-    debugCompile deps.stethoOkhttp
+    debugCompile "com.facebook.stetho:stetho:$stetho_version"
+    debugCompile "com.facebook.stetho:stetho-okhttp3:$stetho_version"
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     // TESTING LIBRARIES                                                                          //
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
     // JUnit //
-    testCompile(deps.junit) {
+    testCompile("junit:junit:$junit_version") {
         exclude group: 'org.hamcrest'
     }
 
     // Espresso //
-    androidTestCompile(deps.espresso) {
+    androidTestCompile("com.android.support.test.espresso:espresso-core:$espresso_version") {
         exclude group: 'com.android.support',
                 module: 'support-annotations'
     }
 
     // Mockito //
-    testCompile deps.mockito
-    testCompile deps.mockitoInline
+    testCompile "org.mockito:mockito-core:$mockito_version"
+    testCompile "org.mockito:mockito-inline:$mockito_version"
 
     // Truth //
-    testCompile(deps.truth) {
+    testCompile("com.google.truth:truth:$truth_version") {
         transitive = false
     }
 
     // Robolectric //
-    testCompile(deps.robolectric) {
+    testCompile("org.robolectric:robolectric:$robolectric_version") {
         exclude group: 'org.assertj'
     }
-    testCompile deps.robolectricShadows
+    testCompile "org.robolectric:shadows-support-v4:$robolectric_version"
 }

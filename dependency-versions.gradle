@@ -1,0 +1,35 @@
+ext {
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // APP DEPENDENCY VERSIONS                                                                    //
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    support_library_version = '25.3.1'
+    play_services_version = '10.2.1'
+    dagger_version = '2.10'
+    rxAndroid_version = '2.0.1'
+    rxJava_version = '2.1.0'
+    butterknife_version = '8.6.0'
+    auto_value_version = '1.4.1'
+    auto_value_gson_version = '0.4.6'
+    auto_value_parcel_version = '0.2.5'
+    okhttp_version = '3.8.0'
+    retrofit_version = '2.3.0'
+    gson_version = '2.8.0'
+    timber_version = '4.5.1'
+    joda_time_version = '2.9.9'
+    architecture_components_version = '1.0.0-alpha1'
+    leakcanary_version = '1.5.1'
+    stetho_version = '1.5.0'
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // TESTING DEPENDENCY VERSIONS                                                                //
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    junit_version = '4.12'
+    espresso_version = '2.2.2'
+    mockito_version = '2.8.9'
+    truth_version = '0.30'
+    robolectric_version = '3.3.2'
+}
+
