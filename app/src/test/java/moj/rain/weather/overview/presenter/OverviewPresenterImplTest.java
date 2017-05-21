@@ -58,7 +58,7 @@ public class OverviewPresenterImplTest {
         getWeatherUseCase = Mockito.mock(GetWeatherUseCase.class);
         callGeocoderUseCase = Mockito.mock(CallGeocoderUseCase.class);
         weatherDataAdapter = Mockito.mock(WeatherDataAdapter.class);
-        presenter = new OverviewPresenterImpl(view, getWeatherUseCase, callGeocoderUseCase, weatherDataAdapter);
+        presenter = new OverviewPresenterImpl(view, weatherDataAdapter, getWeatherUseCase, callGeocoderUseCase);
 
         MockitoAnnotations.initMocks(this);
     }
