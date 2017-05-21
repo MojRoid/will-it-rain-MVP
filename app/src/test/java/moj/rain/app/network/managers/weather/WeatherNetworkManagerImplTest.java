@@ -39,7 +39,7 @@ public class WeatherNetworkManagerImplTest {
 
     private void thenCallDarkSkyApi() {
         String key = BuildConfig.DARK_SKY_API_KEY;
-        String excludes = "currently,daily,alerts,flags";
+        String excludes = "minutely,currently,daily,alerts,flags";
         String units = "uk2";
         then(networkApi).should(times(1)).getWeather(
                 key, LATITUDE_1, LONGITUDE_1, excludes, units);

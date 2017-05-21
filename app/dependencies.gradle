@@ -1,102 +1,96 @@
-ext {
-    // App Dependencies
-    support_library_version = '25.3.1'
-    play_services_version = '10.2.1'
-    dagger_version = '2.9'
-    rxJava_version = '2.0.1'
-    butterknife_version = '8.5.1'
-    auto_value_version = '1.3'
-    auto_value_gson_version = '0.4.6'
-    auto_value_parcel_version = '0.2.5'
-    okhttp_version = '3.6.0'
-    retrofit_version = '2.2.0'
-    gson_version = '2.8.0'
-    timber_version = '4.5.1'
-    joda_time_version = '2.9.9'
-
-    // Testing Dependencies
-    espresso_version = '2.2.2'
-    mockito_version = '2.7.22'
-    truth_version = '0.30'
-    robolectric_version = '3.3.2'
-}
-
-// JUnit 5 Dependencies
-android {
-    junitPlatform {
-        jupiterVersion '5.0.0-M4'
-        platformVersion project.jUnit5PlatformVersion
-        vintageVersion '4.12.0-M4'
-    }
-}
-
 dependencies {
-    // Library Jars
-    compile fileTree(dir: 'libs', include: ['*.jar'])
 
-    // Support Library
-    compile "com.android.support:appcompat-v7:$support_library_version"
-    compile "com.android.support:design:$support_library_version"
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // RELEASE LIBRARIES                                                                          //
+    ////////////////////////////////////////////////////////////////////////////////////////////////
 
-    // Dagger
-    compile "com.google.dagger:dagger:$dagger_version"
-    annotationProcessor "com.google.dagger:dagger-compiler:$dagger_version"
+    //compile project(':other module, i.e. core')
 
-    // RxJava
-    compile "io.reactivex.rxjava2:rxandroid:$rxJava_version"
+    // Support Library //
+    compile deps.appCompat
+    compile deps.supportLibrary
 
-    // Butterknife
-    compile "com.jakewharton:butterknife:$butterknife_version"
-    annotationProcessor "com.jakewharton:butterknife-compiler:$butterknife_version"
+    // Dagger //
+    compile deps.dagger
+    annotationProcessor deps.daggerCompiler
 
-    // Retrofit
-    compile "com.squareup.retrofit2:retrofit:$retrofit_version"
-    compile "com.squareup.retrofit2:converter-gson:$retrofit_version"
-    compile "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
+    // RxJava //
+    compile deps.rxAndroid
+    compile deps.rxJava
 
-    // OkHttp
-    compile "com.squareup.okhttp3:okhttp:$okhttp_version"
-    compile "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
+    // Butterknife //
+    compile deps.butterknife
+    annotationProcessor deps.butterknifeCompiler
 
-    // Gson
-    compile "com.google.code.gson:gson:$gson_version"
+    // Retrofit //
+    compile deps.retrofit
+    compile deps.retrofitConverterGson
+    compile deps.retrofitAdapter
 
-    // AutoValue
-    provided "com.google.auto.value:auto-value:$auto_value_version"
-    annotationProcessor "com.google.auto.value:auto-value:$auto_value_version"
+    // OkHttp //
+    compile deps.okHttp
+    compile deps.okHttpInterceptor
 
-    provided "com.ryanharter.auto.value:auto-value-gson:$auto_value_gson_version"
-    annotationProcessor "com.ryanharter.auto.value:auto-value-gson:$auto_value_gson_version"
+    // Gson //
+    compile deps.gson
 
-    // Logging
-    compile "com.jakewharton.timber:timber:$timber_version"
+    // AutoValue //
+    provided deps.autoValue
+    annotationProcessor deps.autoValue
+    provided deps.autoValueGson
+    annotationProcessor deps.autoValueGson
 
-    // Joda Time
-    compile "joda-time:joda-time:$joda_time_version"
+    // Logging //
+    compile deps.timber
 
-    // TESTING -------------------------------------------------------------------------------------
+    // Joda Time //
+    compile deps.jodaTime
 
-    // Instrumented testing
-    androidTestCompile("com.android.support.test.espresso:espresso-core:$espresso_version", {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
+    // Architecture Components //
+    compile deps.lifecycleRuntime
+    compile deps.lifecycleExtensions
+    annotationProcessor deps.lifecycleCompiler
 
-    // JUnit
+    // Room //
+    compile deps.roomRuntime
+    annotationProcessor deps.roomCompiler
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // DEBUG LIBRARIES                                                                            //
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    // Leak Canary //
+    debugCompile deps.leakCanary
+
+    // Stetho //
+    debugCompile deps.stetho
+    debugCompile deps.stethoOkhttp
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // TESTING LIBRARIES                                                                          //
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    // Espresso //
+    androidTestCompile (deps.espresso) {
+        exclude group: 'com.android.support',
+                module: 'support-annotations'
+    }
+
+    // JUnit //
     testCompile junitJupiter()
-    testCompile junitVintage()
 
-    // Mockito
-    testCompile "org.mockito:mockito-core:$mockito_version"
-    testCompile "org.mockito:mockito-inline:$mockito_version"
+    // Mockito //
+    testCompile deps.mockito
+    testCompile deps.mockitoInline
 
-    // Truth
-    testCompile("com.google.truth:truth:$truth_version", {
+    // Truth //
+    testCompile(deps.truth) {
         transitive = false
-    })
+    }
 
-    // Robolectric
-    testCompile("org.robolectric:robolectric:$robolectric_version", {
+    // Robolectric //
+    testCompile (deps.robolectric) {
         exclude group: 'org.assertj'
-    })
-    testCompile "org.robolectric:shadows-support-v4:$robolectric_version"
+    }
+    testCompile deps.robolectricShadows
 }

@@ -14,7 +14,7 @@ import moj.rain.app.network.model.weather.Hour;
 import moj.rain.app.network.model.weather.Hourly;
 import moj.rain.app.network.model.weather.Weather;
 import moj.rain.weather.overview.data.WeatherDataAdapter;
-import moj.rain.weather.overview.domain.geocoding.GetCoordinatesUseCase;
+import moj.rain.weather.overview.domain.geocoding.CallGeocoderUseCase;
 import moj.rain.weather.overview.domain.weather.GetWeatherUseCase;
 import moj.rain.weather.overview.model.WeatherData;
 import moj.rain.weather.overview.model.WeatherHour;
@@ -49,16 +49,16 @@ public class OverviewPresenterImplTest {
 
     private OverviewView view;
     private GetWeatherUseCase getWeatherUseCase;
-    private GetCoordinatesUseCase getCoordinatesUseCase;
+    private CallGeocoderUseCase callGeocoderUseCase;
     private WeatherDataAdapter weatherDataAdapter;
 
     @Before
     public void setUp() throws Exception {
         view = Mockito.mock(OverviewView.class);
         getWeatherUseCase = Mockito.mock(GetWeatherUseCase.class);
-        getCoordinatesUseCase = Mockito.mock(GetCoordinatesUseCase.class);
+        callGeocoderUseCase = Mockito.mock(CallGeocoderUseCase.class);
         weatherDataAdapter = Mockito.mock(WeatherDataAdapter.class);
-        presenter = new OverviewPresenterImpl(view, getWeatherUseCase, getCoordinatesUseCase, weatherDataAdapter);
+        presenter = new OverviewPresenterImpl(view, getWeatherUseCase, callGeocoderUseCase, weatherDataAdapter);
 
         MockitoAnnotations.initMocks(this);
     }
@@ -113,14 +113,14 @@ public class OverviewPresenterImplTest {
     }
 
     @Test
-    public void onCoordinatesRetrieved() throws Exception {
-        whenCoordinatesDataIsRetrieved();
+    public void onGeocodingRetrieved() throws Exception {
+        whenGeocodingDataIsRetrieved();
         thenGeocoderResultsShouldBePassedToTheView();
     }
 
     @Test
     public void onCoordinatesNetworkError() throws Exception {
-        whenCoordinatesNetworkErrorOccurs();
+        whenGeocodingNetworkErrorOccurs();
         thenShowNetworkErrorToTheView();
     }
 
@@ -138,7 +138,7 @@ public class OverviewPresenterImplTest {
     }
 
     private void whenGetCoordinatesIsCalled() {
-        presenter.getCoordinates(LOCATION_1);
+        presenter.getGeocoding(LOCATION_1);
     }
 
     private void whenViewIsDestroyed() {
@@ -149,8 +149,8 @@ public class OverviewPresenterImplTest {
         presenter.onWeatherNetworkError(throwable);
     }
 
-    private void whenCoordinatesNetworkErrorOccurs() {
-        presenter.onCoordinatesNetworkError(throwable);
+    private void whenGeocodingNetworkErrorOccurs() {
+        presenter.onGeocodingNetworkError(throwable);
     }
 
     private void whenAnErrorOccursAdaptingData() {
@@ -165,16 +165,18 @@ public class OverviewPresenterImplTest {
         presenter.onWeatherRetrieved(weather);
     }
 
-    private void whenCoordinatesDataIsRetrieved() {
-        presenter.onCoordinatesRetrieved(geocoding);
+    private void whenGeocodingDataIsRetrieved() {
+        presenter.onGeocodingRetrieved(geocoding);
     }
 
     private void thenUseCasesShouldBeTrackedAndHaveCallbacksSet() {
         then(getWeatherUseCase).should(times(1)).setCallback(presenter);
-        then(getCoordinatesUseCase).should(times(1)).setCallback(presenter);
+        then(getWeatherUseCase).shouldHaveNoMoreInteractions();
 
-        assertThat(presenter.getUseCaseList()).contains((getWeatherUseCase));
-        assertThat(presenter.getUseCaseList()).contains((getCoordinatesUseCase));
+        then(callGeocoderUseCase).should(times(1)).setCallback(presenter);
+        then(callGeocoderUseCase).shouldHaveNoMoreInteractions();
+
+        assertThat(presenter.getUseCaseList()).containsExactly(getWeatherUseCase, callGeocoderUseCase);
         assertThat(presenter.getUseCaseList()).containsNoDuplicates();
     }
 
@@ -185,17 +187,24 @@ public class OverviewPresenterImplTest {
     }
 
     private void thenExecuteTheGetCoordinatesUseCase() {
-        then(getCoordinatesUseCase).should(times(1)).setCallback(presenter);
-        then(getCoordinatesUseCase).should(times(1)).execute(LOCATION_1);
-        then(getCoordinatesUseCase).shouldHaveNoMoreInteractions();
+        then(callGeocoderUseCase).should(times(1)).setCallback(presenter);
+        then(callGeocoderUseCase).should(times(1)).execute(LOCATION_1);
+        then(callGeocoderUseCase).shouldHaveNoMoreInteractions();
     }
 
     private void thenCancelAndCleanUpAndNullifyCallbacks() {
         then(weatherDataAdapter).should(times(1)).cancel();
         then(weatherDataAdapter).shouldHaveNoMoreInteractions();
 
+        then(getWeatherUseCase).should(times(1)).setCallback(presenter);
         then(getWeatherUseCase).should(times(1)).setCallback(null);
-        then(getCoordinatesUseCase).should(times(1)).setCallback(null);
+        then(getWeatherUseCase).should(times(1)).cleanUp();
+        then(getWeatherUseCase).shouldHaveNoMoreInteractions();
+
+        then(callGeocoderUseCase).should(times(1)).setCallback(presenter);
+        then(callGeocoderUseCase).should(times(1)).setCallback(null);
+        then(callGeocoderUseCase).should(times(1)).cleanUp();
+        then(callGeocoderUseCase).shouldHaveNoMoreInteractions();
 
         assertThat(presenter.getUseCaseList()).isEmpty();
     }

@@ -4,7 +4,6 @@ package moj.rain.app.network.api;
 import io.reactivex.Observable;
 import moj.rain.app.network.model.geocoding.Geocoding;
 import moj.rain.app.network.model.weather.Weather;
-import moj.rain.weather.overview.model.Coordinates;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -20,7 +19,7 @@ public interface NetworkApi {
                                    @Query("units") String units);
 
     @GET
-    Observable<Geocoding> getCoordinates(@Url String url,
-                                         @Query("key") String key,
-                                         @Query("address") String excludes);
+    Observable<Geocoding> getGeocoding(@Url String url,
+                                       @Query("key") String key,
+                                       @Query("address") String excludes);
 }

@@ -5,16 +5,17 @@ import android.view.View;
 import org.joda.time.DateTimeZone;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.robolectric.Robolectric;
+import org.robolectric.RobolectricTestRunner;
 import org.robolectric.android.controller.ActivityController;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import moj.rain.RobolectricTestBase;
 import moj.rain.app.view.error.ErrorView;
 import moj.rain.weather.overview.model.WeatherData;
 import moj.rain.weather.overview.model.WeatherHour;
@@ -25,7 +26,8 @@ import static moj.rain.TestConstants.WEATHER_HOUR_1;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.times;
 
-public class OverviewActivityTest extends RobolectricTestBase {
+@RunWith(RobolectricTestRunner.class)
+public class OverviewActivityTest {
 
     @Mock
     private OverviewPresenter presenter;

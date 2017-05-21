@@ -11,7 +11,7 @@ import java.util.List;
 public abstract class Geocoding {
 
     @SerializedName("results")
-    public abstract List<Results> results();
+    public abstract List<GeocodingResults> results();
 
     @SerializedName("status")
     public abstract String status();

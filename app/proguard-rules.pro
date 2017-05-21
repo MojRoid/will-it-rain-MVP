@@ -23,3 +23,40 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+
+# Retrofit 2 #######################################################################################
+
+-dontwarn retrofit2.**
+-keep class retrofit2.** { *; }
+-keepattributes Signature
+-keepattributes Exceptions
+
+-keepclasseswithmembers class * {
+    @retrofit2.http.* <methods>;
+}
+
+# okio #############################################################################################
+
+-dontwarn okio.**
+
+# okhttp 3 #########################################################################################
+
+-keep class com.squareup.okhttp3.** {
+*;
+}
+
+# RxJava 2 #########################################################################################
+
+-dontwarn javax.annotation.**
+-keep class javax.annotation.** { *; }
+
+# Joda Time ########################################################################################
+
+-dontwarn org.joda.time.**
+-dontwarn org.joda.convert.**
+-keep class org.joda.time.** { *; }
+-keep class org.joda.convert.** { *; }
+-keep interface org.joda.time.** { *; }
+
+####################################################################################################

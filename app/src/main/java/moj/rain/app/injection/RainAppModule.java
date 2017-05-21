@@ -9,9 +9,10 @@ import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import moj.rain.app.RainApp;
-import moj.rain.app.injection.qualifiers.ForComputationThread;
-import moj.rain.app.injection.qualifiers.ForIoThread;
-import moj.rain.app.injection.qualifiers.ForMainThread;
+import moj.rain.app.injection.qualifiers.ForComputationScheduler;
+import moj.rain.app.injection.qualifiers.ForIoScheduler;
+import moj.rain.app.injection.qualifiers.ForMainThreadScheduler;
+import moj.rain.app.injection.qualifiers.ForSingleScheduler;
 import timber.log.Timber;
 
 @Module
@@ -31,21 +32,28 @@ public class RainAppModule {
 
     @Provides
     @Singleton
-    @ForIoThread
+    @ForIoScheduler
     Scheduler provideIoScheduler() {
         return Schedulers.io();
     }
 
     @Provides
     @Singleton
-    @ForComputationThread
+    @ForComputationScheduler
     Scheduler provideComputationScheduler() {
         return Schedulers.computation();
     }
 
     @Provides
     @Singleton
-    @ForMainThread
+    @ForSingleScheduler
+    Scheduler provideSingleScheduler() {
+        return Schedulers.single();
+    }
+
+    @Provides
+    @Singleton
+    @ForMainThreadScheduler
     Scheduler provideMainThreadScheduler() {
         return AndroidSchedulers.mainThread();
     }

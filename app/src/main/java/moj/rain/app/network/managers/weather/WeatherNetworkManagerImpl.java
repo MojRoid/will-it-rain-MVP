@@ -19,7 +19,7 @@ public class WeatherNetworkManagerImpl implements WeatherNetworkManager {
 
     @Override
     public Observable<Weather> getWeather(double latitude, double longitude) {
-        String excludes = "currently,daily,alerts,flags";
+        String excludes = "minutely,currently,daily,alerts,flags";
         String units = "uk2";
         return networkApi.getWeather(
                 BuildConfig.DARK_SKY_API_KEY,

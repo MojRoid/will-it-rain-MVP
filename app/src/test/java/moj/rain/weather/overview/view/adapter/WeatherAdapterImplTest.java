@@ -7,14 +7,15 @@ import android.support.v7.widget.RecyclerView;
 import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mockito;
+import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import moj.rain.R;
-import moj.rain.RobolectricTestBase;
 import moj.rain.app.util.DateUtils;
 import moj.rain.app.view.adapter.DiffCallback;
 import moj.rain.weather.overview.model.WeatherData;
@@ -28,7 +29,8 @@ import static moj.rain.TestConstants.WEATHER_HOUR_VIEW_HOLDER;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.times;
 
-public class WeatherAdapterImplTest extends RobolectricTestBase {
+@RunWith(RobolectricTestRunner.class)
+public class WeatherAdapterImplTest {
 
     private WeatherAdapterImpl weatherAdapter;
 

@@ -13,30 +13,35 @@ import moj.rain.app.network.model.geocoding.Geocoding;
 import moj.rain.app.network.model.weather.Weather;
 import moj.rain.app.presenter.BasePresenter;
 import moj.rain.weather.overview.data.WeatherDataAdapter;
-import moj.rain.weather.overview.domain.geocoding.GetCoordinatesUseCase;
+import moj.rain.weather.overview.domain.geocoding.CallGeocoderUseCase;
 import moj.rain.weather.overview.domain.weather.GetWeatherUseCase;
 import moj.rain.weather.overview.model.WeatherData;
 import moj.rain.weather.overview.model.WeatherHour;
 import moj.rain.weather.overview.view.OverviewView;
+import timber.log.Timber;
 
-public class OverviewPresenterImpl extends BasePresenter implements OverviewPresenter, WeatherDataAdapter.Callback<WeatherHour>, GetWeatherUseCase.Callback, GetCoordinatesUseCase.Callback {
+public class OverviewPresenterImpl extends BasePresenter implements
+        OverviewPresenter,
+        WeatherDataAdapter.Callback<WeatherHour>,
+        GetWeatherUseCase.Callback,
+        CallGeocoderUseCase.Callback {
 
     private final OverviewView view;
-    private final GetWeatherUseCase getWeatherUseCase;
-    private final GetCoordinatesUseCase getCoordinatesUseCase;
     private final WeatherDataAdapter weatherDataAdapter;
+    private final GetWeatherUseCase getWeatherUseCase;
+    private final CallGeocoderUseCase callGeocoderUseCase;
 
     private Weather weather;
 
     @Inject
     public OverviewPresenterImpl(OverviewView view,
+                                 WeatherDataAdapter weatherDataAdapter,
                                  GetWeatherUseCase getWeatherUseCase,
-                                 GetCoordinatesUseCase getCoordinatesUseCase,
-                                 WeatherDataAdapter weatherDataAdapter) {
+                                 CallGeocoderUseCase callGeocoderUseCase) {
         this.view = view;
-        this.getWeatherUseCase = getWeatherUseCase;
-        this.getCoordinatesUseCase = getCoordinatesUseCase;
         this.weatherDataAdapter = weatherDataAdapter;
+        this.getWeatherUseCase = getWeatherUseCase;
+        this.callGeocoderUseCase = callGeocoderUseCase;
 
         setCallbacks();
         trackUseCases();
@@ -44,23 +49,24 @@ public class OverviewPresenterImpl extends BasePresenter implements OverviewPres
 
     private void setCallbacks() {
         getWeatherUseCase.setCallback(this);
-        getCoordinatesUseCase.setCallback(this);
+        callGeocoderUseCase.setCallback(this);
     }
 
     private void trackUseCases() {
         trackUseCase(getWeatherUseCase);
-        trackUseCase(getCoordinatesUseCase);
+        trackUseCase(callGeocoderUseCase);
     }
 
     private void nullifyUseCaseCallbacks() {
         getWeatherUseCase.setCallback(null);
-        getCoordinatesUseCase.setCallback(null);
+        callGeocoderUseCase.setCallback(null);
     }
 
     @Override
     public void getWeather() {
 
-        // TODO: get latitude and longitude first
+        // TODO: check if we have a last known lat/long locally, if so get weather, otherwise, report this back to the view to show an onboarding etc.
+
         double latitude = 50;
         double longitude = 1;
 
@@ -68,8 +74,9 @@ public class OverviewPresenterImpl extends BasePresenter implements OverviewPres
     }
 
     @Override
-    public void getCoordinates(String location) {
-        getCoordinatesUseCase.execute(location);
+    public void getGeocoding(String location) {
+        // TODO: save to local persistence
+        callGeocoderUseCase.execute(location);
     }
 
     @Override
@@ -100,18 +107,18 @@ public class OverviewPresenterImpl extends BasePresenter implements OverviewPres
 
     @Override
     public void onWeatherNetworkError(Throwable throwable) {
-        throwable.printStackTrace();
+        Timber.e(throwable);
         view.showNetworkError();
     }
 
     @Override
-    public void onCoordinatesRetrieved(@NonNull Geocoding geocoding) {
+    public void onGeocodingRetrieved(@NonNull Geocoding geocoding) {
         view.showGeocoding(geocoding);
     }
 
     @Override
-    public void onCoordinatesNetworkError(Throwable throwable) {
-        throwable.printStackTrace();
+    public void onGeocodingNetworkError(Throwable throwable) {
+        Timber.e(throwable);
         view.showNetworkError();
     }
 }

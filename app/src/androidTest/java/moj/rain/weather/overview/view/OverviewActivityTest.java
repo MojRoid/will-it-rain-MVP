@@ -35,12 +35,12 @@ public class OverviewActivityTest {
     }
 
     @Test
-    public void showWeatherNetworkError() throws Exception {
-        whenAWeatherNetworkErrorIsShown();
+    public void showNetworkError() throws Exception {
+        whenANetworkErrorIsShown();
         thenShowTheErrorAsASnackbar();
     }
 
-    private void whenAWeatherNetworkErrorIsShown() {
+    private void whenANetworkErrorIsShown() {
         activity.showNetworkError();
     }
 

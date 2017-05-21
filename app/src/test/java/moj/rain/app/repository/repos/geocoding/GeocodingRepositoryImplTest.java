@@ -38,15 +38,15 @@ public class GeocodingRepositoryImplTest {
     }
 
     private void givenNetworkManagerWillReturnCoordinates() {
-        given(networkManager.getCoordinates(anyString())).willReturn(Observable.just(geocoding));
+        given(networkManager.getGeocoding(anyString())).willReturn(Observable.just(geocoding));
     }
 
     private void whenGetWeatherIsCalled() {
-        geocodingRepository.getCoordinates(LOCATION_1);
+        geocodingRepository.getGeocoding(LOCATION_1);
     }
 
     private void thenRequestWeatherFromNetwork() {
-        then(networkManager).should(times(1)).getCoordinates(LOCATION_1);
+        then(networkManager).should(times(1)).getGeocoding(LOCATION_1);
         then(networkManager).shouldHaveNoMoreInteractions();
     }
 
