@@ -1,7 +1,6 @@
 package moj.rain.app.view.watchers;
 
 import android.text.Editable;
-import android.text.TextUtils;
 
 import io.reactivex.annotations.NonNull;
 
@@ -27,7 +26,7 @@ public class TextWatcher implements android.text.TextWatcher {
 
     @Override
     public void afterTextChanged(Editable s) {
-        if (TextUtils.isEmpty(s)) {
+        if (s.toString().trim().length() == 0) {
             return;
         }
         callback.onTextChanged(s.toString());

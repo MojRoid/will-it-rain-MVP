@@ -1,5 +1,7 @@
 package moj.rain.BDD.overview.search;
 
+import android.widget.TextView;
+
 import moj.rain.BDD.overview.common.OverviewCommonSteps;
 import moj.rain.R;
 import moj.rain.weather.overview.view.OverviewActivity;
@@ -18,7 +20,8 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 public class OverviewSearchSteps<STEP extends OverviewSearchSteps<STEP>> extends OverviewCommonSteps<STEP> {
 
     private void waitUntilIdle() throws InterruptedException {
-        while (!(activity.formattedAddressResultTxt.getText().length() > 0)) {
+        TextView formattedAddressResultTxt = (TextView) activity.findViewById(R.id.formatted_address_results_txt);
+        while (!(formattedAddressResultTxt.getText().length() > 0)) {
             Thread.sleep(200);
         }
     }

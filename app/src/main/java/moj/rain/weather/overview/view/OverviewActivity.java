@@ -26,9 +26,8 @@ public class OverviewActivity extends BaseActivity implements OverviewView, Text
 
     @BindView(R.id.geocoding_search_input_et)
     EditText geocodingSearchInputEt;
-    @VisibleForTesting
     @BindView(R.id.formatted_address_results_txt)
-    public TextView formattedAddressResultTxt;
+    TextView formattedAddressResultTxt;
     @BindView(R.id.hour_list_rv)
     RecyclerView recyclerView;
 

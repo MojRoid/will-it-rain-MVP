@@ -11,10 +11,10 @@ import java.util.List;
 public abstract class Geocoding {
 
     @SerializedName("results")
-    public abstract List<GeocodingResults> results();
+    public abstract List<GeocodingResult> getResults();
 
     @SerializedName("status")
-    public abstract String status();
+    public abstract String getStatus();
 
     public static TypeAdapter<Geocoding> typeAdapter(Gson gson) {
         return new AutoValue_Geocoding.GsonTypeAdapter(gson);

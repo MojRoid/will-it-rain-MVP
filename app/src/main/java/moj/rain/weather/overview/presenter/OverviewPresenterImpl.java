@@ -29,6 +29,8 @@ public class OverviewPresenterImpl extends BasePresenter implements
         CallGeocoderUseCase.Callback,
         SearchInputUseCase.Callback {
 
+    public static final String EMPTY_FORMATTED_ADDRESS = " ";
+
     private final OverviewView view;
     private final WeatherDataAdapter weatherDataAdapter;
     private final GetWeatherUseCase getWeatherUseCase;
@@ -36,7 +38,7 @@ public class OverviewPresenterImpl extends BasePresenter implements
     private final SearchInputUseCase searchInputUseCase;
 
     private Weather weather;
-    private Location location;
+    private Location location = Location.builder().setLat(Double.NaN).setLng(Double.NaN).build();
 
     @Inject
     public OverviewPresenterImpl(OverviewView view,
@@ -74,10 +76,10 @@ public class OverviewPresenterImpl extends BasePresenter implements
 
     @Override
     public void getWeather() {
-        if (location == null) {
+        if (Double.isNaN(location.getLat()) || Double.isNaN(location.getLng())) {
             return;
         }
-        getWeatherUseCase.execute(location.lat(), location.lng());
+        getWeatherUseCase.execute(location.getLat(), location.getLng());
     }
 
     @Override
@@ -119,9 +121,9 @@ public class OverviewPresenterImpl extends BasePresenter implements
 
     @Override
     public void onGeocodingRetrieved(@NonNull Geocoding geocoding) {
-        location = geocoding.results().get(0).geometry().location();
-        getWeatherUseCase.execute(location.lat(), location.lng());
-        view.showFormattedAddress(geocoding.results().get(0).formattedAddress());
+        location = geocoding.getResults().get(0).getGeometry().getLocation();
+        getWeatherUseCase.execute(location.getLat(), location.getLng());
+        view.showFormattedAddress(geocoding.getResults().get(0).getFormattedAddress());
     }
 
     @Override
@@ -132,7 +134,6 @@ public class OverviewPresenterImpl extends BasePresenter implements
 
     @Override
     public void onValidSearchInput(@NonNull String input) {
-        Timber.e("VALID INPUT: " + input);
         if (input.trim().length() > 2) {
             callGeocoderUseCase.execute(input);
         } else {
@@ -141,7 +142,7 @@ public class OverviewPresenterImpl extends BasePresenter implements
     }
 
     private void showEmptyState() {
-        view.showFormattedAddress(" ");
+        view.showFormattedAddress(EMPTY_FORMATTED_ADDRESS);
         view.showWeather(null);
     }
 }

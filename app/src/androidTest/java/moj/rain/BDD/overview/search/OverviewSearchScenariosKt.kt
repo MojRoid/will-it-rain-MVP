@@ -21,7 +21,7 @@ class OverviewSearchScenariosKt : BaseScenarios<OverviewSearchSteps<*>>() {
     ), splitBy = "\\|", trimValues = false)
     @Throws(Exception::class)
     fun KOTLIN_searching_for_locations_should_show_the_auto_completed_locations(searchLocation: String,
-                                                                         autoCompleteLocation: String) {
+                                                                                autoCompleteLocation: String) {
         given().i_am_launching_the_application()
         `when`().`i_search_for_$`(searchLocation)
         then().`i_see_$_as_the_suggested_auto_completed_location`(autoCompleteLocation)

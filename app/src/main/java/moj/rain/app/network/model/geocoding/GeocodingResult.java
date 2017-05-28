@@ -6,15 +6,15 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.SerializedName;
 
 @AutoValue
-public abstract class GeocodingResults {
+public abstract class GeocodingResult {
 
     @SerializedName("formatted_address")
-    public abstract String formattedAddress();
+    public abstract String getFormattedAddress();
 
     @SerializedName("geometry")
-    public abstract Geometry geometry();
+    public abstract Geometry getGeometry();
 
-    public static TypeAdapter<GeocodingResults> typeAdapter(Gson gson) {
-        return new AutoValue_GeocodingResults.GsonTypeAdapter(gson);
+    public static TypeAdapter<GeocodingResult> typeAdapter(Gson gson) {
+        return new AutoValue_GeocodingResult.GsonTypeAdapter(gson);
     }
 }

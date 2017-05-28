@@ -36,6 +36,7 @@ public class WeatherAdapterImplTest {
 
     private Context context;
     private WeatherData weatherData;
+    private List<WeatherHour> weatherHourList;
     private RecyclerView recyclerView;
     private WeatherHourViewHolder weatherHourViewHolder;
     private int actual;
@@ -104,6 +105,14 @@ public class WeatherAdapterImplTest {
     }
 
     @Test
+    public void setWeatherData_null() throws Exception {
+        givenValidWeatherData();
+        givenWeatherDataIsSet();
+        givenWeatherDataIsSetWithNullData();
+        thenDataShouldBeInsertedThenRemovedFromAdapter();
+    }
+
+    @Test
     public void getItemCount_data() throws Exception {
         givenValidWeatherData();
         givenWeatherDataIsSet();
@@ -117,7 +126,6 @@ public class WeatherAdapterImplTest {
         thenDataShouldBeSetToAdapter();
     }
 
-
     @Test
     public void setWeatherData_twice() throws Exception {
         givenValidWeatherData();
@@ -126,8 +134,12 @@ public class WeatherAdapterImplTest {
         thenDataShouldBeSetToAdapterTwice();
     }
 
+    private void givenNullWeatherData() {
+        weatherData = null;
+    }
+
     private void givenValidWeatherData() {
-        List<WeatherHour> weatherHourList = new ArrayList<>();
+        weatherHourList = new ArrayList<>();
         weatherHourList.add(WEATHER_HOUR_1);
         weatherHourList.add(WEATHER_HOUR_2);
         weatherData = WeatherData.create(DATE_TIME_ZONE_UTC, weatherHourList);
@@ -135,6 +147,10 @@ public class WeatherAdapterImplTest {
 
     private void givenWeatherDataIsSet() {
         weatherAdapter.setWeatherData(weatherData);
+    }
+
+    private void givenWeatherDataIsSetWithNullData() {
+        weatherAdapter.setWeatherData(null);
     }
 
     private void whenGetItemViewTypeIsCalled() {
@@ -188,6 +204,18 @@ public class WeatherAdapterImplTest {
 
     private void thenItemCountShouldMatchWeatherDataSize() {
         assertThat(weatherAdapter.getItemCount()).isEqualTo(weatherData.getRainHourList().size());
+    }
+
+    private void thenDataShouldBeInsertedThenRemovedFromAdapter() {
+        then(weatherAdapter).should(times(1))
+                .setWeatherData(weatherData);
+        then(weatherAdapter).should(times(1))
+                .setWeatherData(null);
+        then(weatherAdapter).should(times(1))
+                .notifyItemRangeInserted(0, weatherData.getRainHourList().size());
+        then(weatherAdapter).should(times(1))
+                .notifyItemRangeRemoved(0, weatherHourList.size());
+        then(weatherAdapter).shouldHaveNoMoreInteractions();
     }
 
     private void thenDataShouldBeSetToAdapter() {

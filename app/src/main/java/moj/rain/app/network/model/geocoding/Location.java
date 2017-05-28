@@ -9,12 +9,26 @@ import com.google.gson.annotations.SerializedName;
 public abstract class Location {
 
     @SerializedName("lng")
-    public abstract double lng();
+    public abstract double getLng();
 
     @SerializedName("lat")
-    public abstract double lat();
+    public abstract double getLat();
 
     public static TypeAdapter<Location> typeAdapter(Gson gson) {
         return new AutoValue_Location.GsonTypeAdapter(gson);
+    }
+
+    public static Builder builder() {
+        return new AutoValue_Location.Builder();
+    }
+
+    @AutoValue.Builder
+    public abstract static class Builder {
+
+        public abstract Builder setLat(double lat);
+
+        public abstract Builder setLng(double lng);
+
+        public abstract Location build();
     }
 }
