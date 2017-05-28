@@ -6,8 +6,21 @@
     android:orientation="vertical"
     tools:context="moj.rain.weather.overview.view.OverviewActivity">
 
+    <EditText
+        android:id="@+id/geocoding_search_input_et"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Search for location..."
+        android:padding="8dp"
+        android:textStyle="italic" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@android:color/black" />
+
     <TextView
-        android:id="@+id/geocoder_results_txt"
+        android:id="@+id/formatted_address_results_txt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp"

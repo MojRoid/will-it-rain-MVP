@@ -43,6 +43,8 @@ public class GetWeatherUseCaseImplTest {
                 weatherRepository,
                 Schedulers.trampoline(),
                 Schedulers.trampoline());
+
+        getWeatherUseCase.setCallback(callback);
     }
 
     @Test
@@ -60,12 +62,10 @@ public class GetWeatherUseCaseImplTest {
     }
 
     private void givenWeatherRetrievedSuccessfully() {
-        getWeatherUseCase.setCallback(callback);
         given(weatherRepository.getWeather(anyDouble(), anyDouble())).willReturn(Observable.just(weather));
     }
 
     private void givenWeatherIsNotRetrievedSuccessfully() {
-        getWeatherUseCase.setCallback(callback);
         given(weatherRepository.getWeather(anyDouble(), anyDouble())).willReturn(Observable.error(throwable));
     }
 

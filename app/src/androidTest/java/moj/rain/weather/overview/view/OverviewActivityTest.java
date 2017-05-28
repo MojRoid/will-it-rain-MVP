@@ -1,7 +1,5 @@
 package moj.rain.weather.overview.view;
 
-import android.app.Instrumentation;
-import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -26,12 +24,10 @@ public class OverviewActivityTest {
     public ActivityTestRule<OverviewActivity> activityRule = new ActivityTestRule<>(OverviewActivity.class);
 
     private OverviewActivity activity;
-    private Instrumentation instrumentation;
 
     @Before
     public void setUp() throws Exception {
         activity = activityRule.getActivity();
-        instrumentation = InstrumentationRegistry.getInstrumentation();
     }
 
     @Test
