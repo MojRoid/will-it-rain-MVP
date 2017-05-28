@@ -105,7 +105,6 @@ dependencies {
     // JGiven //
     androidTestCompile("com.tngtech.jgiven:jgiven-android:$jgiven_version") {
         exclude group: 'com.android.support'
-        exclude group: 'com.android.support.test'
     }
 
     // JUnit Data Provider //
