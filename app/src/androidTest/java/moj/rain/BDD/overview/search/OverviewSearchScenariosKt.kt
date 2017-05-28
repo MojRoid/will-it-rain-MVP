@@ -6,6 +6,7 @@ import moj.rain.BDD.base.BaseScenarios
 import moj.rain.BDD.tags.Search
 import moj.rain.BDD.tags.Stories
 import moj.rain.BDD.tags.Story
+import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -13,6 +14,7 @@ import org.junit.runner.RunWith
 @RunWith(DataProviderRunner::class)
 class OverviewSearchScenariosKt : BaseScenarios<OverviewSearchSteps<*>>() {
 
+    @Ignore
     @Story(Stories.EXAMPLE_STORY_456)
     @Test
     @DataProvider(value = *arrayOf(

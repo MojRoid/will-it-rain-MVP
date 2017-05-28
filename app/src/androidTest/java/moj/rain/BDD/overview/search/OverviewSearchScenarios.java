@@ -1,8 +1,10 @@
 package moj.rain.BDD.overview.search;
 
-import com.tngtech.java.junit.dataprovider.DataProvider;
-import com.tngtech.java.junit.dataprovider.DataProviderRunner;
+import android.support.test.runner.AndroidJUnit4;
 
+import com.tngtech.java.junit.dataprovider.DataProvider;
+
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -12,8 +14,8 @@ import moj.rain.BDD.tags.Stories;
 import moj.rain.BDD.tags.Story;
 
 @Search
-@RunWith(DataProviderRunner.class)
-// Can also use AndroidJUnit4.class, but will loose DataProvider functionality
+@RunWith(AndroidJUnit4.class)
+// Can use AndroidJUnit4.class or DataProviderRunner.class for DataProvider functionality
 public class OverviewSearchScenarios extends BaseScenarios<OverviewSearchSteps> {
 
     @Story(Stories.EXAMPLE_STORY_123)
@@ -32,6 +34,7 @@ public class OverviewSearchScenarios extends BaseScenarios<OverviewSearchSteps> 
         then().i_see_$_as_the_suggested_auto_completed_location(" ");
     }
 
+    @Ignore
     @Story(Stories.EXAMPLE_STORY_456)
     @Test
     @DataProvider(value = {
