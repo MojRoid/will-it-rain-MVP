@@ -1,0 +1,73 @@
+def adb = android.getAdbExecutable().toString()
+def deviceReportsDir = '/storage/emulated/0/Download/jgiven-reports'
+def localJsonDir = 'build/reports/jgiven/json'
+def localHtmlDir = 'build/reports/jgiven/html'
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Clean previous reports                                                                         //
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+task cleanJGivenReports(type: Delete) {
+    delete localJsonDir
+    delete localHtmlDir
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Pull in JSON report task                                                                       //
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+task transferJson(type: Exec, dependsOn: cleanJGivenReports) {
+    doFirst {
+        if (!file(localJsonDir).mkdirs()) {
+            println("Cannot create dir " + localJsonDir)
+        }
+    }
+
+    commandLine adb, 'pull', deviceReportsDir, localJsonDir
+
+    doLast {
+        println("Pulled " + deviceReportsDir + " to " + localJsonDir)
+    }
+}
+
+task pullJGivenReports(type: Exec, dependsOn: transferJson) {
+    commandLine adb, 'shell', 'rm -r', deviceReportsDir
+
+    doLast {
+        println("Deleted " + deviceReportsDir + " directory")
+    }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Configure dependencies for HTML5 conversion                                                    //
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    configurations {
+        jgiven
+    }
+    dependencies {
+        jgiven "com.tngtech.jgiven:jgiven-core:$jgiven_version"
+        jgiven "com.tngtech.jgiven:jgiven-html5-report:$jgiven_version"
+    }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Task for converting jgiven JSON to HTML5                                                       //
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    task(jgivenJsonToHtml, dependsOn: pullJGivenReports, type: JavaExec) {
+        main = 'com.tngtech.jgiven.report.ReportGenerator'
+        classpath configurations.jgiven
+        args "--format=html5", "--sourceDir=" + localJsonDir, "--targetDir=" + localHtmlDir
+
+        doLast {
+            println("HTML report generated from JSON")
+        }
+    }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Pull in JSON report after instrumented tests                                                   //
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    gradle.projectsEvaluated {
+        connectedDebugAndroidTest.finalizedBy jgivenJsonToHtml
+    }
+}
