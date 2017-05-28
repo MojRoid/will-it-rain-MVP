@@ -13,6 +13,7 @@
 - [x] 90%+ code coverage
 - [x] Travis CI
 - [x] Code coverage reporting
+- [x] [JGiven BDD tool integration](http://jgiven.org)
 - [ ] [Multi process application](https://medium.com/@rotxed/going-multiprocess-on-android-52975ed8863c)
 - [ ] Feature written in Kotlin
 - [ ] [Module based structure](https://medium.freecodecamp.com/how-modularisation-affects-build-time-of-an-android-application-43a984ce9968)

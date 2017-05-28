@@ -31,5 +31,6 @@ ext {
     mockito_version = '2.8.9'
     truth_version = '0.30'
     robolectric_version = '3.3.2'
+    jgiven_version = '0.15.0'
+    junit_data_provider_version = '1.12.0'
 }
-
