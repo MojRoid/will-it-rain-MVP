@@ -67,7 +67,7 @@ task pullJGivenReports(type: Exec, dependsOn: transferJson) {
 // Pull in JSON report after instrumented tests                                                   //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    gradle.projectsEvaluated {
-        connectedDebugAndroidTest.finalizedBy jgivenJsonToHtml
-    }
+    // gradle.projectsEvaluated {
+        // connectedDebugAndroidTest.finalizedBy jgivenJsonToHtml
+    // }
 }
