@@ -21,8 +21,8 @@ public class OverviewSearchScenarios extends BaseScenarios<OverviewSearchSteps> 
     @Test
     public void searching_for_valid_location_should_show_the_auto_completed_location() throws Exception {
         given().i_am_launching_the_application();
-        when().i_search_for_$("Brighton");
-        then().i_see_$_as_the_suggested_auto_completed_location("Brighton, NY, USA");
+        when().i_search_for_$("N1 1BE");
+        then().i_see_$_as_the_suggested_auto_completed_location("Thornhill Square, London N1 1BE, UK");
     }
 
     @Story({Stories.EXAMPLE_STORY_123, Stories.EXAMPLE_STORY_456})

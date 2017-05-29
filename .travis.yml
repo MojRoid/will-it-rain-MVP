@@ -34,15 +34,10 @@ android:
     # System image to run emulator during tests
     - sys-img-${ANDROID_ABI}-android-${ANDROID_EMULATOR_API}
 
-before_install:
-  - "/sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -ac -screen 0 1920x1080x24"
-
 before_script:
-  - export DISPLAY=:99.0
-  - sleep 3
   - android list targets
   - echo no | android create avd --force --name test --target android-$ANDROID_EMULATOR_API --abi $ANDROID_ABI
-  - emulator -avd test -no-skin -no-audio &
+  - emulator -avd test -no-skin -no-audio -no-window &
 
 script:
   - android-wait-for-emulator

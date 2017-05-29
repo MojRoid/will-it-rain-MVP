@@ -81,7 +81,17 @@ task cleanDeviceJGivenReports(type: Exec) {
 // Generate HTML5 report after instrumented tests                                                 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    gradle.projectsEvaluated {
-        connectedDebugAndroidTest.finalizedBy jGivenGenerateHtmlTestReport
+//    gradle.projectsEvaluated {
+//        connectedDebugAndroidTest.finalizedBy jGivenGenerateHtmlTestReport
+//    }
+
+    android {
+        sourceSets {
+            androidTest {
+                java {
+                    exclude '**/BDD/**'
+                }
+            }
+        }
     }
 }
