@@ -89,6 +89,12 @@ public class OverviewActivity extends BaseActivity implements OverviewView, Text
     }
 
     @Override
+    public void showNoResultsError() {
+        View view = findViewById(android.R.id.content);
+        errorView.showNoResultsErrorView(view);
+    }
+
+    @Override
     public void showWeather(@Nullable WeatherData weatherData) {
         weatherAdapter.setWeatherData(weatherData);
     }

@@ -29,6 +29,7 @@ import static moj.rain.TestConstants.DATE_TIME_ZONE_UTC;
 import static moj.rain.TestConstants.LATITUDE_1;
 import static moj.rain.TestConstants.LOCATION_1;
 import static moj.rain.TestConstants.LONGITUDE_1;
+import static moj.rain.app.network.model.geocoding.Geocoding.STATUS_OK;
 import static moj.rain.weather.overview.presenter.OverviewPresenterImpl.EMPTY_FORMATTED_ADDRESS;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.BDDMockito.given;
@@ -151,10 +152,20 @@ public class OverviewPresenterImplTest {
     }
 
     @Test
-    public void onGeocodingRetrieved() throws Exception {
+    public void onGeocodingRetrieved_ok() throws Exception {
+        givenGeocodingHasResults();
+        givenGeocodingStatusIsOk();
         whenGeocodingIsRetrieved();
         thenExecuteTheGetWeatherUseCase();
         thenShowFormattedAddress();
+    }
+
+    @Test
+    public void onGeocodingRetrieved_not_ok() throws Exception {
+        givenGeocodingStatusIsNotOk();
+        whenGeocodingIsRetrieved();
+        thenShowNoResultsError();
+        thenShowEmptyState();
     }
 
     @Test
@@ -167,7 +178,7 @@ public class OverviewPresenterImplTest {
     public void onValidSearchInput_notValid() throws Exception {
         whenValidSearchInputIsCalled("");
         thenGeocoderUseCaseIsNotExecuted();
-        thenViewIsShowEmptyState();
+        thenShowEmptyState();
     }
 
     @Test
@@ -184,6 +195,24 @@ public class OverviewPresenterImplTest {
     private void givenValidWeatherData() {
         given(weather.getHourly()).willReturn(hourly);
         given(hourly.getHour()).willReturn(hourList);
+    }
+
+    private void givenGeocodingHasResults() {
+        when(geocoding.getResults()).thenReturn(geocodingResults);
+        when(geocodingResults.get(anyInt())).thenReturn(geocodingResult);
+        when(geocodingResult.getGeometry()).thenReturn(geometry);
+        when(geometry.getLocation()).thenReturn(location);
+        when(geocoding.getResults().get(anyInt()).getFormattedAddress()).thenReturn(LOCATION_1);
+        when(location.getLat()).thenReturn(LATITUDE_1);
+        when(location.getLng()).thenReturn(LONGITUDE_1);
+    }
+
+    private void givenGeocodingStatusIsOk() {
+        when(geocoding.getStatus()).thenReturn(STATUS_OK);
+    }
+
+    private void givenGeocodingStatusIsNotOk() {
+        when(geocoding.getStatus()).thenReturn("");
     }
 
     private void givenDateTimeZoneUTC() {
@@ -207,13 +236,6 @@ public class OverviewPresenterImplTest {
     }
 
     private void whenGeocodingIsRetrieved() {
-        when(geocoding.getResults()).thenReturn(geocodingResults);
-        when(geocodingResults.get(anyInt())).thenReturn(geocodingResult);
-        when(geocodingResult.getGeometry()).thenReturn(geometry);
-        when(geometry.getLocation()).thenReturn(location);
-        when(geocoding.getResults().get(anyInt()).getFormattedAddress()).thenReturn(LOCATION_1);
-        when(location.getLat()).thenReturn(LATITUDE_1);
-        when(location.getLng()).thenReturn(LONGITUDE_1);
         presenter.onGeocodingRetrieved(geocoding);
     }
 
@@ -305,7 +327,11 @@ public class OverviewPresenterImplTest {
         then(callGeocoderUseCase).shouldHaveNoMoreInteractions();
     }
 
-    private void thenViewIsShowEmptyState() {
+    private void thenShowNoResultsError() {
+        then(view).should(times(1)).showNoResultsError();
+    }
+
+    private void thenShowEmptyState() {
         then(view).should(times(1)).showFormattedAddress(EMPTY_FORMATTED_ADDRESS);
         then(view).should(times(1)).showWeather(null);
         then(view).shouldHaveNoMoreInteractions();

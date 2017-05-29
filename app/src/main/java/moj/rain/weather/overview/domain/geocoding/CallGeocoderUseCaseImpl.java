@@ -6,7 +6,6 @@ import io.reactivex.Scheduler;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import moj.rain.app.domain.BaseUseCaseImpl;
-import moj.rain.app.injection.qualifiers.ForComputationScheduler;
 import moj.rain.app.injection.qualifiers.ForIoScheduler;
 import moj.rain.app.injection.qualifiers.ForMainThreadScheduler;
 import moj.rain.app.repository.repos.geocoding.GeocodingRepository;
