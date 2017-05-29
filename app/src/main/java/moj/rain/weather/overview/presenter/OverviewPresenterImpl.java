@@ -22,8 +22,6 @@ import moj.rain.weather.overview.model.WeatherHour;
 import moj.rain.weather.overview.view.OverviewView;
 import timber.log.Timber;
 
-import static moj.rain.app.network.model.geocoding.Geocoding.STATUS_OK;
-
 public class OverviewPresenterImpl extends BasePresenter implements
         OverviewPresenter,
         WeatherDataAdapter.Callback<WeatherHour>,
@@ -123,14 +121,15 @@ public class OverviewPresenterImpl extends BasePresenter implements
 
     @Override
     public void onGeocodingRetrieved(@NonNull Geocoding geocoding) {
-        if (!geocoding.getStatus().matches(STATUS_OK)) {
-            showEmptyState();
-            view.showNoResultsError();
-            return;
-        }
         location = geocoding.getResults().get(0).getGeometry().getLocation();
         getWeatherUseCase.execute(location.getLat(), location.getLng());
         view.showFormattedAddress(geocoding.getResults().get(0).getFormattedAddress());
+    }
+
+    @Override
+    public void onGeocodingNoResults() {
+        showEmptyState();
+        view.showNoResultsError();
     }
 
     @Override

@@ -11,6 +11,8 @@ public interface CallGeocoderUseCase extends BaseUseCase {
 
         void onGeocodingRetrieved(@NonNull Geocoding geocoding);
 
+        void onGeocodingNoResults();
+
         void onGeocodingNetworkError(Throwable throwable);
     }
 

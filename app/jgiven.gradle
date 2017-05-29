@@ -83,13 +83,22 @@ task(jGivenGenerateHtmlTestReport, dependsOn: pullJGivenReports, type: JavaExec)
 // Generate HTML5 report after instrumented tests - Does not yet run properly on CI               //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-if (!System.getenv('CI')) {
-    gradle.projectsEvaluated {
-        connectedDebugAndroidTest.finalizedBy jGivenGenerateHtmlTestReport
+def INCLUDE_BDD_TESTS = true // Only set to false when evaluating code coverage locally.
+
+if (INCLUDE_BDD_TESTS) {
+    if (!System.getenv('CI')) {
+        gradle.projectsEvaluated {
+            connectedDebugAndroidTest.finalizedBy jGivenGenerateHtmlTestReport
+        }
     }
+    if (System.getenv('CI')) {
+        excludeBDDTests()
+    }
+} else {
+    excludeBDDTests()
 }
 
-if (System.getenv('CI')) {
+def excludeBDDTests() {
     android {
         sourceSets {
             androidTest {

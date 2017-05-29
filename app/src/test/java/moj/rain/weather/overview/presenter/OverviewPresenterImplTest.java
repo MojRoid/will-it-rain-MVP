@@ -29,7 +29,6 @@ import static moj.rain.TestConstants.DATE_TIME_ZONE_UTC;
 import static moj.rain.TestConstants.LATITUDE_1;
 import static moj.rain.TestConstants.LOCATION_1;
 import static moj.rain.TestConstants.LONGITUDE_1;
-import static moj.rain.app.network.model.geocoding.Geocoding.STATUS_OK;
 import static moj.rain.weather.overview.presenter.OverviewPresenterImpl.EMPTY_FORMATTED_ADDRESS;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.BDDMockito.given;
@@ -152,18 +151,16 @@ public class OverviewPresenterImplTest {
     }
 
     @Test
-    public void onGeocodingRetrieved_ok() throws Exception {
+    public void onGeocodingRetrieved() throws Exception {
         givenGeocodingHasResults();
-        givenGeocodingStatusIsOk();
         whenGeocodingIsRetrieved();
         thenExecuteTheGetWeatherUseCase();
         thenShowFormattedAddress();
     }
 
     @Test
-    public void onGeocodingRetrieved_not_ok() throws Exception {
-        givenGeocodingStatusIsNotOk();
-        whenGeocodingIsRetrieved();
+    public void onGeocodingNoResults() throws Exception {
+        whenGeocodingNoResults();
         thenShowNoResultsError();
         thenShowEmptyState();
     }
@@ -207,14 +204,6 @@ public class OverviewPresenterImplTest {
         when(location.getLng()).thenReturn(LONGITUDE_1);
     }
 
-    private void givenGeocodingStatusIsOk() {
-        when(geocoding.getStatus()).thenReturn(STATUS_OK);
-    }
-
-    private void givenGeocodingStatusIsNotOk() {
-        when(geocoding.getStatus()).thenReturn("");
-    }
-
     private void givenDateTimeZoneUTC() {
         given(weather.getTimezone()).willReturn(DATE_TIME_ZONE_UTC.getID());
     }
@@ -237,6 +226,10 @@ public class OverviewPresenterImplTest {
 
     private void whenGeocodingIsRetrieved() {
         presenter.onGeocodingRetrieved(geocoding);
+    }
+
+    private void whenGeocodingNoResults() {
+        presenter.onGeocodingNoResults();
     }
 
     private void whenGeocodingNetworkErrorOccurs() {
