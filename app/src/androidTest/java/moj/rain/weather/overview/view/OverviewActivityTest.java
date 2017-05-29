@@ -33,16 +33,39 @@ public class OverviewActivityTest {
     @Test
     public void showNetworkError() throws Exception {
         whenANetworkErrorIsShown();
-        thenShowTheErrorAsASnackbar();
+        thenShowTheNetworkErrorAsASnackbar();
+    }
+
+    @Test
+    public void showNoResultsError() throws Exception {
+        whenANoResultsErrorIsShown();
+        thenShowTheNoResultsErrorAsASnackbar();
     }
 
     private void whenANetworkErrorIsShown() {
         activity.showNetworkError();
     }
 
-    private void thenShowTheErrorAsASnackbar() {
+    private void whenANoResultsErrorIsShown() {
+        activity.showNoResultsError();
+    }
+
+    private void thenShowTheNetworkErrorAsASnackbar() {
+        assertError(R.string.network_error_message);
+    }
+
+    private void thenShowTheNoResultsErrorAsASnackbar() {
+        assertError(R.string.no_results_error_message);
+    }
+
+    private void assertError(int errorMessage) {
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         onView(CoreMatchers.allOf(withId(android.support.design.R.id.snackbar_text),
-                ViewMatchers.withText(R.string.network_error_message)))
+                ViewMatchers.withText(errorMessage)))
                 .check(matches(withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)));
     }
 }

@@ -7,4 +7,6 @@ import android.view.View;
 public interface ErrorView {
 
     void showNetworkErrorView(@NonNull View view);
+
+    void showNoResultsErrorView(@NonNull View view);
 }

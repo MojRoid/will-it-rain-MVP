@@ -10,6 +10,8 @@ import java.util.List;
 @AutoValue
 public abstract class Geocoding {
 
+    public static final String STATUS_OK = "OK";
+
     @SerializedName("results")
     public abstract List<GeocodingResult> getResults();
 

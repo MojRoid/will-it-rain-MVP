@@ -127,6 +127,12 @@ public class OverviewPresenterImpl extends BasePresenter implements
     }
 
     @Override
+    public void onGeocodingNoResults() {
+        showEmptyState();
+        view.showNoResultsError();
+    }
+
+    @Override
     public void onGeocodingNetworkError(Throwable throwable) {
         Timber.e(throwable);
         view.showNetworkError();

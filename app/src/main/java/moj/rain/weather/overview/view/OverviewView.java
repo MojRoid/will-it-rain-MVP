@@ -11,6 +11,8 @@ public interface OverviewView extends BaseView {
 
     void showNetworkError();
 
+    void showNoResultsError();
+
     void showWeather(@Nullable WeatherData weatherData);
 
     void showFormattedAddress(@NonNull String formattedAddress);

@@ -26,74 +26,84 @@ task cleanDeviceJGivenReports(type: Exec) {
     doLast {
         println("Cleaned directory: " + deviceReportsDir)
     }
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Pull in JSON report from device                                                                //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    task pullJGivenReports(type: Exec) {
-        doFirst {
-            tasks.cleanLocalJGivenReports.execute()
-            if (!file(localJsonDir).mkdirs()) {
-                println("Cannot create dir " + localJsonDir)
-            }
-        }
-
-        commandLine adb, 'pull', deviceReportsDir, localJsonDir
-
-        doLast {
-            println("Pulled " + deviceReportsDir + " to " + localJsonDir)
-            tasks.cleanDeviceJGivenReports.execute()
+task pullJGivenReports(type: Exec) {
+    doFirst {
+        tasks.cleanLocalJGivenReports.execute()
+        if (!file(localJsonDir).mkdirs()) {
+            println("Cannot create dir " + localJsonDir)
         }
     }
+
+    commandLine adb, 'pull', deviceReportsDir, localJsonDir
+
+    doLast {
+        println("Pulled " + deviceReportsDir + " to " + localJsonDir)
+        tasks.cleanDeviceJGivenReports.execute()
+    }
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Configure dependencies for HTML5 conversion                                                    //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    configurations {
-        jgiven
-    }
-    dependencies {
-        jgiven "com.tngtech.jgiven:jgiven-core:$jgiven_version"
-        jgiven "com.tngtech.jgiven:jgiven-html5-report:$jgiven_version"
-    }
+configurations {
+    jgiven
+}
+
+dependencies {
+    jgiven "com.tngtech.jgiven:jgiven-core:$jgiven_version"
+    jgiven "com.tngtech.jgiven:jgiven-html5-report:$jgiven_version"
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Converts JGiven JSON reports to HTML5 reports                                                  //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    task(jGivenGenerateHtmlTestReport, dependsOn: pullJGivenReports, type: JavaExec) {
-        doFirst {
-            tasks.pullJGivenReports.execute()
-        }
-
-        main = 'com.tngtech.jgiven.report.ReportGenerator'
-        classpath configurations.jgiven
-        args "--format=html5", "--sourceDir=" + localJsonDir, "--targetDir=" + localHtmlDir
-
-        doLast {
-            println("HTML report generated from JSON")
-        }
+task(jGivenGenerateHtmlTestReport, dependsOn: pullJGivenReports, type: JavaExec) {
+    doFirst {
+        tasks.pullJGivenReports.execute()
     }
+
+    main = 'com.tngtech.jgiven.report.ReportGenerator'
+    classpath configurations.jgiven
+    args "--format=html5", "--sourceDir=" + localJsonDir, "--targetDir=" + localHtmlDir
+
+    doLast {
+        println("HTML report generated from JSON")
+    }
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Generate HTML5 report after instrumented tests - Does not yet run properly on CI               //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
+def INCLUDE_BDD_TESTS = true // Only set to false when evaluating code coverage locally.
+
+if (INCLUDE_BDD_TESTS) {
     if (!System.getenv('CI')) {
         gradle.projectsEvaluated {
             connectedDebugAndroidTest.finalizedBy jGivenGenerateHtmlTestReport
         }
     }
-
     if (System.getenv('CI')) {
-        android {
-            sourceSets {
-                androidTest {
-                    java {
-                        exclude '**/BDD/**'
-                    }
+        excludeBDDTests()
+    }
+} else {
+    excludeBDDTests()
+}
+
+def excludeBDDTests() {
+    android {
+        sourceSets {
+            androidTest {
+                java {
+                    exclude '**/BDD/**'
                 }
             }
         }

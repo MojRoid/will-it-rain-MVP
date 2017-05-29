@@ -11,8 +11,19 @@ public class ErrorViewImpl implements ErrorView {
 
     @Override
     public void showNetworkErrorView(@NonNull View view) {
+        String error = view.getContext().getString(R.string.network_error_message);
+        showSnackbar(view, error);
+    }
+
+    @Override
+    public void showNoResultsErrorView(@NonNull View view) {
+        String error = view.getContext().getString(R.string.no_results_error_message);
+        showSnackbar(view, error);
+    }
+
+    private void showSnackbar(@NonNull View view, String error) {
         Snackbar.make(view,
-                view.getContext().getString(R.string.network_error_message),
+                error,
                 Snackbar.LENGTH_SHORT)
                 .show();
     }
