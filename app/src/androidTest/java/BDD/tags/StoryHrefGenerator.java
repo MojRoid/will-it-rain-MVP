@@ -1,4 +1,4 @@
-package moj.rain.BDD.tags;
+package BDD.tags;
 
 import com.tngtech.jgiven.annotation.TagHrefGenerator;
 import com.tngtech.jgiven.config.TagConfiguration;

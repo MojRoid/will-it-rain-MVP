@@ -1,11 +1,10 @@
-package moj.rain.BDD.base;
+package BDD.base;
 
 import android.graphics.Bitmap;
 import android.support.test.InstrumentationRegistry;
 
 import com.tngtech.jgiven.CurrentStep;
 import com.tngtech.jgiven.Stage;
-import com.tngtech.jgiven.annotation.JGivenConfiguration;
 import com.tngtech.jgiven.annotation.ScenarioState;
 import com.tngtech.jgiven.attachment.Attachment;
 import com.tngtech.jgiven.attachment.MediaType;

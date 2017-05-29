@@ -1,12 +1,12 @@
-package moj.rain.BDD.tags;
+package BDD.tags;
 
 import android.support.annotation.StringDef;
 
 import java.lang.annotation.Retention;
 
 import static java.lang.annotation.RetentionPolicy.SOURCE;
-import static moj.rain.BDD.tags.Stories.EXAMPLE_STORY_123;
-import static moj.rain.BDD.tags.Stories.EXAMPLE_STORY_456;
+import static BDD.tags.Stories.EXAMPLE_STORY_123;
+import static BDD.tags.Stories.EXAMPLE_STORY_456;
 
 @Retention(SOURCE)
 @StringDef({

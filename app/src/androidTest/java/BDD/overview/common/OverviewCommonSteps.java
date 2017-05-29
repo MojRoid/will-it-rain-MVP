@@ -1,4 +1,4 @@
-package moj.rain.BDD.overview.common;
+package BDD.overview.common;
 
 import android.content.Intent;
 import android.support.test.rule.ActivityTestRule;
@@ -7,7 +7,7 @@ import com.tngtech.jgiven.annotation.ScenarioState;
 
 import org.junit.Rule;
 
-import moj.rain.BDD.base.BaseSteps;
+import BDD.base.BaseSteps;
 import moj.rain.weather.overview.view.OverviewActivity;
 
 /**

@@ -1,20 +1,19 @@
-package moj.rain.BDD.overview.search;
-
-import android.support.test.runner.AndroidJUnit4;
+package BDD.overview.search;
 
 import com.tngtech.java.junit.dataprovider.DataProvider;
+import com.tngtech.java.junit.dataprovider.DataProviderRunner;
 
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import moj.rain.BDD.base.BaseScenarios;
-import moj.rain.BDD.tags.Search;
-import moj.rain.BDD.tags.Stories;
-import moj.rain.BDD.tags.Story;
+import BDD.base.BaseScenarios;
+import BDD.tags.Search;
+import BDD.tags.Stories;
+import BDD.tags.Story;
 
 @Search
-@RunWith(AndroidJUnit4.class)
+@RunWith(DataProviderRunner.class)
 // Can use AndroidJUnit4.class or DataProviderRunner.class for DataProvider functionality
 public class OverviewSearchScenarios extends BaseScenarios<OverviewSearchSteps> {
 
@@ -22,20 +21,20 @@ public class OverviewSearchScenarios extends BaseScenarios<OverviewSearchSteps> 
     @Test
     public void searching_for_valid_location_should_show_the_auto_completed_location() throws Exception {
         given().i_am_launching_the_application();
-        when().i_search_for_$("Manchester");
-        then().i_see_$_as_the_suggested_auto_completed_location("Manchester, UK");
+        when().i_search_for_$("Brighton");
+        then().i_see_$_as_the_suggested_auto_completed_location("Brighton, NY, USA");
     }
 
     @Story({Stories.EXAMPLE_STORY_123, Stories.EXAMPLE_STORY_456})
     @Test
     public void searching_for_non_valid_location_should_not_show_the_auto_completed_location() throws Exception {
         given().i_am_launching_the_application();
-        when().i_search_for_$("ab");
+        when().i_search_for_$(" ~ ");
         then().i_see_$_as_the_suggested_auto_completed_location(" ");
     }
 
-    @Ignore
     @Story(Stories.EXAMPLE_STORY_456)
+    @Ignore
     @Test
     @DataProvider(value = {
             "Manchester|Manchester, UK",

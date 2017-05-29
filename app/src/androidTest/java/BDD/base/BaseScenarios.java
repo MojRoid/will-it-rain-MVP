@@ -1,4 +1,4 @@
-package moj.rain.BDD.base;
+package BDD.base;
 
 import com.tngtech.jgiven.integration.android.AndroidJGivenTestRule;
 import com.tngtech.jgiven.junit.SimpleScenarioTest;

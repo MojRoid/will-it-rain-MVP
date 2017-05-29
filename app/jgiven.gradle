@@ -4,37 +4,47 @@ def localJsonDir = 'build/reports/jgiven/json'
 def localHtmlDir = 'build/reports/jgiven/html'
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-// Clean previous reports                                                                         //
+// Delete previous local reports directory                                                        //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-task cleanJGivenReports(type: Delete) {
+task cleanLocalJGivenReports(type: Delete) {
     delete localJsonDir
     delete localHtmlDir
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// Pull in JSON report task                                                                       //
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-task transferJson(type: Exec, dependsOn: cleanJGivenReports) {
-    doFirst {
-        if (!file(localJsonDir).mkdirs()) {
-            println("Cannot create dir " + localJsonDir)
-        }
-    }
-
-    commandLine adb, 'pull', deviceReportsDir, localJsonDir
 
     doLast {
-        println("Pulled " + deviceReportsDir + " to " + localJsonDir)
+        println("Cleaned directories: " + localJsonDir + " | " + localHtmlDir)
     }
 }
 
-task pullJGivenReports(type: Exec, dependsOn: transferJson) {
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Delete device report directory                                                                 //
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+task cleanDeviceJGivenReports(type: Exec) {
     commandLine adb, 'shell', 'rm -r', deviceReportsDir
 
     doLast {
-        println("Deleted " + deviceReportsDir + " directory")
+        println("Cleaned directory: " + deviceReportsDir)
+    }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Pull in JSON report from device                                                                //
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    task pullJGivenReports(type: Exec) {
+        doFirst {
+            tasks.cleanLocalJGivenReports.execute()
+            if (!file(localJsonDir).mkdirs()) {
+                println("Cannot create dir " + localJsonDir)
+            }
+        }
+
+        commandLine adb, 'pull', deviceReportsDir, localJsonDir
+
+        doLast {
+            println("Pulled " + deviceReportsDir + " to " + localJsonDir)
+            tasks.cleanDeviceJGivenReports.execute()
+        }
     }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -50,10 +60,14 @@ task pullJGivenReports(type: Exec, dependsOn: transferJson) {
     }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-// Task for converting jgiven JSON to HTML5                                                       //
+// Converts JGiven JSON reports to HTML5 reports                                                  //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    task(jgivenJsonToHtml, dependsOn: pullJGivenReports, type: JavaExec) {
+    task(jGivenGenerateHtmlTestReport, dependsOn: pullJGivenReports, type: JavaExec) {
+        doFirst {
+            tasks.pullJGivenReports.execute()
+        }
+
         main = 'com.tngtech.jgiven.report.ReportGenerator'
         classpath configurations.jgiven
         args "--format=html5", "--sourceDir=" + localJsonDir, "--targetDir=" + localHtmlDir
@@ -64,10 +78,10 @@ task pullJGivenReports(type: Exec, dependsOn: transferJson) {
     }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-// Pull in JSON report after instrumented tests                                                   //
+// Generate HTML5 report after instrumented tests                                                 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
     gradle.projectsEvaluated {
-        connectedDebugAndroidTest.finalizedBy jgivenJsonToHtml
+        connectedDebugAndroidTest.finalizedBy jGivenGenerateHtmlTestReport
     }
 }

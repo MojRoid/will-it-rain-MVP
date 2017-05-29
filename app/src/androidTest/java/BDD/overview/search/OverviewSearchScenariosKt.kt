@@ -1,12 +1,11 @@
-package moj.rain.BDD.overview.search
+package BDD.overview.search
 
+import BDD.base.BaseScenarios
+import BDD.tags.Search
+import BDD.tags.Stories
+import BDD.tags.Story
 import com.tngtech.java.junit.dataprovider.DataProvider
 import com.tngtech.java.junit.dataprovider.DataProviderRunner
-import moj.rain.BDD.base.BaseScenarios
-import moj.rain.BDD.tags.Search
-import moj.rain.BDD.tags.Stories
-import moj.rain.BDD.tags.Story
-import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -14,7 +13,6 @@ import org.junit.runner.RunWith
 @RunWith(DataProviderRunner::class)
 class OverviewSearchScenariosKt : BaseScenarios<OverviewSearchSteps<*>>() {
 
-    @Ignore
     @Story(Stories.EXAMPLE_STORY_456)
     @Test
     @DataProvider(value = *arrayOf(

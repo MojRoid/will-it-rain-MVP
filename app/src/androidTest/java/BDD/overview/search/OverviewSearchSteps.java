@@ -1,8 +1,8 @@
-package moj.rain.BDD.overview.search;
+package BDD.overview.search;
 
 import android.widget.TextView;
 
-import moj.rain.BDD.overview.common.OverviewCommonSteps;
+import BDD.overview.common.OverviewCommonSteps;
 import moj.rain.R;
 import moj.rain.weather.overview.view.OverviewActivity;
 
