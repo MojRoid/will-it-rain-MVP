@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import javax.inject.Inject;
@@ -12,18 +13,20 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import moj.rain.R;
 import moj.rain.app.RainApp;
-import moj.rain.app.network.model.geocoding.Geocoding;
 import moj.rain.app.view.BaseActivity;
 import moj.rain.app.view.error.ErrorView;
+import moj.rain.app.view.watchers.TextWatcherAfter;
 import moj.rain.weather.overview.injection.OverviewModule;
 import moj.rain.weather.overview.model.WeatherData;
 import moj.rain.weather.overview.presenter.OverviewPresenter;
 import moj.rain.weather.overview.view.adapter.WeatherAdapter;
 
-public class OverviewActivity extends BaseActivity implements OverviewView {
+public class OverviewActivity extends BaseActivity implements OverviewView, TextWatcherAfter.Callback {
 
-    @BindView(R.id.geocoder_results_txt)
-    TextView geocodingResultsTxt;
+    @BindView(R.id.geocoding_search_input_et)
+    EditText geocodingSearchInputEt;
+    @BindView(R.id.formatted_address_results_txt)
+    TextView formattedAddressResultTxt;
     @BindView(R.id.hour_list_rv)
     RecyclerView recyclerView;
 
@@ -35,6 +38,8 @@ public class OverviewActivity extends BaseActivity implements OverviewView {
     RecyclerView.LayoutManager layoutManager;
     @Inject
     WeatherAdapter weatherAdapter;
+    @Inject
+    TextWatcherAfter textWatcherAfter;
 
     @Override
     public int getLayoutResourceId() {
@@ -53,12 +58,16 @@ public class OverviewActivity extends BaseActivity implements OverviewView {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setUpRecyclerView();
-        presenter.getGeocoding("London");
+        setUpViews();
     }
 
     private void setUpRecyclerView() {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(weatherAdapter);
+    }
+
+    private void setUpViews() {
+        geocodingSearchInputEt.addTextChangedListener(textWatcherAfter);
     }
 
     @Override
@@ -80,12 +89,17 @@ public class OverviewActivity extends BaseActivity implements OverviewView {
     }
 
     @Override
-    public void showWeather(@NonNull WeatherData weatherData) {
+    public void showWeather(@Nullable WeatherData weatherData) {
         weatherAdapter.setWeatherData(weatherData);
     }
 
     @Override
-    public void showGeocoding(Geocoding geocoding) {
-        geocodingResultsTxt.setText(geocoding.toString());
+    public void showFormattedAddress(@NonNull String formattedAddress) {
+        formattedAddressResultTxt.setText(formattedAddress);
+    }
+
+    @Override
+    public void onTextChanged(@NonNull String input) {
+        presenter.onSearchInput(input);
     }
 }

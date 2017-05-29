@@ -7,6 +7,9 @@ dependencies {
     //compile project(':other module, i.e. core')
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
+    // Kotlin //
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
+
     // Support Library //
     compile "com.android.support:appcompat-v7:$support_library_version"
     compile "com.android.support:design:$support_library_version"
@@ -71,6 +74,9 @@ dependencies {
     // TESTING LIBRARIES                                                                          //
     ////////////////////////////////////////////////////////////////////////////////////////////////
 
+    // Kotlin JUnit //
+    testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
+
     // JUnit //
     testCompile("junit:junit:$junit_version") {
         exclude group: 'org.hamcrest'
@@ -78,8 +84,7 @@ dependencies {
 
     // Espresso //
     androidTestCompile("com.android.support.test.espresso:espresso-core:$espresso_version") {
-        exclude group: 'com.android.support',
-                module: 'support-annotations'
+        exclude group: 'com.android.support'
     }
 
     // Mockito //
@@ -96,4 +101,13 @@ dependencies {
         exclude group: 'org.assertj'
     }
     testCompile "org.robolectric:shadows-support-v4:$robolectric_version"
+
+    // JGiven //
+    androidTestCompile("com.tngtech.jgiven:jgiven-android:$jgiven_version") {
+        exclude group: 'com.android.support'
+    }
+
+    // JUnit Data Provider //
+    androidTestCompile "com.tngtech.java:junit-dataprovider:$junit_data_provider_version"
 }
+

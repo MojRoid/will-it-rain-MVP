@@ -8,13 +8,17 @@ import android.support.v7.widget.RecyclerView;
 import dagger.Module;
 import dagger.Provides;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.subjects.PublishSubject;
 import moj.rain.app.injection.qualifiers.ForActivity;
 import moj.rain.app.injection.scopes.PerActivity;
 import moj.rain.app.view.adapter.DiffCallback;
 import moj.rain.app.view.error.ErrorView;
 import moj.rain.app.view.error.ErrorViewImpl;
+import moj.rain.app.view.watchers.TextWatcherAfter;
 import moj.rain.weather.overview.domain.geocoding.CallGeocoderUseCase;
 import moj.rain.weather.overview.domain.geocoding.CallGeocoderUseCaseImpl;
+import moj.rain.weather.overview.domain.search.SearchInputUseCase;
+import moj.rain.weather.overview.domain.search.SearchInputUseCaseImpl;
 import moj.rain.weather.overview.domain.weather.GetWeatherUseCase;
 import moj.rain.weather.overview.domain.weather.GetWeatherUseCaseImpl;
 import moj.rain.weather.overview.model.WeatherHour;
@@ -66,6 +70,12 @@ public class OverviewModule {
     }
 
     @Provides
+    @PerActivity
+    SearchInputUseCase provideSearchInputUseCase(SearchInputUseCaseImpl searchInputUseCase) {
+        return searchInputUseCase;
+    }
+
+    @Provides
     CompositeDisposable provideCompositeDisposable() {
         return new CompositeDisposable();
     }
@@ -92,5 +102,17 @@ public class OverviewModule {
     @PerActivity
     WeatherAdapter provideRainAdapter(WeatherAdapterImpl rainHourAdapter) {
         return rainHourAdapter;
+    }
+
+    @Provides
+    @PerActivity
+    TextWatcherAfter provideTextWatcher() {
+        return new TextWatcherAfter(activity);
+    }
+
+    @Provides
+    @PerActivity
+    PublishSubject<String> providePublisherSubject() {
+        return PublishSubject.create();
     }
 }

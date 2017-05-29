@@ -1,6 +1,7 @@
 package moj.rain.weather.overview.view;
 
 import android.view.View;
+import android.widget.TextView;
 
 import org.joda.time.DateTimeZone;
 import org.junit.Before;
@@ -22,6 +23,7 @@ import moj.rain.weather.overview.model.WeatherHour;
 import moj.rain.weather.overview.presenter.OverviewPresenter;
 import moj.rain.weather.overview.view.adapter.WeatherAdapter;
 
+import static moj.rain.TestConstants.LOCATION_1;
 import static moj.rain.TestConstants.WEATHER_HOUR_1;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.times;
@@ -35,6 +37,8 @@ public class OverviewActivityTest {
     private ErrorView errorView;
     @Mock
     private WeatherAdapter weatherAdapter;
+    @Mock
+    private TextView formattedAddressResultTxt;
 
     private ActivityController<OverviewActivity> activityController;
 
@@ -80,6 +84,18 @@ public class OverviewActivityTest {
         thenNetworkErrorViewIsShown();
     }
 
+    @Test
+    public void showFormattedAddress() throws Exception {
+        whenFormattedAddressIsProvided();
+        thenShowThisFormattedAddress();
+    }
+
+    @Test
+    public void onTextChanged() throws Exception {
+        whenTextIsChanged();
+        thenCallThePresenterWithThisNewInput();
+    }
+
     private void givenValidWeatherData() {
         DateTimeZone dateTimeZone = DateTimeZone.UTC;
         List<WeatherHour> weatherHourList = new ArrayList<>();
@@ -101,6 +117,14 @@ public class OverviewActivityTest {
 
     private void whenWeatherNetworkError() {
         activity.showNetworkError();
+    }
+
+    private void whenFormattedAddressIsProvided() {
+        activity.showFormattedAddress(LOCATION_1);
+    }
+
+    private void whenTextIsChanged() {
+        activity.onTextChanged(LOCATION_1);
     }
 
     private void thenGetWeatherShouldNotBeCalled() {
@@ -127,5 +151,15 @@ public class OverviewActivityTest {
         View view = activity.findViewById(android.R.id.content);
         then(errorView).should(times(1)).showNetworkErrorView(view);
         then(errorView).shouldHaveNoMoreInteractions();
+    }
+
+    private void thenShowThisFormattedAddress() {
+        then(formattedAddressResultTxt).should(times(1)).setText(LOCATION_1);
+        then(formattedAddressResultTxt).shouldHaveNoMoreInteractions();
+    }
+
+    private void thenCallThePresenterWithThisNewInput() {
+        then(presenter).should(times(1)).onSearchInput(LOCATION_1);
+        then(presenter).shouldHaveNoMoreInteractions();
     }
 }

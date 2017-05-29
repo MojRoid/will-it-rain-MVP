@@ -34,7 +34,6 @@ android:
     # System image to run emulator during tests
     - sys-img-${ANDROID_ABI}-android-${ANDROID_EMULATOR_API}
 
-
 before_script:
   - android list targets
   - echo no | android create avd --force --name test --target android-$ANDROID_EMULATOR_API --abi $ANDROID_ABI

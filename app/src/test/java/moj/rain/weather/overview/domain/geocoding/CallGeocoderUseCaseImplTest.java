@@ -41,6 +41,8 @@ public class CallGeocoderUseCaseImplTest {
                 geocodingRepository,
                 Schedulers.trampoline(),
                 Schedulers.trampoline());
+
+        getCoordinatesUseCase.setCallback(callback);
     }
 
     @Test
@@ -58,12 +60,10 @@ public class CallGeocoderUseCaseImplTest {
     }
 
     private void givenCoordinatesRetrievedSuccessfully() {
-        getCoordinatesUseCase.setCallback(callback);
         given(geocodingRepository.getGeocoding(anyString())).willReturn(Observable.just(geocoding));
     }
 
     private void givenCoordinatesAreNotRetrievedSuccessfully() {
-        getCoordinatesUseCase.setCallback(callback);
         given(geocodingRepository.getGeocoding(anyString())).willReturn(Observable.error(throwable));
     }
 

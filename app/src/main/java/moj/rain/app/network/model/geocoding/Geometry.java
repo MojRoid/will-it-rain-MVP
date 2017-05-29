@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName;
 public abstract class Geometry {
 
     @SerializedName("location")
-    public abstract Location location();
+    public abstract Location getLocation();
 
     public static TypeAdapter<Geometry> typeAdapter(Gson gson) {
         return new AutoValue_Geometry.GsonTypeAdapter(gson);
