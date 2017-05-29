@@ -30,14 +30,14 @@ public class WeatherNetworkManagerImplTest {
     @Test
     public void getWeather() throws Exception {
         whenGetWeatherIsCalled();
-        thenCallDarkSkyApi();
+        thenCallNetworkApi();
     }
 
     private void whenGetWeatherIsCalled() {
         weatherNetworkManager.getWeather(LATITUDE_1, LONGITUDE_1);
     }
 
-    private void thenCallDarkSkyApi() {
+    private void thenCallNetworkApi() {
         String key = BuildConfig.DARK_SKY_API_KEY;
         String excludes = "minutely,currently,daily,alerts,flags";
         String units = "uk2";
