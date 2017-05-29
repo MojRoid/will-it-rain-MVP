@@ -78,10 +78,10 @@ task cleanDeviceJGivenReports(type: Exec) {
     }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-// Generate HTML5 report after instrumented tests                                                 //
+// Generate HTML5 report after instrumented tests - Does not yet run properly on CI               //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    if (System.getenv('CI') == null || !System.getenv('CI')) {
+    if (!System.getenv('CI')) {
         gradle.projectsEvaluated {
             connectedDebugAndroidTest.finalizedBy jGivenGenerateHtmlTestReport
         }

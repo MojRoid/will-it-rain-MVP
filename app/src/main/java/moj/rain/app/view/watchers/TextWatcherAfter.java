@@ -4,7 +4,7 @@ import android.text.Editable;
 
 import io.reactivex.annotations.NonNull;
 
-public class TextWatcher implements android.text.TextWatcher {
+public class TextWatcherAfter implements android.text.TextWatcher {
 
     public interface Callback {
         void onTextChanged(@NonNull String text);
@@ -12,7 +12,7 @@ public class TextWatcher implements android.text.TextWatcher {
 
     private Callback callback;
 
-    public TextWatcher(Callback callback) {
+    public TextWatcherAfter(Callback callback) {
         this.callback = callback;
     }
 

@@ -14,7 +14,7 @@ import moj.rain.app.injection.scopes.PerActivity;
 import moj.rain.app.view.adapter.DiffCallback;
 import moj.rain.app.view.error.ErrorView;
 import moj.rain.app.view.error.ErrorViewImpl;
-import moj.rain.app.view.watchers.TextWatcher;
+import moj.rain.app.view.watchers.TextWatcherAfter;
 import moj.rain.weather.overview.domain.geocoding.CallGeocoderUseCase;
 import moj.rain.weather.overview.domain.geocoding.CallGeocoderUseCaseImpl;
 import moj.rain.weather.overview.domain.search.SearchInputUseCase;
@@ -106,8 +106,8 @@ public class OverviewModule {
 
     @Provides
     @PerActivity
-    TextWatcher provideTextWatcher() {
-        return new TextWatcher(activity);
+    TextWatcherAfter provideTextWatcher() {
+        return new TextWatcherAfter(activity);
     }
 
     @Provides

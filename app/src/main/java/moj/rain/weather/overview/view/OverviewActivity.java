@@ -3,7 +3,6 @@ package moj.rain.weather.overview.view;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.annotation.VisibleForTesting;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.EditText;
@@ -16,13 +15,13 @@ import moj.rain.R;
 import moj.rain.app.RainApp;
 import moj.rain.app.view.BaseActivity;
 import moj.rain.app.view.error.ErrorView;
-import moj.rain.app.view.watchers.TextWatcher;
+import moj.rain.app.view.watchers.TextWatcherAfter;
 import moj.rain.weather.overview.injection.OverviewModule;
 import moj.rain.weather.overview.model.WeatherData;
 import moj.rain.weather.overview.presenter.OverviewPresenter;
 import moj.rain.weather.overview.view.adapter.WeatherAdapter;
 
-public class OverviewActivity extends BaseActivity implements OverviewView, TextWatcher.Callback {
+public class OverviewActivity extends BaseActivity implements OverviewView, TextWatcherAfter.Callback {
 
     @BindView(R.id.geocoding_search_input_et)
     EditText geocodingSearchInputEt;
@@ -40,7 +39,7 @@ public class OverviewActivity extends BaseActivity implements OverviewView, Text
     @Inject
     WeatherAdapter weatherAdapter;
     @Inject
-    TextWatcher textWatcher;
+    TextWatcherAfter textWatcherAfter;
 
     @Override
     public int getLayoutResourceId() {
@@ -68,7 +67,7 @@ public class OverviewActivity extends BaseActivity implements OverviewView, Text
     }
 
     private void setUpViews() {
-        geocodingSearchInputEt.addTextChangedListener(textWatcher);
+        geocodingSearchInputEt.addTextChangedListener(textWatcherAfter);
     }
 
     @Override

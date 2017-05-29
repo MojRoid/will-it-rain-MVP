@@ -2,6 +2,8 @@ package BDD.overview.search;
 
 import android.widget.TextView;
 
+import com.tngtech.jgiven.annotation.SingleQuoted;
+
 import BDD.overview.common.OverviewCommonSteps;
 import moj.rain.R;
 import moj.rain.weather.overview.view.OverviewActivity;
@@ -37,7 +39,7 @@ public class OverviewSearchSteps<STEP extends OverviewSearchSteps<STEP>> extends
         return self();
     }
 
-    public STEP i_see_$_as_the_suggested_auto_completed_location(String searchResult) throws InterruptedException {
+    public STEP i_see_$_as_the_suggested_auto_completed_location(@SingleQuoted String searchResult) throws InterruptedException {
         waitUntilIdle();
 
         takeScreenshot();
