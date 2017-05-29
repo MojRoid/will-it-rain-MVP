@@ -81,15 +81,19 @@ task cleanDeviceJGivenReports(type: Exec) {
 // Generate HTML5 report after instrumented tests                                                 //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//    gradle.projectsEvaluated {
-//        connectedDebugAndroidTest.finalizedBy jGivenGenerateHtmlTestReport
-//    }
+    if (System.getenv('CI') == null || !System.getenv('CI')) {
+        gradle.projectsEvaluated {
+            connectedDebugAndroidTest.finalizedBy jGivenGenerateHtmlTestReport
+        }
+    }
 
-    android {
-        sourceSets {
-            androidTest {
-                java {
-                    exclude '**/BDD/**'
+    if (System.getenv('CI')) {
+        android {
+            sourceSets {
+                androidTest {
+                    java {
+                        exclude '**/BDD/**'
+                    }
                 }
             }
         }
