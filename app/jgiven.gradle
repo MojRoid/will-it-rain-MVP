@@ -65,7 +65,7 @@ dependencies {
 // Converts JGiven JSON reports to HTML5 reports                                                  //
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-task(jGivenGenerateHtmlTestReport, dependsOn: pullJGivenReports, type: JavaExec) {
+task jGivenGenerateHtmlTestReport(type: JavaExec) {
     doFirst {
         tasks.pullJGivenReports.execute()
     }
