@@ -35,13 +35,16 @@ public class WeatherDataAdapter extends BaseDataAdapter<Hour, WeatherHour> {
         return WeatherHour.builder()
                 .setHour(new DateTime(hour.getTime() * 1000))
                 .setIcon(hour.getIcon())
-                .setPrecipIntensity(getMultipliedByOneHundredAndRoundedToNearestFive(hour.getPrecipIntensity()))
-                .setPrecipProbability(getMultipliedByOneHundredAndRoundedToNearestFive(hour.getPrecipProbability()))
+                .setPrecipIntensity(adaptDouble(hour.getPrecipIntensity()))
+                .setPrecipProbability(adaptDouble(hour.getPrecipProbability()))
                 .setTemperature(getTemperature(hour.getTemperature(), hour.getApparentTemperature()))
                 .build();
     }
 
-    protected int getMultipliedByOneHundredAndRoundedToNearestFive(double doubleValue) {
+    /**
+     * Multiply by one hundred and round to nearest five.
+     */
+    int adaptDouble(double doubleValue) {
         return (int) Math.round(doubleValue / 0.05) * 5;
     }
 

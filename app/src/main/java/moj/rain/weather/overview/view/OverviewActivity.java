@@ -78,8 +78,8 @@ public class OverviewActivity extends BaseActivity implements OverviewView, Text
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         presenter.onViewDestroyed();
+        super.onDestroy();
     }
 
     @Override

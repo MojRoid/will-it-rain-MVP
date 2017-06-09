@@ -70,21 +70,21 @@ public class WeatherDataAdapterTest {
     @Test
     public void getRoundedToNearestFive_1() throws Exception {
         givenADouble(5.4);
-        whenMultipliedByOneHundredAndRoundedToNearestFive();
+        whenDoubleIsAdapted();
         thenDoubleShouldReturnCorrectlyAsAnInt(540);
     }
 
     @Test
     public void getRoundedToNearestFive_2() throws Exception {
         givenADouble(5.434);
-        whenMultipliedByOneHundredAndRoundedToNearestFive();
+        whenDoubleIsAdapted();
         thenDoubleShouldReturnCorrectlyAsAnInt(545);
     }
 
     @Test
     public void getRoundedToNearestFive_3() throws Exception {
         givenADouble(0.032);
-        whenMultipliedByOneHundredAndRoundedToNearestFive();
+        whenDoubleIsAdapted();
         thenDoubleShouldReturnCorrectlyAsAnInt(5);
     }
 
@@ -113,8 +113,8 @@ public class WeatherDataAdapterTest {
         weatherHour = WeatherHour.builder()
                 .setHour(new DateTime(TIME_1 * 1000))
                 .setIcon(ICON_1)
-                .setPrecipIntensity(weatherDataAdapter.getMultipliedByOneHundredAndRoundedToNearestFive(PRECIP_INTENSITY_1))
-                .setPrecipProbability(weatherDataAdapter.getMultipliedByOneHundredAndRoundedToNearestFive(PRECIP_PROBABILITY_1))
+                .setPrecipIntensity(weatherDataAdapter.adaptDouble(PRECIP_INTENSITY_1))
+                .setPrecipProbability(weatherDataAdapter.adaptDouble(PRECIP_PROBABILITY_1))
                 .setTemperature(weatherDataAdapter.getTemperature(TEMPERATURE_1, APPARENT_TEMPERATURE_1))
                 .build();
     }
@@ -159,8 +159,8 @@ public class WeatherDataAdapterTest {
         actualWeatherHour = weatherDataAdapter.transformSource(hour);
     }
 
-    private void whenMultipliedByOneHundredAndRoundedToNearestFive() {
-        actualInt = weatherDataAdapter.getMultipliedByOneHundredAndRoundedToNearestFive(doubleValue);
+    private void whenDoubleIsAdapted() {
+        actualInt = weatherDataAdapter.adaptDouble(doubleValue);
     }
 
     private void whenAnAverageTemperatureIsCalculated() {
