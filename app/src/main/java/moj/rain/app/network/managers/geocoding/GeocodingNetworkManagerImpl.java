@@ -20,7 +20,7 @@ public class GeocodingNetworkManagerImpl implements GeocodingNetworkManager {
     public Observable<Geocoding> getGeocoding(String location) {
         return networkApi.getGeocoding(
                 BuildConfig.GEOCODER_BASE_URL,
-                BuildConfig.GECODER_API_KEY,
+                BuildConfig.GOOGLE_API_KEY,
                 location);
     }
 }

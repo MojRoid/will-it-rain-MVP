@@ -4,6 +4,7 @@ package moj.rain.weather.overview.view;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import moj.rain.app.network.model.geocoding.Location;
 import moj.rain.app.view.BaseView;
 import moj.rain.weather.overview.model.WeatherData;
 
@@ -16,4 +17,6 @@ public interface OverviewView extends BaseView {
     void showWeather(@Nullable WeatherData weatherData);
 
     void showFormattedAddress(@NonNull String formattedAddress);
+
+    void showMap(@NonNull Location location);
 }

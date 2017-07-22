@@ -1,18 +1,27 @@
 package moj.rain.weather.overview.view;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+
+import java.util.Locale;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import moj.rain.BuildConfig;
 import moj.rain.R;
 import moj.rain.app.RainApp;
+import moj.rain.app.network.model.geocoding.Location;
 import moj.rain.app.view.BaseActivity;
 import moj.rain.app.view.error.ErrorView;
 import moj.rain.app.view.watchers.TextWatcherAfter;
@@ -29,6 +38,8 @@ public class OverviewActivity extends BaseActivity implements OverviewView, Text
     TextView formattedAddressResultTxt;
     @BindView(R.id.hour_list_rv)
     RecyclerView recyclerView;
+    @BindView(R.id.google_maps_image)
+    ImageView googleMapsImage;
 
     @Inject
     OverviewPresenter presenter;
@@ -68,6 +79,8 @@ public class OverviewActivity extends BaseActivity implements OverviewView, Text
 
     private void setUpViews() {
         geocodingSearchInputEt.addTextChangedListener(textWatcherAfter);
+        ViewGroup.LayoutParams layoutParams = googleMapsImage.getLayoutParams();
+        layoutParams.height = Resources.getSystem().getDisplayMetrics().widthPixels / 4;
     }
 
     @Override
@@ -102,6 +115,14 @@ public class OverviewActivity extends BaseActivity implements OverviewView, Text
     @Override
     public void showFormattedAddress(@NonNull String formattedAddress) {
         formattedAddressResultTxt.setText(formattedAddress);
+    }
+
+    @Override
+    public void showMap(@NonNull Location location) {
+        Glide.with(this).load(String.format(Locale.getDefault(), BuildConfig.GOOGLE_STATIC_MAPS_FULL_URL,
+                        location.getLat(), location.getLng(), BuildConfig.GOOGLE_API_KEY))
+                .centerCrop()
+                .into(googleMapsImage);
     }
 
     @Override

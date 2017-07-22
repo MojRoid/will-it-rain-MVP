@@ -50,6 +50,9 @@ dependencies {
     // Joda Time //
     compile "joda-time:joda-time:$joda_time_version"
 
+    // Glide //
+    compile "com.github.bumptech.glide:glide:$glide_version"
+
     // Architecture Components //
     //compile "android.arch.lifecycle:runtime:$architecture_components_version"
     //compile "android.arch.lifecycle:extensions:$architecture_components_version"

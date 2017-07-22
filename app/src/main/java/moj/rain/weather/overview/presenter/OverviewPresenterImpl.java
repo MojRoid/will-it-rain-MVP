@@ -124,6 +124,7 @@ public class OverviewPresenterImpl extends BasePresenter implements
         location = geocoding.getResults().get(0).getGeometry().getLocation();
         getWeatherUseCase.execute(location.getLat(), location.getLng());
         view.showFormattedAddress(geocoding.getResults().get(0).getFormattedAddress());
+        view.showMap(location);
     }
 
     @Override

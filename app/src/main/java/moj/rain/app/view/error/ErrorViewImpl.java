@@ -22,9 +22,6 @@ public class ErrorViewImpl implements ErrorView {
     }
 
     private void showSnackbar(@NonNull View view, String error) {
-        Snackbar.make(view,
-                error,
-                Snackbar.LENGTH_SHORT)
-                .show();
+        Snackbar.make(view, error, Snackbar.LENGTH_SHORT).show();
     }
 }

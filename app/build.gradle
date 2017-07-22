@@ -31,9 +31,10 @@ android {
 
         buildConfigField "String", "DARK_SKY_BASE_URL", "\"${config.commonProperties.dark_sky_base_url}\""
         buildConfigField "String", "GEOCODER_BASE_URL", "\"${config.commonProperties.geocoder_base_url}\""
+        buildConfigField "String", "GOOGLE_STATIC_MAPS_FULL_URL", "\"${config.commonProperties.google_static_maps_full_url}\""
 
         buildConfigField "String", "DARK_SKY_API_KEY", "\"${config.keysProperties.dark_sky_api_key}\""
-        buildConfigField "String", "GECODER_API_KEY", "\"${config.keysProperties.geocoder_api_key}\""
+        buildConfigField "String", "GOOGLE_API_KEY", "\"${config.keysProperties.google_api_key}\""
 
         signingConfigs {
             release {
