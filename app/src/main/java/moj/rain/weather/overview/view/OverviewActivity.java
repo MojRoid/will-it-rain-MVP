@@ -51,6 +51,7 @@ public class OverviewActivity extends BaseActivity implements OverviewView, Text
     WeatherAdapter weatherAdapter;
     @Inject
     TextWatcherAfter textWatcherAfter;
+    private String input;
 
     @Override
     public int getLayoutResourceId() {
@@ -109,7 +110,7 @@ public class OverviewActivity extends BaseActivity implements OverviewView, Text
 
     @Override
     public void showWeather(@Nullable WeatherData weatherData) {
-        weatherAdapter.setWeatherData(weatherData);
+        //weatherAdapter.setWeatherData(weatherData);
     }
 
     @Override
@@ -120,13 +121,18 @@ public class OverviewActivity extends BaseActivity implements OverviewView, Text
     @Override
     public void showMap(@NonNull Location location) {
         Glide.with(this).load(String.format(Locale.getDefault(), BuildConfig.GOOGLE_STATIC_MAPS_FULL_URL,
-                        location.getLat(), location.getLng(), BuildConfig.GOOGLE_API_KEY))
+                location.getLat(), location.getLng(), BuildConfig.GOOGLE_API_KEY))
                 .centerCrop()
                 .into(googleMapsImage);
+        googleMapsImage.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void onTextChanged(@NonNull String input) {
+        this.input = input;
         presenter.onSearchInput(input);
+        if (input.length() < 3) {
+            googleMapsImage.setVisibility(View.GONE);
+        }
     }
 }
